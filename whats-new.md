@@ -2,6 +2,24 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-07
+
+- **Claude Code v2.1.292** (AI/Claude tooling) - Released Oct 6 (also v2.1.290 Oct 5, v2.1.291 Oct 6 regression fixes, per the GitHub release page).
+  - Why it matters: Adds an `effort` parameter on the Agent tool so you can set sub-agent effort per call (cheap sub-agents for search, heavier for design), `claude plugin install --marketplace <source>`, a `CLAUDE_CODE_OVERLOADED_RETRY_BASE_DELAY_MS` retry knob, and security fixes for file-read access and permission prompts. 2.1.290 added `claude attach <name>` / `claude logs <name>` for background sessions.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Leviathan** (GitHub repo) - Single static Rust binary that turns JSONL/JSON/CSV/SQLite records into a ranked BM25 full-text index, with MCP and Claude skill integration, so agents query large datasets without grepping them.
+  - Why it matters: A token-saving retrieval step for agents working over big logs or exports. README claims median ~436 tokens per query vs 107K+ with grep (vendor claim, not verified).
+  - Link: https://github.com/elstongun/leviathan
+  - Safety note: Apache-2.0; created Oct 5, ~650 stars, only 5 commits and very new; described as read-only, offline and `unsafe`-free; install via `cargo install leviathan-index` or release binaries. I read the README only, not the source. Review before use.
+
+- **mesh-avatar-studio** (GitHub repo) - Turns one illustration into an animated 2D mesh avatar using a coding agent plus a local editor, with camera face tracking, lip-sync and OBS output.
+  - Why it matters: A concrete pattern of an agent producing an asset that a human then refines in a purpose-built local editor. Useful reference if you build agent-plus-editor workflows.
+  - Link: https://github.com/shinshin86/mesh-avatar-studio
+  - Safety note: MIT for code (the bundled sample character has separate usage terms); 47 commits; created Oct 4, ~440 stars; plain `npm install && npm run dev` on Node 22.17+. I did not audit the source or check last-commit date beyond the Oct 7 repo update.
+
+Not included: repos whose primary pages I did not vet (e.g. several skill-pack repos trending with 600-1900 stars), and universal-modder / jevgrep, already covered Oct 6.
+
 ## 2026-10-06
 
 - **Claude Code v2.1.290 / v2.1.291** (AI/Claude tooling) - Latest releases (Oct 5-6 per the GitHub release page).
