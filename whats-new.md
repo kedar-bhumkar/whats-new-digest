@@ -2,6 +2,32 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-08
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - New small/fast model, `claude-haiku-5-5`, released Oct 7 and now the default Haiku on the Anthropic API (also in Claude Code v2.1.293).
+  - Why it matters: Per the API release notes: 1M-token context, 128k max output, adaptive thinking with the `effort` parameter, and availability on Bedrock, Google Cloud and Foundry. Good fit for high-volume sub-agents and routing steps. Migrating from Haiku 4.5: manual `budget_tokens` extended thinking now returns a 400, and thinking blocks appear by default (more tokens). The release notes page did not list prices; check the pricing page.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude API changes, Oct 5-8** (AI/Claude tooling) - Sonnet 5.5 cache reads cut from $0.20 to $0.10 per million tokens (cache writes unchanged); Python/TypeScript SDKs add beta classes for the browser-use and computer-use tools where the SDK runs the tool loop; Managed Agents `allowed_hosts` now also governs `web_search`/`web_fetch`; Models API gains `capabilities.server_tools` and `capabilities.thinking.types.disabled`.
+  - Why it matters: Cheaper long-context agent loops, less hand-written tool-loop code, and programmatic capability checks when choosing a model. Note Sonnet 4.5 retires Nov 30, 2026.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.293 / v2.1.294** (AI/Claude tooling) - Released Oct 7 and Oct 8.
+  - Why it matters: 2.1.294 fixes `prompt`/`agent` hooks written as plain instructions (e.g. "Block commands that...") failing to block what they should, and improves Stop/SubagentStop hook judging. 2.1.293 fixes an HTTP MCP connection memory leak and Claude treating pre-compaction actions as done after compaction. Upgrade if you rely on hooks or long sessions.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **HyperFrames** (GitHub repo, heygen-com) - Turns HTML/CSS/media and seekable animations (GSAP, Lottie, Three.js) into deterministic MP4s by seeking frames in headless Chrome and encoding with FFmpeg; ships a Claude Code plugin and standalone skills.
+  - Why it matters: Lets an agent produce video by writing plain HTML, which it can already do well, with reproducible output. Useful for generated demos, changelog videos or social clips.
+  - Link: https://github.com/heygen-com/hyperframes
+  - Safety note: Apache-2.0; listed on GitHub Trending this week; page shows ~58.9k stars (I could not confirm creation or last-commit dates from the page). Installs run third-party packages via `npx` and a plugin marketplace, so review them like any dependency. I did not audit the source.
+
+- **OpenRig** (GitHub repo, mvschwarz) - Local daemon, CLI, TUI and MCP server on tmux for defining teams of Claude Code, Codex and Pi agents in YAML, with roles, shared context and persistent sessions.
+  - Why it matters: A concrete way to run multi-agent setups with durable roles instead of ad hoc terminals.
+  - Link: https://github.com/mvschwarz/openrig
+  - Safety note: Apache-2.0; ~6.0k stars, 3,673 commits, trending this week (creation/last-commit dates not visible to me). Invasive: it writes hooks, status-line commands and trust settings into `~/.claude` and `~/.codex/config.toml`, offers `curl | sh` and a postinstall check, and has optional permission-bypass modes. No credential requests seen. Try it in a disposable environment and prefer the npm route over `curl | sh`.
+
+Not included: other trending repos I did not vet (claude-mem, mattpocock/skills, Agent-Reach, text-to-cad, cursor/plugins).
+
 ## 2026-10-07
 
 - **Claude Code v2.1.292** (AI/Claude tooling) - Released Oct 6 (also v2.1.290 Oct 5, v2.1.291 Oct 6 regression fixes, per the GitHub release page).
