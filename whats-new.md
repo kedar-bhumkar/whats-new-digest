@@ -2,6 +2,28 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-09
+
+- **Claude Code v2.1.295** (AI/Claude tooling) - Released Oct 8 (with v2.1.294 earlier that day).
+  - Why it matters: New `onFailure: "block"` option for command and HTTP hooks, so a hook that fails to start, times out or exits unexpectedly blocks the action instead of letting it through (a fail-closed guardrail). Also adds `CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS` to cap unattended retry waits on 429/529, remote MCP servers now reconnect with backoff, and `claude -p` no longer drops earlier responses when background work starts another turn. v2.1.292 (Oct 6) added an `effort` parameter on the Agent tool for sub-agents.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Managed Agents web-tool restrictions and SDK browser/computer-use classes** (AI/Claude tooling) - API release notes for Oct 7: with `limited` networking, `allowed_hosts` now also governs `web_search`/`web_fetch`; `web_fetch` only fetches URLs already seen in the session; the Python/TypeScript SDKs add beta classes where you subclass and implement one method per browser/computer-use tool.
+  - Why it matters: Safer egress control for agents that browse, and less boilerplate for custom browser or computer-use agents. Note `allowed_domains` outside `allowed_hosts` now fails with a 400. Max and Team plans also now include monthly API credits.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **alibaba/open-code-review** (GitHub repo) - `ocr` CLI that reviews Git diffs (or whole files via `ocr scan`) by pairing deterministic pipelines with a tool-using LLM agent, producing line-level comments with a model provider you configure.
+  - Why it matters: A drop-in AI review step for CI or pre-merge checks that is provider-configurable rather than tied to one assistant.
+  - Link: https://github.com/alibaba/open-code-review
+  - Safety note: Apache-2.0; ~44.9k stars, 787 commits, listed on GitHub Trending today. I could not see last-commit or creation dates or contributor count on the page. The project's own benchmark (AACR-Bench) is self-reported and it says recall is lower than general-purpose agents like Claude Code. Install is via npm (`@alibaba-group/open-code-review`); an install script is also offered, so prefer npm. Needs your own LLM API key. I did not audit the source.
+
+- **diagram-design** (GitHub repo, cathrynlavery) - Agent skill that generates editorial-style diagrams as self-contained HTML/SVG (42 diagram types), can match a site's brand, redraw draw.io/Mermaid/Excalidraw sources, and export PNG/SVG.
+  - Why it matters: Gives Claude Code and similar agents a consistent way to produce architecture diagrams and docs visuals.
+  - Link: https://github.com/cathrynlavery/diagram-design
+  - Safety note: MIT; ~47.4k stars, 265 commits, trending today. Last-commit date and contributors not visible to me. Brand onboarding fetches your website and diagrams load Google Fonts (see its PRIVACY.md); PNG export needs Playwright/Chromium. README warns of unofficial copies under other names, so install only from this repo. I did not audit the source.
+
+Not included: other trending repos I did not vet (morluto/rea, AnyPS5, storytold/artcraft, lingbot-map).
+
 ## 2026-10-08
 
 - **Claude Haiku 5.5** (AI/Claude tooling) - New small/fast model, `claude-haiku-5-5`, released Oct 7 and now the default Haiku on the Anthropic API (also in Claude Code v2.1.293).
