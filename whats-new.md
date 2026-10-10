@@ -2,6 +2,27 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-10
+
+- **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release notes: an agent can write a program that runs many agents in phases, executed server-side as a workflow run.
+  - Why it matters: Fan-out/pipeline orchestration (review, research, migration jobs) without hosting your own orchestrator. Enable via the agent's `multiagent` field set to `{"type": "multiagent_20261001", "workflows": {"type": "enabled"}}` with the `managed-agents-2026-04-01` beta header; progress arrives as `workflow_run.*` events.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Sonnet 5.5 cheaper cache reads + Models API capability fields** (AI/Claude tooling) - Prompt cache reads on Claude Sonnet 5.5 dropped from $0.20 to $0.10 per million tokens (Oct 7). The Models API also gained `capabilities.server_tools` (Oct 6) and `capabilities.thinking.types.disabled` (Oct 5).
+  - Why it matters: Halves the cost of cache-heavy agent loops; the capability fields let code check programmatically whether a model accepts web search/code execution tools or `thinking: {type: "disabled"}` instead of hardcoding per-model assumptions.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.296** (AI/Claude tooling) - Released Oct 9.
+  - Why it matters: Subagents (frontmatter and `--agents`) get `autoCompactWindow` to compact earlier than the main conversation; `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` pins one model for all workflow agents; Read tool gains `allow_large`; the MCP tool-description/instructions limit rises from 2,048 to 4,096 characters. Fixes: managed `PreToolUse` hooks that deny with `"continue": false` no longer end the turn, Edit/NotebookEdit refuse non-UTF-8 files instead of corrupting them, and Bash permission checks no longer auto-approve `BASH_ARGV0` assignment tricks.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **mattpocock/skills** (GitHub repo) - Collection of agent skills from the author's own `.agents` directory: engineering skills (e.g. `tdd`, `grill-with-docs`, `to-spec`, `code-review`) and productivity skills (`grill-me`, `handoff`, `teach`), packaged as plugins for Claude Code, Codex, Copilot and Gemini CLI.
+  - Why it matters: Ready-made, reusable workflows (spec grilling, TDD, handoff notes) you can install into your own agent setup rather than writing prompts from scratch.
+  - Link: https://github.com/mattpocock/skills
+  - Safety note: MIT; ~284k stars, 545 commits, trending today. Last-commit date and contributor list not visible to me. Install via one method per agent only (otherwise skills duplicate). Skills are prompt files that steer your agent, so skim them before enabling. I did not audit the source.
+
+Not included: mksglu/context-mode (interesting context-window tool, but Elastic License 2.0 is not OSI-approved); other trending repos I did not vet (morluto/rea, AnyPS5, storytold/artcraft).
+
 ## 2026-10-09
 
 - **Claude Code v2.1.295** (AI/Claude tooling) - Released Oct 8 (with v2.1.294 earlier that day).
