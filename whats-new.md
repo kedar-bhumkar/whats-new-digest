@@ -2,6 +2,30 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-11
+
+- **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude tooling) - Launched Oct 7: 1M context, 128k max output, adaptive thinking.
+  - Why it matters: Cheap/fast tier for subagents and high-volume steps. Migration gotcha: Haiku 4.5 patterns now return 400s (`budget_tokens`, `temperature`/`top_p`/`top_k`, assistant prefill, and the `computer_20250124` tool), so audit existing calls before swapping the model ID.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **SDK computer-use and browser-use classes (beta)** (AI/Claude tooling) - Oct 7 API release: Python and TypeScript SDKs let you subclass a computer or browser class and implement one method per tool against your own automation backend.
+  - Why it matters: Less glue code for custom computer-use agents (e.g. driving your own Playwright or VM harness). Same release: Managed Agents `limited` networking now also restricts `web_search`/`web_fetch` via `allowed_hosts`, and `web_fetch` only fetches URLs already seen in the session.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.295 / v2.1.294** (AI/Claude tooling) - Released Oct 8.
+  - Why it matters: New `onFailure: "block"` for command and HTTP hooks makes a hook that fails to start, times out, or crashes block the action instead of letting it through (fail-closed guardrails). Also: `prompt`/`agent` hooks phrased as instructions no longer allow actions they should block, remote MCP servers back off up to 30s instead of reconnect-looping, and OSC 7501 lets terminals show working/waiting/done status.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **strands-agents/box** (GitHub repo) - Rust sandbox for running AI agents with OS isolation, default-deny network/file/exec policies, and credential injection so secrets stay outside the agent. macOS on Apple silicon today; Linux planned.
+  - Why it matters: A way to run coding agents or MCP tools with least privilege instead of trusting prompt-level rules; relevant to any agent that executes untrusted code or holds API keys.
+  - Link: https://github.com/strands-agents/box
+  - Safety note: Apache-2.0; created Oct 2, last push Oct 11; ~319 stars, 14 forks; under the `strands-agents` org. Young project (41 open issues), so review before relying on it for real isolation.
+
+- **dzhng/jevgrep** (GitHub repo) - CLI for coding agents that finds code by describing what it does, using the Jev model to pick relevant files and source context.
+  - Why it matters: Semantic code retrieval for Claude Code/Codex without hand-built embeddings pipelines; a concrete example of a typed/judgment model replacing grep-and-guess steps.
+  - Link: https://github.com/dzhng/jevgrep
+  - Safety note: MIT; created Sep 26, last push Oct 2; ~2.6k stars, 187 forks. I checked repo metadata only, not the code or install scripts, so inspect before installing.
+
 ## 2026-10-10
 
 - **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release notes: an agent can write a program that runs many agents in phases, executed server-side as a workflow run.
