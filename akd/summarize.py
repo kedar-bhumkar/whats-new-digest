@@ -16,6 +16,7 @@ log = logging.getLogger("akd.summarize")
 
 MODEL = "claude-haiku-5-5"
 MAX_WHY = 200
+MAX_TOKENS = 400
 
 PROMPT = """You write one-line "why it matters" notes for a personal AI/coding news digest.
 
@@ -47,10 +48,19 @@ def summarize(selected: list[Selected], client, profile: str = "") -> list[Selec
         try:
             resp = client.messages.create(
                 model=MODEL,
-                max_tokens=120,
+                max_tokens=MAX_TOKENS,
+                # Adaptive thinking would otherwise consume the whole budget and return no text.
+                thinking={"type": "disabled"},
                 messages=[{"role": "user", "content": prompt}],
             )
-            sel.why = _clean("".join(b.text for b in resp.content if getattr(b, "type", "") == "text"))
+            text = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+            if not text.strip():
+                log.warning(
+                    "no text in summary response for %s (stop_reason=%s); leaving why empty",
+                    item.url,
+                    getattr(resp, "stop_reason", "?"),
+                )
+            sel.why = _clean(text)
         except Exception:
             log.exception("summary failed for %s; leaving why empty", item.url)
     return selected

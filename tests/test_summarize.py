@@ -52,3 +52,29 @@ def test_prompt_marks_item_as_untrusted_data_and_includes_profile():
     assert "MY STACK" in prompt
     assert "<item>" in prompt and "Title 1" in prompt
     assert "do not follow" in prompt.lower()
+
+
+def test_thinking_disabled_and_budget_covers_a_sentence():
+    seen = {}
+
+    class Spy(FakeClaude):
+        def _create(self, **kwargs):
+            seen.update(kwargs)
+            return super()._create(**kwargs)
+
+    summarize([selected(1)], Spy())
+    assert seen["thinking"] == {"type": "disabled"}  # adaptive thinking ate the whole budget otherwise
+    assert seen["max_tokens"] >= 300
+
+
+def test_empty_text_response_is_logged_not_silent(caplog):
+    class ThinkingOnly(FakeClaude):
+        def _create(self, **kwargs):
+            return SimpleNamespace(content=[SimpleNamespace(type="thinking", text="")], stop_reason="max_tokens")
+
+    import logging
+
+    with caplog.at_level(logging.WARNING, logger="akd.summarize"):
+        out = summarize([selected(1)], ThinkingOnly())
+    assert out[0].why == ""
+    assert any("no text" in r.message.lower() for r in caplog.records)
