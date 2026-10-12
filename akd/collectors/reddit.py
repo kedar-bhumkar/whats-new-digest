@@ -15,7 +15,7 @@ from akd.models import Item
 
 log = logging.getLogger("akd.collectors.reddit")
 
-REQUEST_GAP_SECONDS = 3.0
+LIMIT = 50
 DEFAULT_RETRY_WAIT = 10.0
 MAX_RETRY_WAIT = 30.0
 
@@ -25,7 +25,8 @@ class RedditCollector:
 
     Flagged simplification: the anonymous JSON API returns 403 for unauthenticated
     clients, so this uses the Atom feed, which carries no upvote counts. Ranking
-    therefore relies on Jev's judgment of the post text alone.
+    therefore relies on Jev's judgment of the post text alone. All subreddits are fetched
+    as one multireddit (`r/a+b+c`) because Reddit rate-limits repeat requests.
     """
 
     name = "reddit"
@@ -46,26 +47,24 @@ class RedditCollector:
             return get(self.client, url).content
 
     def collect(self) -> list[Item]:
-        items: list[Item] = []
+        if not self.cfg.subreddits:
+            return []
         now = datetime.now(timezone.utc)
-        for i, sub in enumerate(self.cfg.subreddits):
-            if i:
-                self.sleep(REQUEST_GAP_SECONDS)
-            url = f"https://www.reddit.com/r/{sub}/top/.rss?t=day&limit=15"
-            try:
-                parsed = feedparser.parse(self._fetch(url))
-            except Exception:
-                log.exception("reddit feed failed for r/%s", sub)
-                continue
-            for entry in parsed.entries:
-                items.append(
-                    Item(
-                        id=item_id(entry.link),
-                        source="reddit",
-                        title=strip_html(entry.title),
-                        url=entry.link,
-                        text=clip(strip_html(entry.get("summary", ""))),
-                        published_at=struct_to_dt(entry.get("published_parsed") or entry.get("updated_parsed"), now),
-                    )
-                )
-        return items
+        # One multireddit request: Reddit 429s a second request from the same client.
+        url = f"https://www.reddit.com/r/{'+'.join(self.cfg.subreddits)}/top/.rss?t=day&limit={LIMIT}"
+        try:
+            parsed = feedparser.parse(self._fetch(url))
+        except Exception:
+            log.exception("reddit feed failed")
+            return []
+        return [
+            Item(
+                id=item_id(entry.link),
+                source="reddit",
+                title=strip_html(entry.title),
+                url=entry.link,
+                text=clip(strip_html(entry.get("summary", ""))),
+                published_at=struct_to_dt(entry.get("published_parsed") or entry.get("updated_parsed"), now),
+            )
+            for entry in parsed.entries
+        ]

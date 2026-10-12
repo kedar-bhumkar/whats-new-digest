@@ -97,7 +97,7 @@ def test_collector_http_error_does_not_raise_through_collect_all():
     assert items == []
 
 
-def test_reddit_retries_once_on_429_and_spaces_requests():
+def test_reddit_retries_once_on_429():
     calls = {"n": 0}
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -112,9 +112,22 @@ def test_reddit_retries_once_on_429_and_spaces_requests():
     items = RedditCollector(c, client, sleep=sleeps.append).collect()
     assert items  # recovered after the 429
     assert 7 in sleeps  # honored Retry-After
-    assert len([s for s in sleeps if s > 0]) >= len(c.subreddits)  # spaced between subs
 
 
 def test_reddit_gives_up_after_one_retry():
     client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(429)))
     assert RedditCollector(cfg(), client, sleep=lambda s: None).collect() == []
+
+
+def test_reddit_uses_a_single_multireddit_request():
+    urls = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        urls.append(str(request.url))
+        return httpx.Response(200, content=(FIX / "reddit.xml").read_bytes())
+
+    c = cfg()
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    RedditCollector(c, client, sleep=lambda s: None).collect()
+    assert len(urls) == 1  # Reddit 429s a second request from the same client
+    assert "r/" + "+".join(c.subreddits) + "/top/.rss" in urls[0]
