@@ -174,3 +174,15 @@ def test_gather_applies_freshness_and_dedupe_for_every_caller():
     done = make_item(3)
     out = gather(CFG, [FakeCollector([fresh, old, dup, done])], {done.id}, NOW)
     assert [i.title for i in out] == ["Story 1"]
+
+
+def test_on_scored_receives_every_ranked_item_even_when_nothing_is_selected(tmp_path):
+    def weak(items, profile):
+        return [Scored(i, "other", {d: 0.05 for d in ("significance", "relevance", "actionability", "novelty")}, 0.0, 0.9) for i in items]
+
+    captured = []
+    digest, site = dirs(tmp_path)
+    out = run(CFG, "p", [FakeCollector([make_item(1), make_item(2)])], weak, summarizer, set(), DAY, digest, site, now=NOW, on_scored=captured.extend)
+    assert out == []  # nothing above the floor, nothing published
+    assert sorted(s.item.title for s in captured) == ["Story 1", "Story 2"]  # but kept for debugging
+    assert all(s.rank > 0 for s in captured)

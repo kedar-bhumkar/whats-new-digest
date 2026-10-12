@@ -55,10 +55,11 @@ def clip(text: str, limit: int = MAX_TEXT) -> str:
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
-def struct_to_dt(parsed: time.struct_time | None, fallback: datetime) -> datetime:
-    if not parsed:
-        return fallback
-    return datetime(*parsed[:6], tzinfo=timezone.utc)
+def entry_datetime(entry) -> datetime | None:
+    """A feed entry's own date, or None. Undated entries must be skipped, not stamped "now":
+    a fresh timestamp every day would let stale items bypass the freshness filter forever."""
+    parsed: time.struct_time | None = entry.get("published_parsed") or entry.get("updated_parsed")
+    return datetime(*parsed[:6], tzinfo=timezone.utc) if parsed else None
 
 
 def get(client: httpx.Client, url: str, **kwargs) -> httpx.Response:

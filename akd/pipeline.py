@@ -61,6 +61,7 @@ def run(
     digest_dir: Path,
     site_dir: Path,
     now: datetime | None = None,
+    on_scored: Callable[[list[Scored]], None] | None = None,
 ) -> list[Selected]:
     now = now or datetime.now(timezone.utc)
     items = gather(cfg, collectors, published_ids, now)
@@ -68,6 +69,8 @@ def run(
     if not items:
         return []
     ranked = rank_all(scorer(items, profile), cfg)
+    if on_scored:
+        on_scored(ranked)  # every scored item, selected or not, kept for debugging (spec 3.4)
     selected = select(ranked, cfg)
     if not selected:
         log.info("nothing above the rank floor; publishing nothing")

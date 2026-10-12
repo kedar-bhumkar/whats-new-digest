@@ -3,12 +3,11 @@ from __future__ import annotations
 import logging
 import time
 from collections.abc import Callable
-from datetime import datetime, timezone
 
 import feedparser
 import httpx
 
-from akd.collectors.base import clip, get, strip_html, struct_to_dt
+from akd.collectors.base import clip, entry_datetime, get, strip_html
 from akd.config import Config
 from akd.dedupe import item_id
 from akd.models import Item
@@ -49,7 +48,6 @@ class RedditCollector:
     def collect(self) -> list[Item]:
         if not self.cfg.subreddits:
             return []
-        now = datetime.now(timezone.utc)
         # One multireddit request: Reddit 429s a second request from the same client.
         url = f"https://www.reddit.com/r/{'+'.join(self.cfg.subreddits)}/top/.rss?t=day&limit={LIMIT}"
         try:
@@ -64,7 +62,8 @@ class RedditCollector:
                 title=strip_html(entry.title),
                 url=entry.link,
                 text=clip(strip_html(entry.get("summary", ""))),
-                published_at=struct_to_dt(entry.get("published_parsed") or entry.get("updated_parsed"), now),
+                published_at=published,
             )
             for entry in parsed.entries
+            if (published := entry_datetime(entry)) is not None
         ]

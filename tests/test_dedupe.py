@@ -41,3 +41,12 @@ def test_dedupe_skips_already_published():
 
 def test_dedupe_empty_list_returns_empty():
     assert dedupe([], set()) == []
+
+
+def test_canonical_url_ignores_scheme_and_query_order():
+    assert canonical_url("http://x.com/a?b=1&c=2") == canonical_url("https://x.com/a?c=2&b=1")
+
+
+def test_dedupe_collapses_scheme_and_query_order_variants():
+    items = [make("http://x.com/a?b=1&c=2"), make("https://x.com/a?c=2&b=1")]
+    assert len(dedupe(items, set())) == 1

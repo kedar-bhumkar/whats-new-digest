@@ -116,6 +116,7 @@ def cmd_run(args) -> int:
             day,
             digest_dir,
             site_dir,
+            on_scored=lambda ranked: save_scored(ranked, args.out / "scored.json"),
         )
     print(f"published {len(selected)} items for {day} ({'dry-run -> ' + str(args.out) if args.dry_run else 'live'})")
     return 0

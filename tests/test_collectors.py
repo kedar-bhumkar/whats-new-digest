@@ -131,3 +131,25 @@ def test_reddit_uses_a_single_multireddit_request():
     RedditCollector(c, client, sleep=lambda s: None).collect()
     assert len(urls) == 1  # Reddit 429s a second request from the same client
     assert "r/" + "+".join(c.subreddits) + "/top/.rss" in urls[0]
+
+
+UNDATED_RSS = b"""<?xml version="1.0"?><rss version="2.0"><channel><title>t</title>
+<item><title>No date</title><link>https://e.com/nodate</link><description>x</description></item>
+<item><title>Dated</title><link>https://e.com/dated</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0000</pubDate></item>
+</channel></rss>"""
+
+UNDATED_ATOM = b"""<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title>t</title>
+<entry><title>No date</title><link href="https://www.reddit.com/r/x/comments/1/"/><id>1</id></entry>
+<entry><title>Dated</title><link href="https://www.reddit.com/r/x/comments/2/"/><id>2</id><updated>2026-10-12T10:00:00+00:00</updated></entry>
+</feed>"""
+
+
+def test_web_skips_undated_entries():
+    # An undated item can't be proven fresh; stamping it "now" would let stale items recirculate forever.
+    items = WebCollector(cfg(), client_for({"": UNDATED_RSS})).collect()
+    assert {i.title for i in items} == {"Dated"}
+
+
+def test_reddit_skips_undated_entries():
+    items = RedditCollector(cfg(), client_for({"reddit.com": UNDATED_ATOM}), sleep=lambda s: None).collect()
+    assert {i.title for i in items} == {"Dated"}

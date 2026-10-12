@@ -131,3 +131,17 @@ def test_rerun_same_day_does_not_duplicate(tmp_path):
     doc = json.loads((site / "public" / "whats-new" / "items.json").read_text(encoding="utf-8"))
     assert len(doc["days"]) == 1
     assert (digest / "whats-new.md").read_text(encoding="utf-8").count("(AKD)") == 1
+
+
+def test_unchanged_content_does_not_rewrite_outputs(tmp_path):
+    from datetime import timedelta
+
+    digest, site = tmp_path / "digest", tmp_path / "site"
+    digest.mkdir()
+    (digest / "whats-new.md").write_text(MD, encoding="utf-8", newline="")
+    write_outputs([sel(1)], DAY, digest, site, now=NOW)
+    items = site / "public" / "whats-new" / "items.json"
+    first_json, first_md = items.read_bytes(), (digest / "whats-new.md").read_bytes()
+    write_outputs([sel(1)], DAY, digest, site, now=NOW + timedelta(hours=3))
+    assert items.read_bytes() == first_json  # lastUpdated must not churn, or every rerun makes a commit
+    assert (digest / "whats-new.md").read_bytes() == first_md

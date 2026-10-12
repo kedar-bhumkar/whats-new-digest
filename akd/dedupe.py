@@ -27,7 +27,8 @@ def canonical_url(url: str) -> str:
         if k.lower() not in _TRACKING_KEYS and not k.lower().startswith(_TRACKING_PREFIXES)
     ]
     path = parts.path.rstrip("/")
-    return urlunsplit((parts.scheme.lower(), host, path, urlencode(query), ""))
+    scheme = "https" if parts.scheme.lower() in ("http", "https") else parts.scheme.lower()
+    return urlunsplit((scheme, host, path, urlencode(sorted(query)), ""))
 
 
 def item_id(url: str) -> str:

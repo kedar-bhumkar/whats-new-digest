@@ -93,6 +93,13 @@ def prepend_markdown(md: str, day: date, selected: list[Selected]) -> str:
     return out.replace("\n", "\r\n") if crlf else out
 
 
+def _write_if_changed(path: Path, data: bytes) -> None:
+    if path.exists() and path.read_bytes() == data:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+
+
 def write_outputs(
     selected: list[Selected],
     day: date,
@@ -111,13 +118,13 @@ def write_outputs(
     items_path = Path(site_dir) / ITEMS_RELPATH
     existing = json.loads(items_path.read_text(encoding="utf-8")) if items_path.exists() else {}
     doc = merge_day(existing, day, selected, window_days, now)
+    if existing and doc["days"] == existing.get("days"):
+        doc = existing  # same content: keep lastUpdated so a rerun makes no diff and no commit
     validate(doc)
 
     md_path = Path(digest_dir) / MD_NAME
     md = md_path.read_bytes().decode("utf-8") if md_path.exists() else MD_HEADER
     new_md = prepend_markdown(md, day, selected)
 
-    items_path.parent.mkdir(parents=True, exist_ok=True)
-    items_path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-    md_path.parent.mkdir(parents=True, exist_ok=True)
-    md_path.write_bytes(new_md.encode("utf-8"))
+    _write_if_changed(items_path, (json.dumps(doc, indent=1, ensure_ascii=False) + "\n").encode("utf-8"))
+    _write_if_changed(md_path, new_md.encode("utf-8"))

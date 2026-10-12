@@ -48,6 +48,7 @@ jobs:
         run: pytest -q
 
       - name: Run AKD
+        id: akd
         env:
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -59,24 +60,14 @@ jobs:
             python -m akd.cli run
           fi
 
-      - name: Upload dry-run output
-        if: env.DRY_RUN == 'true'
+      - name: Upload run output (scored.json keeps every scored item, published or not)
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: akd-dry-run
+          name: akd-run
           path: out/
+          retention-days: 14
           if-no-files-found: ignore
-
-      - name: Publish digest (this repo)
-        if: env.DRY_RUN != 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add whats-new.md
-          if git diff --cached --quiet; then echo "no digest change"; exit 0; fi
-          git commit -m "AKD digest $(date -u +%F)"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: Publish items.json (site repo)
         if: env.DRY_RUN != 'true'
@@ -89,3 +80,15 @@ jobs:
           git commit -m "What's New $(date -u +%F)"
           git pull --rebase
           git push
+
+      - name: Publish digest (this repo)
+        # Runs even if the site push failed, but only when AKD itself succeeded.
+        if: ${{ always() && steps.akd.outcome == 'success' && env.DRY_RUN != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add whats-new.md
+          if git diff --cached --quiet; then echo "no digest change"; exit 0; fi
+          git commit -m "AKD digest $(date -u +%F)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

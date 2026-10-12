@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
 
 import feedparser
 import httpx
 
-from akd.collectors.base import clip, get, strip_html, struct_to_dt
+from akd.collectors.base import clip, entry_datetime, get, strip_html
 from akd.config import Config
 from akd.dedupe import item_id
 from akd.models import Item
@@ -25,7 +24,6 @@ class WebCollector:
 
     def collect(self) -> list[Item]:
         items: list[Item] = []
-        now = datetime.now(timezone.utc)
         for feed_url in self.cfg.feeds:
             try:
                 parsed = feedparser.parse(get(self.client, feed_url).content)
@@ -34,7 +32,8 @@ class WebCollector:
                 continue
             for entry in parsed.entries:
                 link = entry.get("link")
-                if not link:
+                published = entry_datetime(entry)
+                if not link or published is None:
                     continue
                 items.append(
                     Item(
@@ -43,7 +42,7 @@ class WebCollector:
                         title=strip_html(entry.get("title", "")),
                         url=link,
                         text=clip(strip_html(entry.get("summary", ""))),
-                        published_at=struct_to_dt(entry.get("published_parsed") or entry.get("updated_parsed"), now),
+                        published_at=published,
                     )
                 )
         return items
