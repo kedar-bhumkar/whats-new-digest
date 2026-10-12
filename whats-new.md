@@ -2,6 +2,22 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-12
+
+- **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release: an agent can write a workflow program that fans out many agents in phases and combines their results, run server-side in the background.
+  - Why it matters: Lets you hand a task too big for one conversation (e.g. reviewing hundreds of documents) to a hosted agent without writing your own orchestrator. Enable with beta header `managed-agents-2026-04-01` and `"multiagent": {"type": "multiagent_20261001", "workflows": {"type": "enabled"}}`; follow progress via `workflow_run.*` events.
+  - Link: https://platform.claude.com/docs/en/managed-agents/workflow-runs
+
+- **Claude Code v2.1.296** (AI/Claude tooling) - Released Oct 9.
+  - Why it matters: `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` pins all workflow agents to one model (cost control); `autoCompactWindow` in subagent frontmatter lets a subagent compact earlier; Read tool gains `allow_large`; MCP tool description/instruction limit raised from 2,048 to 4,096 chars; managed `PreToolUse` deny hooks with `"continue": false` no longer end the turn.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Sonnet 5.5 prompt-cache reads halved** (AI/Claude tooling) - Oct 7: cache reads now $0.10 per million tokens (was $0.20).
+  - Why it matters: Long-context agent loops and repeated-prefix workloads get cheaper with no code change; worth re-checking cost estimates for caching-heavy designs.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+No GitHub repos made the cut today: the trending ones I checked either use a non-OSI license (mksglu/context-mode is ELv2) or had anomalous star growth I could not vouch for.
+
 ## 2026-10-11
 
 - **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude tooling) - Launched Oct 7: 1M context, 128k max output, adaptive thinking.
