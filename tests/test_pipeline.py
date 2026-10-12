@@ -131,3 +131,32 @@ def test_rank_all_orders_and_format_tune_shows_top_and_bottom():
     assert "Story 1" in text and "Story 7" in text
     assert "Story 4" not in text
     assert "sig=" in text and "rel=" in text
+
+
+def test_filter_fresh_drops_old_items_and_keeps_recent_and_future():
+    from datetime import timedelta
+
+    from akd.pipeline import filter_fresh
+
+    def at(n, delta):
+        it = make_item(n)
+        return Item(it.id, it.source, it.title, it.url, it.text, NOW + delta)
+
+    items = [at(1, timedelta(hours=-5)), at(2, timedelta(days=-2, hours=-23)), at(3, timedelta(days=-3, hours=-1)), at(4, timedelta(days=-400)), at(5, timedelta(hours=2))]
+    kept = filter_fresh(items, NOW, max_age_days=3)
+    assert [i.title for i in kept] == ["Story 1", "Story 2", "Story 5"]
+
+
+def test_stale_items_never_reach_the_scorer(tmp_path):
+    from datetime import timedelta
+
+    old = make_item(1)
+    old = Item(old.id, old.source, old.title, old.url, old.text, NOW - timedelta(days=500))
+    seen = []
+
+    def spying(items, profile):
+        seen.extend(items)
+        return good_scorer(items, profile)
+
+    assert do_run(tmp_path, [FakeCollector([old, make_item(2)])], scorer=spying)
+    assert [i.title for i in seen] == ["Story 2"]

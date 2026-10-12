@@ -10,6 +10,7 @@ min_notable_rank: 0.35
 hype_penalty: 0.5
 low_confidence_threshold: 0.4
 window_days: 60
+max_age_days: 3  # items older than this are dropped before scoring (feeds can return whole archives)
 
 subreddits:
   - LocalLLaMA
@@ -18,9 +19,10 @@ subreddits:
   - programming
 
 feeds:
-  - https://www.anthropic.com/news/rss.xml
   - https://openai.com/news/rss.xml
-  - https://hnrss.org/newest?q=LLM+OR+Claude+OR+agents&points=100
+  - https://hnrss.org/newest?q=Claude&points=100
+  - https://hnrss.org/newest?q=LLM&points=150
+  - https://hnrss.org/newest?q=MCP&points=50
 
 github_topics:
   - llm

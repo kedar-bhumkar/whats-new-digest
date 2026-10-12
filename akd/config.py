@@ -17,6 +17,7 @@ class Config:
     hype_penalty: float
     low_confidence_threshold: float
     window_days: int
+    max_age_days: int
     subreddits: list[str]
     feeds: list[str]
     github_topics: list[str]
@@ -38,6 +39,7 @@ def load_config(path: Path) -> Config:
         hype_penalty=float(raw["hype_penalty"]),
         low_confidence_threshold=float(raw["low_confidence_threshold"]),
         window_days=int(raw["window_days"]),
+        max_age_days=int(raw.get("max_age_days", 3)),
         subreddits=list(raw.get("subreddits", [])),
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),

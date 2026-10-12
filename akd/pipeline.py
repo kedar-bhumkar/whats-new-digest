@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Callable
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from akd.collectors.base import Collector, collect_all
@@ -35,6 +35,12 @@ def published_ids_from(doc: dict, exclude_day: date) -> set[str]:
     return ids
 
 
+def filter_fresh(items: list[Item], now: datetime, max_age_days: int) -> list[Item]:
+    """Drop items older than the window. Some feeds return their whole archive."""
+    cutoff = now - timedelta(days=max_age_days)
+    return [i for i in items if i.published_at >= cutoff]
+
+
 def rank_all(scored: list[Scored], cfg: Config) -> list[Scored]:
     return rank(scored, cfg)
 
@@ -51,8 +57,9 @@ def run(
     site_dir: Path,
     now: datetime | None = None,
 ) -> list[Selected]:
-    items = dedupe(collect_all(collectors), published_ids)
-    log.info("%d new items after dedupe", len(items))
+    now = now or datetime.now(timezone.utc)
+    items = dedupe(filter_fresh(collect_all(collectors), now, cfg.max_age_days), published_ids)
+    log.info("%d new items after freshness filter and dedupe", len(items))
     if not items:
         return []
     ranked = rank_all(scorer(items, profile), cfg)

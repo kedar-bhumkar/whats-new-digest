@@ -50,7 +50,7 @@ def test_github_maps_search_and_releases():
 
 def test_reddit_maps_atom_feed():
     client = client_for({"reddit.com/r/": (FIX / "reddit.xml").read_bytes()})
-    items = RedditCollector(cfg(), client).collect()
+    items = RedditCollector(cfg(), client, sleep=lambda s: None).collect()
     assert items
     first = items[0]
     assert first.source == "reddit"
@@ -93,5 +93,28 @@ def test_collect_all_isolates_failures():
 
 def test_collector_http_error_does_not_raise_through_collect_all():
     client = client_for({})  # every request 404s
-    items = collect_all([RedditCollector(cfg(), client), WebCollector(cfg(), client)])
+    items = collect_all([RedditCollector(cfg(), client, sleep=lambda s: None), WebCollector(cfg(), client)])
     assert items == []
+
+
+def test_reddit_retries_once_on_429_and_spaces_requests():
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return httpx.Response(429, headers={"Retry-After": "7"})
+        return httpx.Response(200, content=(FIX / "reddit.xml").read_bytes())
+
+    sleeps = []
+    c = cfg()
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    items = RedditCollector(c, client, sleep=sleeps.append).collect()
+    assert items  # recovered after the 429
+    assert 7 in sleeps  # honored Retry-After
+    assert len([s for s in sleeps if s > 0]) >= len(c.subreddits)  # spaced between subs
+
+
+def test_reddit_gives_up_after_one_retry():
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(429)))
+    assert RedditCollector(cfg(), client, sleep=lambda s: None).collect() == []

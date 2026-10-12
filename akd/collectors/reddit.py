@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import time
+from collections.abc import Callable
 from datetime import datetime, timezone
 
 import feedparser
@@ -13,6 +15,10 @@ from akd.models import Item
 
 log = logging.getLogger("akd.collectors.reddit")
 
+REQUEST_GAP_SECONDS = 3.0
+DEFAULT_RETRY_WAIT = 10.0
+MAX_RETRY_WAIT = 30.0
+
 
 class RedditCollector:
     """Daily top posts per subreddit via the Atom feed.
@@ -24,17 +30,30 @@ class RedditCollector:
 
     name = "reddit"
 
-    def __init__(self, cfg: Config, client: httpx.Client) -> None:
+    def __init__(self, cfg: Config, client: httpx.Client, sleep: Callable[[float], None] = time.sleep) -> None:
         self.cfg = cfg
         self.client = client
+        self.sleep = sleep
+
+    def _fetch(self, url: str) -> bytes:
+        """Reddit 429s back-to-back requests: honor Retry-After once, then give up."""
+        try:
+            return get(self.client, url).content
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code != 429:
+                raise
+            self.sleep(min(float(e.response.headers.get("Retry-After", DEFAULT_RETRY_WAIT)), MAX_RETRY_WAIT))
+            return get(self.client, url).content
 
     def collect(self) -> list[Item]:
         items: list[Item] = []
         now = datetime.now(timezone.utc)
-        for sub in self.cfg.subreddits:
+        for i, sub in enumerate(self.cfg.subreddits):
+            if i:
+                self.sleep(REQUEST_GAP_SECONDS)
             url = f"https://www.reddit.com/r/{sub}/top/.rss?t=day&limit=15"
             try:
-                parsed = feedparser.parse(get(self.client, url).content)
+                parsed = feedparser.parse(self._fetch(url))
             except Exception:
                 log.exception("reddit feed failed for r/%s", sub)
                 continue

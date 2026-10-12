@@ -13,7 +13,7 @@ from akd.models import Item
 
 log = logging.getLogger("akd.collectors.github")
 API = "https://api.github.com"
-LOOKBACK_DAYS = 7
+LOOKBACK_DAYS = 3
 MIN_STARS = 50
 
 
