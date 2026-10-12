@@ -160,3 +160,17 @@ def test_stale_items_never_reach_the_scorer(tmp_path):
 
     assert do_run(tmp_path, [FakeCollector([old, make_item(2)])], scorer=spying)
     assert [i.title for i in seen] == ["Story 2"]
+
+
+def test_gather_applies_freshness_and_dedupe_for_every_caller():
+    from datetime import timedelta
+
+    from akd.pipeline import gather
+
+    fresh = make_item(1)
+    old = make_item(2)
+    old = Item(old.id, old.source, old.title, old.url, old.text, NOW - timedelta(days=400))
+    dup = Item("other", "web", "Dup", fresh.url + "/?utm_source=x", "t", NOW)
+    done = make_item(3)
+    out = gather(CFG, [FakeCollector([fresh, old, dup, done])], {done.id}, NOW)
+    assert [i.title for i in out] == ["Story 1"]

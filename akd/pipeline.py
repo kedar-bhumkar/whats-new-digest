@@ -41,6 +41,11 @@ def filter_fresh(items: list[Item], now: datetime, max_age_days: int) -> list[It
     return [i for i in items if i.published_at >= cutoff]
 
 
+def gather(cfg: Config, collectors: list[Collector], published_ids: set[str], now: datetime) -> list[Item]:
+    """Collect, drop stale items, dedupe. Shared by `run` and `tune` so both see the same input."""
+    return dedupe(filter_fresh(collect_all(collectors), now, cfg.max_age_days), published_ids)
+
+
 def rank_all(scored: list[Scored], cfg: Config) -> list[Scored]:
     return rank(scored, cfg)
 
@@ -58,7 +63,7 @@ def run(
     now: datetime | None = None,
 ) -> list[Selected]:
     now = now or datetime.now(timezone.utc)
-    items = dedupe(filter_fresh(collect_all(collectors), now, cfg.max_age_days), published_ids)
+    items = gather(cfg, collectors, published_ids, now)
     log.info("%d new items after freshness filter and dedupe", len(items))
     if not items:
         return []

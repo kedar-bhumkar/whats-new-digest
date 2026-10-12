@@ -13,14 +13,12 @@ from pathlib import Path
 
 import httpx
 
-from akd.collectors.base import collect_all
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
 from akd.config import load_config, load_profile
-from akd.dedupe import dedupe
 from akd.models import Item, Scored
-from akd.pipeline import format_tune, published_ids_from, rank_all, run
+from akd.pipeline import format_tune, gather, published_ids_from, rank_all, run
 from akd.publish import ITEMS_RELPATH, MD_NAME
 from akd.score import score_items_async
 from akd.summarize import summarize
@@ -130,7 +128,7 @@ def cmd_tune(args) -> int:
     else:
         profile = load_profile(ROOT / "profile.yaml")
         with httpx.Client() as http:
-            items = dedupe(collect_all(_collectors(cfg, http)), set())
+            items = gather(cfg, _collectors(cfg, http), set(), datetime.now(timezone.utc))
         scored = _score_sync(items, profile, cfg.low_confidence_threshold)
         save_scored(scored, args.cache)
     print(format_tune(rank_all(scored, cfg), args.top))
