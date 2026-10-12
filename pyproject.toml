@@ -21,3 +21,6 @@ include = ["akd*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.setuptools.package-data]
+akd = ["schema/*.json"]
