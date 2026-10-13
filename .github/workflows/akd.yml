@@ -1,8 +1,6 @@
 name: AKD
 
 on:
-  push:
-    branches: [feat/akd]   # TEMPORARY: branch testing, always a dry run. Remove before merging.
   schedule:
     - cron: "30 13 * * *"   # daily, 13:30 UTC (runs only from the default branch)
   workflow_dispatch:
