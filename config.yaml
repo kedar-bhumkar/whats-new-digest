@@ -50,7 +50,7 @@ youtube_channels:
 
 # X (paid, via Apify): off unless the APIFY_TOKEN secret is set and handles/searches are listed.
 x:
-  handles: [AnthropicAI]
+  handles: [AnthropicAI, ClaudeDevs, RoundtableSpace, emollick]
   searches: []             # e.g. ["claude code", "MCP server"]
   min_likes: 50            # drops low-engagement noise
   max_items: 150           # hard cap per run; this bounds the Apify bill
