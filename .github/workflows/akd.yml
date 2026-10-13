@@ -52,6 +52,7 @@ jobs:
         env:
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}   # optional: X stays off while unset
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           if [ "$DRY_RUN" = "true" ]; then

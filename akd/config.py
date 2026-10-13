@@ -23,6 +23,10 @@ class Config:
     github_topics: list[str]
     github_watchlist: list[str]
     youtube_channels: list[dict] = field(default_factory=list)
+    x_handles: list[str] = field(default_factory=list)
+    x_searches: list[str] = field(default_factory=list)
+    x_min_likes: int = 50
+    x_max_items: int = 150
 
 
 def load_config(path: Path) -> Config:
@@ -32,6 +36,7 @@ def load_config(path: Path) -> Config:
         raise ValueError(f"weights must cover exactly {DIMENSIONS}")
     if abs(sum(weights.values()) - 1.0) > 1e-9:
         raise ValueError("weights must sum to 1.0")
+    x = raw.get("x") or {}
     return Config(
         weights=weights,
         max_picks=int(raw["max_picks"]),
@@ -45,6 +50,10 @@ def load_config(path: Path) -> Config:
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
+        x_handles=[str(h).lstrip("@") for h in x.get("handles") or []],
+        x_searches=[str(t) for t in x.get("searches") or []],
+        x_min_likes=int(x.get("min_likes", 50)),
+        x_max_items=int(x.get("max_items", 150)),
         youtube_channels=[{"id": str(c["id"]), "name": str(c.get("name", c["id"]))} for c in raw.get("youtube_channels") or []],
     )
 

@@ -6,6 +6,7 @@ import argparse
 import asyncio
 import json
 import logging
+import os
 import shutil
 import sys
 from datetime import date, datetime, timezone
@@ -16,6 +17,7 @@ import httpx
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
+from akd.collectors.x import XCollector
 from akd.collectors.youtube import YouTubeCollector
 from akd.config import load_config, load_profile
 from akd.models import Item, Scored
@@ -83,6 +85,7 @@ def _collectors(cfg, client: httpx.Client):
         RedditCollector(cfg, client),
         WebCollector(cfg, client),
         YouTubeCollector(cfg, client),
+        XCollector(cfg, client, token=os.environ.get("APIFY_TOKEN")),
     ]
 
 

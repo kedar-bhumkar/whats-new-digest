@@ -45,3 +45,10 @@ youtube_channels:
   - {id: UCPix8N6PMRI4KzgyjuZeF0g, name: Fahd Mirza}
   - {id: UC_a85mUHqsy5j0CYCgLnkEQ, name: DIY Smart Code}
   - {id: UCDq7SjbgRKty5TgGafW8Clg, name: Prompt Engineering}
+
+# X (paid, via Apify): off unless the APIFY_TOKEN secret is set and handles/searches are listed.
+x:
+  handles: [AnthropicAI]
+  searches: []             # e.g. ["claude code", "MCP server"]
+  min_likes: 50            # drops low-engagement noise
+  max_items: 150           # hard cap per run; this bounds the Apify bill

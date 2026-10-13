@@ -7,6 +7,7 @@ from akd.collectors.base import Collector, collect_all, strip_html
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
+from akd.collectors.x import XCollector
 from akd.collectors.youtube import YouTubeCollector
 from akd.config import load_config
 from akd.models import Item
@@ -225,3 +226,56 @@ def test_youtube_skips_undated_entries():
 </feed>"""
     items = YouTubeCollector(yt_cfg("UCa"), client_for({"": undated}), sleep=lambda s: None).collect()
     assert {i.title for i in items} == {"Dated"}
+
+
+def x_cfg(handles=("AnthropicAI",), searches=()):
+    from dataclasses import replace
+
+    return replace(cfg(), x_handles=list(handles), x_searches=list(searches), x_min_likes=50, x_max_items=150)
+
+
+def x_client(captured: list, body: bytes | None = None, status: int = 200) -> httpx.Client:
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured.append(request)
+        return httpx.Response(status, content=body if body is not None else (FIX / "x.json").read_bytes())
+
+    return httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def test_x_maps_posts_and_skips_retweets_replies_undated_and_placeholders():
+    items = XCollector(x_cfg(), x_client([]), token="tok").collect()
+    assert [i.url for i in items] == ["https://x.com/AnthropicAI/status/1845000000000000001"]
+    post = items[0]
+    assert post.source == "x"
+    assert post.title.startswith("Claude Code now supports background tasks")
+    assert "@AnthropicAI" in post.text and "4200" in post.text
+    assert post.published_at == datetime(2026, 10, 12, 10, 0, tzinfo=timezone.utc)
+
+
+def test_x_sends_confirmed_actor_inputs_and_keeps_token_out_of_the_url():
+    captured = []
+    XCollector(x_cfg(searches=("claude code",)), x_client(captured), token="s3cret").collect()
+    req = captured[0]
+    assert "apidojo~tweet-scraper" in str(req.url) and "run-sync-get-dataset-items" in str(req.url)
+    assert "s3cret" not in str(req.url)
+    assert req.headers["Authorization"] == "Bearer s3cret"
+    import json
+
+    body = json.loads(req.content)
+    assert body["twitterHandles"] == ["AnthropicAI"]
+    assert body["searchTerms"] and "claude code" in body["searchTerms"][0]
+    assert body["maxItems"] == 150 and body["minimumFavorites"] == 50 and body["sort"] == "Latest"
+
+
+def test_x_is_off_without_token_or_without_targets():
+    captured = []
+    assert XCollector(x_cfg(), x_client(captured), token=None).collect() == []
+    assert XCollector(x_cfg(handles=(), searches=()), x_client(captured), token="tok").collect() == []
+    assert captured == []
+
+
+def test_x_http_error_returns_nothing_and_never_logs_the_token(caplog):
+    with caplog.at_level("WARNING"):
+        items = XCollector(x_cfg(), x_client([], body=b"{}", status=402), token="s3cret").collect()
+    assert items == []
+    assert "s3cret" not in caplog.text
