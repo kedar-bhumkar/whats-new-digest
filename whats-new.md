@@ -2,6 +2,53 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-13 (AKD)
+
+- **modelcontextprotocol/servers v1.0.0** (Top pick; agents_mcp_skills; github) - This is the first 1.0.0 release of the official MCP reference servers (filesystem, memory, fetch, git, time), so pin versions carefully since the changelog and tooling churn may affect existing MCP c…
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v1.0.0
+
+- **LiquidAI/LFM2.5-24B-A2B** (Top pick; model_release; reddit) - A 24B open-weight MoE with only 2B active parameters that claims near-Qwen3.6-35B agentic performance and runs on-device (184 tok/s on an M5 Max), relevant for local agent builds and tool-use testing.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x52kco/liquidailfm2524ba2b/
+
+- **Google is BACK! (Gemini 4 Argon - Fully Tested!)** (Top pick; model_release; youtube) - Gemini 4 Argon adds a 1M-token output mode with a continuation token, plus guidance on reasoning-effort levels and prompting for long outputs, relevant to anyone calling the Gemini API.
+  - Link: https://www.youtube.com/watch?v=yksrd5uNxcw
+
+- **Meta’s Muse Wonder - Fable Class Model** (Top pick; model_release; youtube) - Meta's Muse Wonder models target general personal-assistant tasks with Active Memory and Focus, and are available via Meta's Model API, so it's a new API option to evaluate against Claude for agent w…
+  - Link: https://www.youtube.com/shorts/JqeqEqh_KeM
+
+- **Google's GPT-3 Moment for Databases & Spreadsheets (TabFM)** (Top pick; model_release; youtube) - TabFM is a zero-shot tabular foundation model with open weights and code on GitHub and Hugging Face, so it can be tried on existing spreadsheets or database tables without any training.
+  - Link: https://www.youtube.com/watch?v=5YJGDElbCDY
+
+- **Save on Claude Code subagent costs #ClaudeCode #Coding #Productivity** (Notable; dev_tooling; youtube) - Claude Code 2.1.198 changed the built-in Explore subagent from Haiku to inherit the main session model (capped at Opus), so codebase searches cost more unless you override it with a project subagent…
+  - Link: https://www.youtube.com/shorts/nIMH-vnu6KI
+
+- **I Believe Everything My Agents Tell Me: Three Levels of Review — Corey Gallon, Rexmore** (Notable; agents_mcp_skills; youtube) - A concrete three-level agent review workflow, released as agent skills, that addresses agents overstating completed work, relevant to agentic coding and agent reliability.
+  - Link: https://www.youtube.com/watch?v=dYh7TQkuYFE
+
+- **Claude Code from your phone with cloud sessions** (Notable; dev_tooling; youtube) - Claude Code cloud sessions run in a remote VM you can start from your phone and run in parallel, available on Pro, Max, and Team plans with no separate compute charge.
+  - Link: https://www.youtube.com/watch?v=-OH1y7CjIew
+
+- **Muse Wonder Full: Meta Knocks Strongly on Frontier AI Door** (Notable; model_release; youtube) - Meta's Muse Wonder is a new frontier model claimed to lead on agentic benchmarks like DeepSWE, which matters if you're evaluating coding-agent backends, though this video is a single creator's hands-…
+  - Link: https://www.youtube.com/watch?v=Be0fUeLhYYY
+
+- **Is this the future of multiplayer coding? #zed #coding #ai** (Notable; dev_tooling; youtube) - Zed's team turned off PRs on Delta's own repo and now builds it inside Delta with shared agent threads, so it's a concrete test of a multiplayer agent-coding workflow.
+  - Link: https://www.youtube.com/shorts/P26fUPcT3-g
+
+- **Your GPU Neighbor Can Hear Your Model — Branislav Brzak, Stealthium** (Notable; research; youtube) - A timing side channel on shared H100 GPUs can leak workload type (code, prose, JSON) and model depth to a neighboring tenant, so multi-tenant inference deployments need placement and isolation review.
+  - Link: https://www.youtube.com/watch?v=SacJfmp33vM
+
+- **Tencent open-sourced Agent Memory and it runs 100% locally on SQLite** (Notable; repo_library; reddit) - Tencent's open-source agent memory layer runs fully local on SQLite, giving agent builders a no-server persistence option to test against their existing setup this week.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x50rgo/tencent_opensourced_agent_memory_and_it_runs_100/
+
+- **Code review is no longer the bottleneck** (Notable; dev_tooling; youtube) - Codex now handles PR review, team guidelines, and drafting comments across repos, with GitHub review generally available and GitLab in preview.
+  - Link: https://www.youtube.com/watch?v=IZXv6a78NDw
+
+- **Why you need to update your Git repos now! #git #devops** (Notable; dev_tooling; youtube) - Git 3.0 (planned April 2027) makes SHA-256 the default for new repos, so commit IDs grow from 40 to 64 characters and mixed-format fetches and submodules will break.
+  - Link: https://www.youtube.com/shorts/SgJr_dfuf9Y
+
+- **Your Agent Is a Lethal Trifecta (And What to Do About It) — Kim Maida, Keycard** (Notable; agents_mcp_skills; youtube) - Relevant to agent security: it shows how OAuth token exchange and short-lived, task-scoped credentials can stop an agent with standing admin keys from taking destructive actions through MCP servers.
+  - Link: https://www.youtube.com/watch?v=ws9XcGGPBDk
+
 ## 2026-10-13
 
 - **Claude Haiku 5.5** (AI/Claude tooling) - Oct 7: `claude-haiku-5-5` launched for high-volume, latency-sensitive work; 1M-token context, 128k max output, adaptive thinking with the effort parameter.
