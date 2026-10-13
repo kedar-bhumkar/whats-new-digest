@@ -391,3 +391,25 @@ def test_x_logs_rows_per_author(caplog):
         XCollector(x_cfg(), x_client([]), token="tok").collect()
     assert "'AnthropicAI': 2" in caplog.text
 
+def test_youtube_skips_obvious_shorts():
+    feed = b"""<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title>c</title>
+<entry><title>Long video</title><link href="https://www.youtube.com/watch?v=v1"/><id>v1</id><published>2026-10-12T10:00:00+00:00</published></entry>
+<entry><title>A short</title><link href="https://www.youtube.com/shorts/s1"/><id>s1</id><published>2026-10-12T10:00:00+00:00</published></entry>
+<entry><title>Quick tip #Shorts</title><link href="https://www.youtube.com/watch?v=s2"/><id>s2</id><published>2026-10-12T10:00:00+00:00</published></entry>
+</feed>"""
+    items = YouTubeCollector(yt_cfg("UCa"), client_for({"": feed}), sleep=lambda s: None).collect()
+    assert {i.title for i in items} == {"Long video"}
+
+
+def test_youtube_apify_skips_obvious_shorts():
+    from akd.collectors.youtube import is_short
+
+    assert is_short("https://www.youtube.com/shorts/abc", "x")
+    assert is_short("https://www.youtube.com/watch?v=abc", "Tip #shorts")
+    assert not is_short("https://www.youtube.com/watch?v=abc", "A normal video about shorts of the year")
+
+
+def test_shipped_config_caps_youtube_picks():
+    caps = load_config(ROOT / "config.yaml").per_source_pick_cap
+    assert caps.get("youtube") == 2 and caps.get("reddit") == 2
+

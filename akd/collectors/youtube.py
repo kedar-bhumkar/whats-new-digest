@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import time
 from collections import Counter
 from collections.abc import Callable
@@ -24,6 +25,11 @@ YOUTUBE_RETRY_STATUSES = frozenset({404, 429, 500, 502, 503, 504})
 APIFY_ACTOR = "apidojo~youtube-scraper"
 APIFY_MIN_PER_CHANNEL = 10  # the actor fetches at least 10 videos per start URL
 DAY_FORMATS = ("%b %d, %Y", "%B %d, %Y")  # the actor reports e.g. "Jan 30, 2024": a day, with no time
+
+
+def is_short(url: str, title: str) -> bool:
+    """Obvious Shorts only: a /shorts/ link or a #shorts tag. The feed carries no duration, so the rest slip through."""
+    return "/shorts/" in url or re.search(r"#shorts\b", title, re.IGNORECASE) is not None
 
 
 def _day(raw) -> datetime | None:
@@ -77,7 +83,7 @@ class YouTubeCollector:
             for entry in parsed.entries:
                 link = entry.get("link")
                 published = entry_datetime(entry)
-                if not link or published is None:
+                if not link or published is None or is_short(link, entry.get("title", "")):
                     continue
                 description = clip(strip_html(entry.get("summary", "")))
                 items.append(
@@ -118,7 +124,7 @@ class YouTubeCollector:
         undated = 0
         for row in rows:
             url = row.get("url")
-            if not url or row.get("type") not in (None, "video"):
+            if not url or row.get("type") not in (None, "video") or is_short(url, row.get("title", "")):
                 continue
             published = _day(row.get("publishDate") or row.get("uploadDate"))
             if published is None:

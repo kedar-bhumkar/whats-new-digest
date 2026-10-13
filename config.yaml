@@ -7,6 +7,7 @@ weights:
 max_picks: 5
 per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
   reddit: 2
+  youtube: 2
 max_notable: 10
 min_notable_rank: 0.35
 hype_penalty: 0.5
