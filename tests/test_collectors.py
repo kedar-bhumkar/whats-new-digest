@@ -379,3 +379,15 @@ def test_youtube_apify_failure_returns_nothing_and_never_logs_the_token(caplog):
             yt_cfg("UCa"), yt_apify_client([], status=402), sleep=lambda s: None, token="s3cret"
         ).collect()
     assert items == [] and "s3cret" not in caplog.text
+
+def test_youtube_apify_logs_rows_per_channel(caplog):
+    with caplog.at_level("INFO", logger="akd.collectors.youtube"):
+        YouTubeCollector(yt_cfg("UCa"), yt_apify_client([]), sleep=lambda s: None, token="tok").collect()
+    assert "returned 2 rows: {'Chan UCa': 2}" in caplog.text
+
+
+def test_x_logs_rows_per_author(caplog):
+    with caplog.at_level("INFO", logger="akd.collectors.x"):
+        XCollector(x_cfg(), x_client([]), token="tok").collect()
+    assert "'AnthropicAI': 2" in caplog.text
+

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import time
+from collections import Counter
 from collections.abc import Callable
 from datetime import datetime, timezone
 
@@ -108,6 +109,11 @@ class YouTubeCollector:
         except (httpx.HTTPError, ValueError) as exc:
             log.warning("YouTube Apify fallback failed: %s", exc)  # the token is in a header, not in this text
             return []
+        per_channel = Counter(
+            names.get((r.get("channel") or {}).get("id")) or (r.get("channel") or {}).get("name") or "unknown"
+            for r in rows
+        )
+        log.info("YouTube Apify returned %d rows: %s", len(rows), dict(per_channel))
         items: list[Item] = []
         undated = 0
         for row in rows:

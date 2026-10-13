@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 import httpx
@@ -62,6 +63,8 @@ class XCollector:
         except (httpx.HTTPError, ValueError) as exc:
             log.warning("X fetch failed: %s", exc)  # the exception text never contains the token (it is in a header)
             return []
+        per_author = Counter((r.get("author") or {}).get("userName", "unknown") for r in rows if r.get("type") == "tweet")
+        log.info("X returned %d rows: %s", len(rows), dict(per_author))
         items: list[Item] = []
         for row in rows:
             if row.get("type") != "tweet" or row.get("isRetweet") or row.get("isReply"):
