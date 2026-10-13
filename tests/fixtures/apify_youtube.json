@@ -1,0 +1,22 @@
+[
+  {
+    "type": "video",
+    "id": "abc123XYZ01",
+    "url": "https://www.youtube.com/watch?v=abc123XYZ01",
+    "title": "Claude Code: a deep dive into hooks",
+    "description": "We walk through hooks, skills and subagents in Claude Code.",
+    "publishDate": "Oct 12, 2026",
+    "uploadDate": "Oct 12, 2026",
+    "views": 15000,
+    "channel": {"id": "UCa", "name": "Claude Official", "url": "https://www.youtube.com/channel/UCa"}
+  },
+  {
+    "type": "video",
+    "id": "def456XYZ02",
+    "url": "https://www.youtube.com/watch?v=def456XYZ02",
+    "title": "Video with an unparseable date",
+    "description": "Should be skipped.",
+    "publishDate": "3 days ago-ish",
+    "channel": {"id": "UCa", "name": "Claude Official"}
+  }
+]

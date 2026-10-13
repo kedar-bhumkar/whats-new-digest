@@ -312,3 +312,104 @@ def test_web_does_not_retry_a_404():
     client = httpx.Client(transport=httpx.MockTransport(handler))
     assert WebCollector(one_feed, client, sleep=lambda s: None).collect() == []
     assert calls["n"] == 1
+
+
+def yt_apify_client(captured: list, rss_ok_for=(), status: int = 200):
+    """RSS GETs 404 unless the channel is in rss_ok_for; Apify POSTs return the recorded dataset."""
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured.append(request)
+        if request.method == "POST":
+            return httpx.Response(status, content=(FIX / "apify_youtube.json").read_bytes())
+        if any(ch in str(request.url) for ch in rss_ok_for):
+            return httpx.Response(200, content=(FIX / "youtube.xml").read_bytes())
+        return httpx.Response(404)
+
+    return httpx.Client(transport=httpx.MockTransport(handler))
+
+
+def test_youtube_falls_back_to_apify_when_the_feed_is_down():
+    captured = []
+    items = YouTubeCollector(yt_cfg("UCa"), yt_apify_client(captured), sleep=lambda s: None, token="tok").collect()
+    posts = [r for r in captured if r.method == "POST"]
+    assert len(posts) == 1
+    assert "apidojo~youtube-scraper" in str(posts[0].url) and "run-sync-get-dataset-items" in str(posts[0].url)
+    assert posts[0].headers["Authorization"] == "Bearer tok" and "tok" not in str(posts[0].url)
+    import json
+
+    body = json.loads(posts[0].content)
+    assert body["startUrls"] == ["https://www.youtube.com/channel/UCa"]
+    assert body["includeShorts"] is False and body["maxItems"] == 10
+    [video] = items  # the unparseable-date row is skipped
+    assert video.source == "youtube" and video.url.endswith("abc123XYZ01")
+    assert video.title == "Claude Code: a deep dive into hooks"
+    assert "Chan UCa" in video.text and "hooks, skills and subagents" in video.text
+    assert video.published_at == datetime(2026, 10, 12, tzinfo=timezone.utc)
+
+
+def test_youtube_does_not_call_apify_when_the_feed_works():
+    captured = []
+    client = yt_apify_client(captured, rss_ok_for=("UCa",))
+    items = YouTubeCollector(yt_cfg("UCa"), client, sleep=lambda s: None, token="tok").collect()
+    assert items and not [r for r in captured if r.method == "POST"]
+
+
+def test_youtube_batches_all_failed_channels_into_one_apify_run():
+    captured = []
+    client = yt_apify_client(captured, rss_ok_for=("UCok",))
+    YouTubeCollector(yt_cfg("UCa", "UCok", "UCb"), client, sleep=lambda s: None, token="tok").collect()
+    posts = [r for r in captured if r.method == "POST"]
+    assert len(posts) == 1
+    import json
+
+    body = json.loads(posts[0].content)
+    assert body["startUrls"] == ["https://www.youtube.com/channel/UCa", "https://www.youtube.com/channel/UCb"]
+    assert body["maxItems"] == 20  # 10 per failed channel
+
+
+def test_youtube_without_a_token_never_calls_apify():
+    captured = []
+    items = YouTubeCollector(yt_cfg("UCa"), yt_apify_client(captured), sleep=lambda s: None, token=None).collect()
+    assert items == [] and not [r for r in captured if r.method == "POST"]
+
+
+def test_youtube_apify_failure_returns_nothing_and_never_logs_the_token(caplog):
+    with caplog.at_level("WARNING"):
+        items = YouTubeCollector(
+            yt_cfg("UCa"), yt_apify_client([], status=402), sleep=lambda s: None, token="s3cret"
+        ).collect()
+    assert items == [] and "s3cret" not in caplog.text
+
+def test_youtube_apify_logs_rows_per_channel(caplog):
+    with caplog.at_level("INFO", logger="akd.collectors.youtube"):
+        YouTubeCollector(yt_cfg("UCa"), yt_apify_client([]), sleep=lambda s: None, token="tok").collect()
+    assert "returned 2 rows: {'Chan UCa': 2}" in caplog.text
+
+
+def test_x_logs_rows_per_author(caplog):
+    with caplog.at_level("INFO", logger="akd.collectors.x"):
+        XCollector(x_cfg(), x_client([]), token="tok").collect()
+    assert "'AnthropicAI': 2" in caplog.text
+
+def test_youtube_skips_obvious_shorts():
+    feed = b"""<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title>c</title>
+<entry><title>Long video</title><link href="https://www.youtube.com/watch?v=v1"/><id>v1</id><published>2026-10-12T10:00:00+00:00</published></entry>
+<entry><title>A short</title><link href="https://www.youtube.com/shorts/s1"/><id>s1</id><published>2026-10-12T10:00:00+00:00</published></entry>
+<entry><title>Quick tip #Shorts</title><link href="https://www.youtube.com/watch?v=s2"/><id>s2</id><published>2026-10-12T10:00:00+00:00</published></entry>
+</feed>"""
+    items = YouTubeCollector(yt_cfg("UCa"), client_for({"": feed}), sleep=lambda s: None).collect()
+    assert {i.title for i in items} == {"Long video"}
+
+
+def test_youtube_apify_skips_obvious_shorts():
+    from akd.collectors.youtube import is_short
+
+    assert is_short("https://www.youtube.com/shorts/abc", "x")
+    assert is_short("https://www.youtube.com/watch?v=abc", "Tip #shorts")
+    assert not is_short("https://www.youtube.com/watch?v=abc", "A normal video about shorts of the year")
+
+
+def test_shipped_config_caps_youtube_picks():
+    caps = load_config(ROOT / "config.yaml").per_source_pick_cap
+    assert caps.get("youtube") == 2 and caps.get("reddit") == 2
+

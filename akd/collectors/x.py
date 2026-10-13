@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import logging
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 import httpx
 
-from akd.collectors.base import USER_AGENT, clip, strip_html
+from akd.collectors.base import apify_items, clip, strip_html
 from akd.config import Config
 from akd.dedupe import item_id
 from akd.models import Item
@@ -13,7 +14,6 @@ from akd.models import Item
 log = logging.getLogger("akd.collectors.x")
 
 ACTOR = "apidojo~tweet-scraper"
-ENDPOINT = f"https://api.apify.com/v2/acts/{ACTOR}/run-sync-get-dataset-items"
 TWITTER_TIME = "%a %b %d %H:%M:%S %z %Y"  # e.g. "Mon Oct 12 10:00:00 +0000 2026"
 
 
@@ -59,19 +59,14 @@ class XCollector:
         if not self.token or not (self.cfg.x_handles or self.cfg.x_searches):
             return []
         try:
-            resp = self.client.post(
-                ENDPOINT,
-                json=self._payload(),
-                headers={"Authorization": f"Bearer {self.token}", "User-Agent": USER_AGENT},
-                timeout=240,
-            )
-            resp.raise_for_status()
-            rows = resp.json()
+            rows = apify_items(self.client, ACTOR, self.token, self._payload())
         except (httpx.HTTPError, ValueError) as exc:
             log.warning("X fetch failed: %s", exc)  # the exception text never contains the token (it is in a header)
             return []
+        per_author = Counter((r.get("author") or {}).get("userName", "unknown") for r in rows if r.get("type") == "tweet")
+        log.info("X returned %d rows: %s", len(rows), dict(per_author))
         items: list[Item] = []
-        for row in rows if isinstance(rows, list) else []:
+        for row in rows:
             if row.get("type") != "tweet" or row.get("isRetweet") or row.get("isReply"):
                 continue
             url, created = row.get("url"), _created_at(row.get("createdAt"))

@@ -84,7 +84,7 @@ def _collectors(cfg, client: httpx.Client):
         GitHubCollector(cfg, client),
         RedditCollector(cfg, client),
         WebCollector(cfg, client),
-        YouTubeCollector(cfg, client),
+        YouTubeCollector(cfg, client, token=os.environ.get("APIFY_TOKEN")),
         XCollector(cfg, client, token=os.environ.get("APIFY_TOKEN")),
     ]
 

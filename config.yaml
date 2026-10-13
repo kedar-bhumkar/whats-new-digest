@@ -7,6 +7,7 @@ weights:
 max_picks: 5
 per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
   reddit: 2
+  youtube: 2
 max_notable: 10
 min_notable_rank: 0.35
 hype_penalty: 0.5
@@ -50,7 +51,7 @@ youtube_channels:
 
 # X (paid, via Apify): off unless the APIFY_TOKEN secret is set and handles/searches are listed.
 x:
-  handles: [AnthropicAI]
+  handles: [AnthropicAI, ClaudeDevs, RoundtableSpace, emollick]
   searches: []             # e.g. ["claude code", "MCP server"]
   min_likes: 50            # drops low-engagement noise
   max_items: 150           # hard cap per run; this bounds the Apify bill

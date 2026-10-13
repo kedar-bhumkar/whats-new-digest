@@ -91,6 +91,20 @@ def get_with_retry(
     raise AssertionError("unreachable")
 
 
+def apify_items(client: httpx.Client, actor: str, token: str, payload: dict) -> list:
+    """Run an Apify actor synchronously and return its dataset rows. The token goes in a header, never the URL,
+    so it cannot leak through logged request URLs or exception text. Raises httpx.HTTPError / ValueError."""
+    resp = client.post(
+        f"https://api.apify.com/v2/acts/{actor}/run-sync-get-dataset-items",
+        json=payload,
+        headers={"Authorization": f"Bearer {token}", "User-Agent": USER_AGENT},
+        timeout=240,
+    )
+    resp.raise_for_status()
+    rows = resp.json()
+    return rows if isinstance(rows, list) else []
+
+
 def collect_all(collectors: list[Collector]) -> list[Item]:
     """Run every collector; one failing never stops the others."""
     items: list[Item] = []
