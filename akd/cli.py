@@ -16,6 +16,7 @@ import httpx
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
+from akd.collectors.youtube import YouTubeCollector
 from akd.config import load_config, load_profile
 from akd.models import Item, Scored
 from akd.pipeline import format_tune, gather, published_ids_from, rank_all, run
@@ -77,7 +78,12 @@ def _score_sync(items: list[Item], profile: str, low_conf: float) -> list[Scored
 
 
 def _collectors(cfg, client: httpx.Client):
-    return [GitHubCollector(cfg, client), RedditCollector(cfg, client), WebCollector(cfg, client)]
+    return [
+        GitHubCollector(cfg, client),
+        RedditCollector(cfg, client),
+        WebCollector(cfg, client),
+        YouTubeCollector(cfg, client),
+    ]
 
 
 def _read_doc(site_dir: Path) -> dict:

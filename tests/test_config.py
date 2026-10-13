@@ -61,3 +61,12 @@ def test_repo_config_and_profile_load():
     cfg = load_config(root / "config.yaml")
     assert cfg.max_picks == 5
     assert load_profile(root / "profile.yaml").strip()
+
+
+def test_youtube_channels_load_with_default_name_and_empty_list(tmp_path):
+    base = (Path(__file__).resolve().parent.parent / "config.yaml").read_text(encoding="utf-8").split("youtube_channels:")[0]
+    p = tmp_path / "c.yaml"
+    p.write_text(base + "youtube_channels:\n  - {id: UCx, name: X}\n  - {id: UCy}\n", encoding="utf-8")
+    assert load_config(p).youtube_channels == [{"id": "UCx", "name": "X"}, {"id": "UCy", "name": "UCy"}]
+    p.write_text(base, encoding="utf-8")
+    assert load_config(p).youtube_channels == []

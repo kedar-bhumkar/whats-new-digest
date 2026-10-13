@@ -7,6 +7,7 @@ from akd.collectors.base import Collector, collect_all, strip_html
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
+from akd.collectors.youtube import YouTubeCollector
 from akd.config import load_config
 from akd.models import Item
 
@@ -152,4 +153,75 @@ def test_web_skips_undated_entries():
 
 def test_reddit_skips_undated_entries():
     items = RedditCollector(cfg(), client_for({"reddit.com": UNDATED_ATOM}), sleep=lambda s: None).collect()
+    assert {i.title for i in items} == {"Dated"}
+
+
+def yt_cfg(*ids):
+    from dataclasses import replace
+
+    return replace(cfg(), youtube_channels=[{"id": i, "name": f"Chan {i}"} for i in ids])
+
+
+def test_youtube_maps_channel_feed():
+    client = client_for({"feeds/videos.xml?channel_id=UCa": (FIX / "youtube.xml").read_bytes()})
+    items = YouTubeCollector(yt_cfg("UCa"), client, sleep=lambda s: None).collect()
+    first = next(i for i in items if i.url.endswith("DdCEmlAydcw"))
+    assert first.source == "youtube"
+    assert first.title == "Inside Anthropic's molecular biology lab"
+    assert first.url == "https://www.youtube.com/watch?v=DdCEmlAydcw"
+    assert "molecular biology research group" in first.text
+    assert "Chan UCa" in first.text  # the configured channel name is carried into the text
+    assert first.published_at.tzinfo is not None
+
+
+def test_youtube_disabled_when_no_channels_configured():
+    called = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        called.append(request)
+        return httpx.Response(200)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    assert YouTubeCollector(yt_cfg(), client, sleep=lambda s: None).collect() == []
+    assert called == []
+
+
+def test_youtube_retries_intermittent_404_then_recovers():
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if calls["n"] < 3:
+            return httpx.Response(404)  # YouTube's feed host 404s intermittently
+        return httpx.Response(200, content=(FIX / "youtube.xml").read_bytes())
+
+    sleeps = []
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    items = YouTubeCollector(yt_cfg("UCa"), client, sleep=sleeps.append).collect()
+    assert items
+    assert calls["n"] == 3 and len(sleeps) == 2
+
+
+def test_youtube_gives_up_on_persistent_404_without_raising():
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(404)))
+    assert YouTubeCollector(yt_cfg("UCa"), client, sleep=lambda s: None).collect() == []
+
+
+def test_youtube_one_failing_channel_does_not_stop_the_others():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "UCbad" in str(request.url):
+            return httpx.Response(404)
+        return httpx.Response(200, content=(FIX / "youtube.xml").read_bytes())
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    items = YouTubeCollector(yt_cfg("UCbad", "UCgood"), client, sleep=lambda s: None).collect()
+    assert items and all("UCgood" in i.text for i in items)
+
+
+def test_youtube_skips_undated_entries():
+    undated = b"""<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title>c</title>
+<entry><title>No date</title><link href="https://www.youtube.com/watch?v=x1"/><id>x1</id></entry>
+<entry><title>Dated</title><link href="https://www.youtube.com/watch?v=x2"/><id>x2</id><published>2026-10-12T10:00:00+00:00</published></entry>
+</feed>"""
+    items = YouTubeCollector(yt_cfg("UCa"), client_for({"": undated}), sleep=lambda s: None).collect()
     assert {i.title for i in items} == {"Dated"}

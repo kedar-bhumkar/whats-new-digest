@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
@@ -22,6 +22,7 @@ class Config:
     feeds: list[str]
     github_topics: list[str]
     github_watchlist: list[str]
+    youtube_channels: list[dict] = field(default_factory=list)
 
 
 def load_config(path: Path) -> Config:
@@ -44,6 +45,7 @@ def load_config(path: Path) -> Config:
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
+        youtube_channels=[{"id": str(c["id"]), "name": str(c.get("name", c["id"]))} for c in raw.get("youtube_channels") or []],
     )
 
 

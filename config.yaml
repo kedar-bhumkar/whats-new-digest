@@ -34,3 +34,14 @@ github_watchlist:
   - anthropics/claude-code
   - anthropics/anthropic-sdk-python
   - modelcontextprotocol/servers
+
+# YouTube: edit this list to follow more channels. `id` is the channel's UC... id (handles do not work in
+# feed URLs); `name` is only a label. Find an id on the channel page (view-source, "canonical" link).
+youtube_channels:
+  - {id: UCV03SRZXJEz-hchIAogeJOg, name: Claude}
+  - {id: UCXZCJLdBC09xxGZ6gcdrc6A, name: OpenAI}
+  - {id: UCrDwWp7EBBv4NwvScIpBDOA, name: Anthropic}
+  - {id: UCLKPca3kwwd-B59HNr-_lvA, name: AI Engineer}
+  - {id: UCPix8N6PMRI4KzgyjuZeF0g, name: Fahd Mirza}
+  - {id: UC_a85mUHqsy5j0CYCgLnkEQ, name: DIY Smart Code}
+  - {id: UCDq7SjbgRKty5TgGafW8Clg, name: Prompt Engineering}

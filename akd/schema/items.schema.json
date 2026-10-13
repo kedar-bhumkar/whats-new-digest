@@ -30,7 +30,7 @@
         "id": { "type": "string", "minLength": 1 },
         "title": { "type": "string", "minLength": 1 },
         "url": { "type": "string", "pattern": "^https?://" },
-        "source": { "type": "string", "enum": ["web", "github", "reddit", "email", "x"] },
+        "source": { "type": "string", "enum": ["web", "github", "reddit", "youtube", "email", "x"] },
         "category": { "type": "string", "minLength": 1 },
         "why": { "type": "string", "maxLength": 200 },
         "rank": { "$ref": "#/$defs/unit" },
