@@ -1,10 +1,12 @@
 # AKD configuration. Weights are applied in code; changing them never re-runs inference.
 weights:
-  significance: 0.45
-  relevance: 0.25
+  significance: 0.55
+  relevance: 0.20
   actionability: 0.20
-  novelty: 0.10
+  novelty: 0.05
 max_picks: 5
+per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
+  reddit: 2
 max_notable: 10
 min_notable_rank: 0.35
 hype_penalty: 0.5

@@ -27,6 +27,7 @@ class Config:
     x_searches: list[str] = field(default_factory=list)
     x_min_likes: int = 50
     x_max_items: int = 150
+    per_source_pick_cap: dict[str, int] = field(default_factory=dict)
 
 
 def load_config(path: Path) -> Config:
@@ -50,6 +51,7 @@ def load_config(path: Path) -> Config:
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
+        per_source_pick_cap={str(k): int(v) for k, v in (raw.get("per_source_pick_cap") or {}).items()},
         x_handles=[str(h).lstrip("@") for h in x.get("handles") or []],
         x_searches=[str(t) for t in x.get("searches") or []],
         x_min_likes=int(x.get("min_likes", 50)),

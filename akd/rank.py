@@ -17,6 +17,16 @@ def rank(scored: list[Scored], cfg: Config) -> list[Scored]:
 def select(ranked: list[Scored], cfg: Config) -> list[Selected]:
     # The rank floor applies to picks too: a slow news day shows fewer items rather than filler.
     eligible = [s for s in ranked if s.rank >= cfg.min_notable_rank]
-    picks = [Selected(s, "pick") for s in eligible[: cfg.max_picks]]
-    notable = [Selected(s, "notable") for s in eligible[cfg.max_picks :][: cfg.max_notable]]
-    return picks + notable
+    picks: list[Scored] = []
+    per_source: dict[str, int] = {}
+    for s in eligible:
+        if len(picks) == cfg.max_picks:
+            break
+        source = s.item.source
+        if per_source.get(source, 0) >= cfg.per_source_pick_cap.get(source, cfg.max_picks):
+            continue  # this source already filled its share of Top picks; it can still be notable
+        picks.append(s)
+        per_source[source] = per_source.get(source, 0) + 1
+    chosen = {id(s) for s in picks}
+    rest = [s for s in eligible if id(s) not in chosen][: cfg.max_notable]
+    return [Selected(s, "pick") for s in picks] + [Selected(s, "notable") for s in rest]

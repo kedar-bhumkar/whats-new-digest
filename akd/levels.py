@@ -25,9 +25,9 @@ QUESTIONS = {
     "significance": Score(
         instructions=f"How significant is {_ITEM} for the AI and software-engineering field as a whole, regardless of who is reading?",
         criteria=[
-            "Routine or trivial: a minor patch release, a small tutorial, an opinion post, or a rehash of known facts.",
+            "Routine or trivial: a minor patch release, a small tutorial, an opinion post, a personal side project or demo (a game, a mod, a toy app), a question or discussion thread, or a rehash of known facts.",
             "Useful but narrow: a modest feature, a small library, or an incremental improvement that matters to a small group.",
-            "Notable: a meaningful release or finding that many practitioners will want to know about this month.",
+            "Notable: a meaningful release or finding that many practitioners will want to know about this month, such as a stable 1.0 or major-version release of a widely used tool, SDK or protocol.",
             "Major: a flagship model or tool launch, a widely applicable technique, or a change that many teams must respond to.",
             "Field-shifting: changes how the field works, such as a new model generation, a new standard, or a breakthrough that makes earlier approaches obsolete.",
         ],
@@ -37,8 +37,8 @@ QUESTIONS = {
         criteria=[
             "Unrelated to anything in the profile, or squarely inside its not_interested list.",
             "Loosely related: same broad field but no tool, language or workflow the reader uses.",
-            "Adjacent: concerns a technology the reader touches occasionally or a close alternative to what they use.",
-            "Directly relevant: concerns a tool, platform or topic listed in the profile's stack or interests.",
+            "Adjacent: merely mentions or is built with a tool in the profile (a demo, game or side project made with it), or concerns a close alternative to what they use.",
+            "Directly relevant: is itself about a tool, platform or topic listed in the profile's stack or interests, such as its release, change, bug or best practice.",
             "Critical: changes, breaks or substantially improves something the profile depends on every day.",
         ],
     ),
@@ -46,7 +46,7 @@ QUESTIONS = {
         instructions="How actionable is `item` for the reader: could they use it, adopt it, or must they respond to it?",
         criteria=[
             "Pure news: nothing the reader can do with it.",
-            "Awareness only: worth knowing, but no concrete step follows.",
+            "Awareness only: worth knowing, but no concrete step follows. Showcases, demos and \"I built X\" posts belong here unless the reader could install and use the thing.",
             "Worth evaluating: a tool, repo or technique to try when time allows, with an unclear first step.",
             "Adoptable soon: has a clear install or usage path and a plausible benefit within weeks.",
             "Act now: can be adopted this week with an obvious first step, or requires action to avoid breakage.",

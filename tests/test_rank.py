@@ -30,7 +30,7 @@ def test_rank_formula():
 
 def test_rank_uses_spec_weights():
     [s] = rank([scored(1, sig=1.0, rel=0.0, act=0.0, nov=0.0)], cfg())
-    assert s.rank == pytest.approx(0.45)
+    assert s.rank == pytest.approx(0.55)
 
 
 def test_weights_change_order_without_rescoring():
@@ -75,3 +75,26 @@ def test_select_empty_returns_empty():
 def test_slow_day_publishes_fewer_than_five_picks():
     weak = [scored(i, sig=0.1, rel=0.1, act=0.1, nov=0.1) for i in range(1, 4)]
     assert select(rank(weak, cfg()), cfg()) == []
+
+
+def scored_from(source: str, n: int, strength: float) -> Scored:
+    s = scored(n, sig=strength, rel=strength, act=strength, nov=strength)
+    s.item = Item(f"{source}{n:03d}", source, f"T{n}", f"https://e.com/{source}/{n}", "x", NOW)
+    return s
+
+
+def test_per_source_cap_limits_picks_and_demotes_the_rest_to_notable():
+    reddit = [scored_from("reddit", i, 0.9) for i in range(1, 6)]
+    github = [scored_from("github", i, 0.7) for i in range(1, 4)]
+    sel = select(rank(reddit + github, cfg(per_source_pick_cap={"reddit": 2})), cfg(per_source_pick_cap={"reddit": 2}))
+    picks = [s for s in sel if s.tier == "pick"]
+    assert [s.scored.item.source for s in picks].count("reddit") == 2
+    assert len(picks) == 5  # the freed slots go to the next-best items from other sources
+    assert len(sel) == 8  # nothing is dropped, capped items just become notable
+    assert all(s.tier == "notable" for s in sel if s.scored.item.source == "reddit" and s not in picks)
+
+
+def test_no_cap_configured_leaves_selection_unchanged():
+    items = [scored_from("reddit", i, 0.9) for i in range(1, 9)]
+    sel = select(rank(items, cfg(per_source_pick_cap={})), cfg(per_source_pick_cap={}))
+    assert [s.tier for s in sel].count("pick") == 5
