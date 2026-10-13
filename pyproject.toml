@@ -1,0 +1,26 @@
+[project]
+name = "akd"
+version = "0.1.0"
+description = "Automated Knowledge Discovery: daily ranked AI/coding news for the What's New tab"
+requires-python = ">=3.12"
+dependencies = [
+  "pyyaml",
+  "httpx",
+  "feedparser",
+  "jsonschema",
+  "typesafe-sdk",
+  "anthropic",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["akd*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.setuptools.package-data]
+akd = ["schema/*.json"]

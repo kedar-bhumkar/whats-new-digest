@@ -1,0 +1,16 @@
+# Who the reader is. Passed to Jev as state so "relevance" is judged against real context.
+role: Solutions/FDE engineer and AI builder with a personal site and side projects
+stack:
+  - Claude Code, Claude Agent SDK, Claude API, MCP servers, skills and plugins
+  - Salesforce, Agentforce, Apex, LWC
+  - React, Vite, TypeScript, Tailwind, Vercel
+  - AI image and video tooling (ComfyUI, HyperFrames, Remotion)
+  - TypeSafe / Jev (System One models)
+interests:
+  - Agentic coding tools and how they change developer workflow
+  - New model releases and API changes that break or improve existing code
+  - Open-source agent infrastructure, sandboxing, and security of agents
+  - Anything adoptable within a week with a clear first step
+not_interested:
+  - Funding rounds, valuations, and executive moves with no technical content
+  - Generic "AI will change everything" opinion pieces

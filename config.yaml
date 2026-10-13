@@ -1,0 +1,56 @@
+# AKD configuration. Weights are applied in code; changing them never re-runs inference.
+weights:
+  significance: 0.55
+  relevance: 0.20
+  actionability: 0.20
+  novelty: 0.05
+max_picks: 5
+per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
+  reddit: 2
+max_notable: 10
+min_notable_rank: 0.35
+hype_penalty: 0.5
+low_confidence_threshold: 0.4
+window_days: 60
+max_age_days: 3  # items older than this are dropped before scoring (feeds can return whole archives)
+
+subreddits:
+  - LocalLLaMA
+  - ClaudeAI
+  - MachineLearning
+  - programming
+
+feeds:
+  - https://openai.com/news/rss.xml
+  - https://hnrss.org/newest?q=Claude&points=100
+  - https://hnrss.org/newest?q=LLM&points=150
+  - https://hnrss.org/newest?q=MCP&points=50
+
+github_topics:
+  - llm
+  - ai-agents
+  - mcp
+  - claude-code
+
+github_watchlist:
+  - anthropics/claude-code
+  - anthropics/anthropic-sdk-python
+  - modelcontextprotocol/servers
+
+# YouTube: edit this list to follow more channels. `id` is the channel's UC... id (handles do not work in
+# feed URLs); `name` is only a label. Find an id on the channel page (view-source, "canonical" link).
+youtube_channels:
+  - {id: UCV03SRZXJEz-hchIAogeJOg, name: Claude}
+  - {id: UCXZCJLdBC09xxGZ6gcdrc6A, name: OpenAI}
+  - {id: UCrDwWp7EBBv4NwvScIpBDOA, name: Anthropic}
+  - {id: UCLKPca3kwwd-B59HNr-_lvA, name: AI Engineer}
+  - {id: UCPix8N6PMRI4KzgyjuZeF0g, name: Fahd Mirza}
+  - {id: UC_a85mUHqsy5j0CYCgLnkEQ, name: DIY Smart Code}
+  - {id: UCDq7SjbgRKty5TgGafW8Clg, name: Prompt Engineering}
+
+# X (paid, via Apify): off unless the APIFY_TOKEN secret is set and handles/searches are listed.
+x:
+  handles: [AnthropicAI]
+  searches: []             # e.g. ["claude code", "MCP server"]
+  min_likes: 50            # drops low-engagement noise
+  max_items: 150           # hard cap per run; this bounds the Apify bill

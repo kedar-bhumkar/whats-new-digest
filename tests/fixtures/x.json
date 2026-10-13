@@ -1,0 +1,48 @@
+[
+  {
+    "type": "tweet",
+    "id": "1845000000000000001",
+    "url": "https://x.com/AnthropicAI/status/1845000000000000001",
+    "text": "Claude Code now supports background tasks, so long-running commands no longer block your session. https://t.co/abc123",
+    "createdAt": "Mon Oct 12 10:00:00 +0000 2026",
+    "likeCount": 4200,
+    "retweetCount": 600,
+    "replyCount": 90,
+    "isRetweet": false,
+    "isReply": false,
+    "author": {"userName": "AnthropicAI", "name": "Anthropic", "followers": 900000}
+  },
+  {
+    "type": "tweet",
+    "id": "1845000000000000002",
+    "url": "https://x.com/someone/status/1845000000000000002",
+    "text": "RT @AnthropicAI: Claude Code now supports background tasks",
+    "createdAt": "Mon Oct 12 10:05:00 +0000 2026",
+    "likeCount": 0,
+    "isRetweet": true,
+    "isReply": false,
+    "author": {"userName": "someone", "followers": 10}
+  },
+  {
+    "type": "tweet",
+    "id": "1845000000000000003",
+    "url": "https://x.com/AnthropicAI/status/1845000000000000003",
+    "text": "@user thanks, we are looking into it",
+    "createdAt": "Mon Oct 12 11:00:00 +0000 2026",
+    "likeCount": 12,
+    "isRetweet": false,
+    "isReply": true,
+    "author": {"userName": "AnthropicAI", "followers": 900000}
+  },
+  {
+    "type": "tweet",
+    "id": "1845000000000000004",
+    "url": "https://x.com/karpathy/status/1845000000000000004",
+    "text": "Undated tweet that must be skipped",
+    "likeCount": 500,
+    "isRetweet": false,
+    "isReply": false,
+    "author": {"userName": "karpathy", "followers": 1000000}
+  },
+  {"type": "mock_tweet", "id": "-1"}
+]

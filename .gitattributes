@@ -1,0 +1,3 @@
+# The old daily routine and AKD both insert at the top of this file. Union merge keeps both
+# sides on a concurrent push instead of failing the rebase (verified in a scratch repo).
+whats-new.md merge=union
