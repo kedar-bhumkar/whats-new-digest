@@ -4,6 +4,7 @@ import html
 import logging
 import re
 import time
+from collections.abc import Callable
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from typing import Protocol
@@ -67,6 +68,27 @@ def get(client: httpx.Client, url: str, **kwargs) -> httpx.Response:
     resp = client.get(url, headers=headers, timeout=20, follow_redirects=True, **kwargs)
     resp.raise_for_status()
     return resp
+
+
+def get_with_retry(
+    client: httpx.Client,
+    url: str,
+    sleep: Callable[[float], None] = time.sleep,
+    backoff: tuple[float, ...] = (2, 6),
+    retry_statuses: frozenset[int] = frozenset({429, 500, 502, 503, 504}),
+) -> httpx.Response:
+    """GET with a short back-off on transient failures; anything else (and the last failure) raises."""
+    for attempt in range(len(backoff) + 1):
+        try:
+            return get(client, url)
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code not in retry_statuses or attempt == len(backoff):
+                raise
+        except httpx.TransportError:
+            if attempt == len(backoff):
+                raise
+        sleep(backoff[attempt])
+    raise AssertionError("unreachable")
 
 
 def collect_all(collectors: list[Collector]) -> list[Item]:

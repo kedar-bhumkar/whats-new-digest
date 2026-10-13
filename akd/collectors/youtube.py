@@ -7,7 +7,7 @@ from collections.abc import Callable
 import feedparser
 import httpx
 
-from akd.collectors.base import clip, entry_datetime, get, strip_html
+from akd.collectors.base import clip, entry_datetime, get_with_retry, strip_html
 from akd.config import Config
 from akd.dedupe import item_id
 from akd.models import Item
@@ -17,6 +17,7 @@ log = logging.getLogger("akd.collectors.youtube")
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={id}"
 # YouTube's feed host answers 404 for hours at a time, then recovers; a short back-off catches the brief blips.
 BACKOFF_SECONDS = (2, 6)
+YOUTUBE_RETRY_STATUSES = frozenset({404, 429, 500, 502, 503, 504})
 
 
 class YouTubeCollector:
@@ -30,14 +31,7 @@ class YouTubeCollector:
         self.sleep = sleep
 
     def _fetch(self, url: str) -> bytes:
-        for attempt in range(len(BACKOFF_SECONDS) + 1):
-            try:
-                return get(self.client, url).content
-            except httpx.HTTPError:
-                if attempt == len(BACKOFF_SECONDS):
-                    raise
-                self.sleep(BACKOFF_SECONDS[attempt])
-        raise AssertionError("unreachable")
+        return get_with_retry(self.client, url, self.sleep, BACKOFF_SECONDS, YOUTUBE_RETRY_STATUSES).content
 
     def collect(self) -> list[Item]:
         items: list[Item] = []

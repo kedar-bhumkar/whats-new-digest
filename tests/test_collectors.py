@@ -279,3 +279,36 @@ def test_x_http_error_returns_nothing_and_never_logs_the_token(caplog):
         items = XCollector(x_cfg(), x_client([], body=b"{}", status=402), token="s3cret").collect()
     assert items == []
     assert "s3cret" not in caplog.text
+
+
+def test_web_retries_transient_502_then_recovers():
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return httpx.Response(502)
+        return httpx.Response(200, content=(FIX / "web.xml").read_bytes())
+
+    from dataclasses import replace
+
+    sleeps = []
+    one_feed = replace(cfg(), feeds=["https://example.com/feed"])
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    items = WebCollector(one_feed, client, sleep=sleeps.append).collect()
+    assert items and calls["n"] == 2 and len(sleeps) == 1
+
+
+def test_web_does_not_retry_a_404():
+    calls = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        return httpx.Response(404)
+
+    from dataclasses import replace
+
+    one_feed = replace(cfg(), feeds=["https://example.com/feed"])
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    assert WebCollector(one_feed, client, sleep=lambda s: None).collect() == []
+    assert calls["n"] == 1
