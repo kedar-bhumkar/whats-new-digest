@@ -2,6 +2,30 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-13
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - Oct 7: `claude-haiku-5-5` launched for high-volume, latency-sensitive work; 1M-token context, 128k max output, adaptive thinking with the effort parameter.
+  - Why it matters: A cheap, fast tier for classification, extraction and subagent work. Migrating from Haiku 4.5 code breaks: `budget_tokens`, `temperature`, `top_p`, `top_k` and assistant prefill now return 400; `computer_20250124` must become `computer_toolset_20260801`; thinking text is omitted unless `thinking.display` is `"summarized"`. Claude Code v2.1.293 made it the default Haiku.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **SDK classes for browser-use and computer-use tools (beta)** (AI/Claude tooling) - Oct 7: Python and TypeScript SDKs let you subclass a tool class and implement one method per tool action.
+  - Why it matters: The SDK runs the tool loop, URL/file policies and your approval callback, replacing hand-written agent loops for UI-automation features.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Managed Agents web tool restrictions** (AI/Claude tooling) - Oct 7: with `limited` networking, `allowed_hosts` now also gates `web_search`/`web_fetch`; `web_fetch` only fetches URLs already present in the session (user message or prior search result), otherwise `url_not_in_prior_context`.
+  - Why it matters: Reduces prompt-injection exfiltration paths, but agents that built URLs themselves will start failing; send needed URLs in a `user.message` and keep `allowed_domains` inside `allowed_hosts` (else session creation returns 400).
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.295 / v2.1.294** (AI/Claude tooling) - Released Oct 8.
+  - Why it matters: `onFailure: "block"` for command and HTTP hooks makes guard hooks fail closed; v2.1.294 fixes `prompt`/`agent` hooks written as instructions letting through what they should block. Also `timeouts.upstream_ttfb_ms` for gateways.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Models API capability fields** (AI/Claude tooling) - Oct 1-6: `GET /v1/models` now reports `capabilities.server_tools` (web search/code execution support), `capabilities.thinking.types.disabled`, and a `line` field.
+  - Why it matters: Lets code choose models and request parameters by querying capabilities instead of hard-coding model names.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+No GitHub repos today: my one search surfaced no fresh October trending list, and I could not verify license, maintainer history or install safety for any candidate, so I skipped them.
+
 ## 2026-10-12
 
 - **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release: an agent can write a workflow program that fans out many agents in phases and combines their results, run server-side in the background.
