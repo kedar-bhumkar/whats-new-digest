@@ -64,7 +64,7 @@ def test_select_notable_respects_min_rank_and_cap():
     sel = select(rank(strong + weak, cfg()), cfg())
     assert len(sel) == 5  # weak ones fall below min_notable_rank
     many = [scored(i, sig=0.6, rel=0.6, act=0.6, nov=0.6) for i in range(1, 30)]
-    sel = select(rank(many, cfg()), cfg())
+    sel = select(rank(many, cfg(max_notable_per_source=0)), cfg(max_notable_per_source=0))  # isolate the overall cap
     assert len(sel) == 5 + 10
 
 
@@ -98,3 +98,41 @@ def test_no_cap_configured_leaves_selection_unchanged():
     items = [scored_from("reddit", i, 0.9) for i in range(1, 9)]
     sel = select(rank(items, cfg(per_source_pick_cap={})), cfg(per_source_pick_cap={}))
     assert [s.tier for s in sel].count("pick") == 5
+
+def scored_dims(source: str, n: int, sig: float, rel: float, act: float = 0.5, nov: float = 0.5) -> Scored:
+    s = scored(n, sig=sig, rel=rel, act=act, nov=nov)
+    s.item = Item(f"{source}{n:03d}", source, f"{source} {n}", f"https://e.com/{source}/{n}", "x", NOW)
+    return s
+
+
+def test_notable_cap_keeps_the_most_relevant_items_of_an_overflowing_source():
+    strong = [scored_dims("github", i, sig=0.95, rel=0.95, act=0.95, nov=0.95) for i in range(1, 6)]  # become the 5 picks
+    higher_rank_less_relevant = scored_dims("youtube", 1, sig=0.8, rel=0.1)  # rank ~0.585
+    lower_rank_more_relevant = scored_dims("youtube", 2, sig=0.5, rel=0.9)  # rank ~0.580
+    c = cfg(max_notable_per_source=1, per_source_pick_cap={})
+    sel = select(rank(strong + [higher_rank_less_relevant, lower_rank_more_relevant], c), c)
+    notable = [s.scored.item.id for s in sel if s.tier == "notable"]
+    assert notable == ["youtube002"]  # relevance, not rank, decided which one stayed
+
+
+def test_notable_cap_applies_per_source_and_keeps_rank_order():
+    strong = [scored_dims("github", i, sig=0.95, rel=0.95, act=0.95, nov=0.95) for i in range(1, 6)]
+    yt = [scored_dims("youtube", i, sig=0.6, rel=0.5 + i / 100) for i in range(1, 6)]
+    rd = [scored_dims("reddit", i, sig=0.55, rel=0.5) for i in range(1, 4)]
+    c = cfg(max_notable_per_source=2, per_source_pick_cap={})
+    sel = select(rank(strong + yt + rd, c), c)
+    notable = [s.scored for s in sel if s.tier == "notable"]
+    counts = {src: sum(1 for s in notable if s.item.source == src) for src in ("youtube", "reddit")}
+    assert counts == {"youtube": 2, "reddit": 2}
+    assert [s.rank for s in notable] == sorted((s.rank for s in notable), reverse=True)
+
+
+def test_zero_means_no_notable_cap():
+    items = [scored_dims("youtube", i, sig=0.6, rel=0.6) for i in range(1, 12)]
+    c = cfg(max_notable_per_source=0, per_source_pick_cap={})
+    assert len([s for s in select(rank(items, c), c) if s.tier == "notable"]) == 6  # 11 eligible, 5 picks, rest notable
+
+
+def test_shipped_config_caps_notable_per_source():
+    assert load_config(ROOT / "config.yaml").max_notable_per_source == 4
+
