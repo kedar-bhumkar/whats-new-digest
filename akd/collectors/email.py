@@ -161,16 +161,18 @@ class EmailCollector:
         self.now = now or datetime.now(timezone.utc)
         self._resolves = 0
 
-    def _resolve(self, url: str) -> str:
-        """Follow a tracking redirect to the real article URL; keep the original if that fails."""
+    def _resolve(self, url: str) -> str | None:
+        """Follow a tracking redirect to the real article URL. Returns None when the link stays an
+        unresolved, unreachable URL: that is a per-subscriber tracker, which must not be published."""
         if self._resolves >= MAX_RESOLVES:
-            return url
+            return None
         self._resolves += 1
         try:
             with self.client.stream("GET", url, headers={"User-Agent": USER_AGENT}, timeout=8, follow_redirects=True) as resp:
-                return str(resp.url)
+                final = str(resp.url)
+                return None if final == url and resp.status_code >= 400 else final
         except httpx.HTTPError:
-            return url
+            return None
 
     def _matching_messages(self, imap) -> list[tuple[datetime, bytes]]:
         since = _imap_date(self.now - timedelta(days=self.cfg.max_age_days))
@@ -206,6 +208,7 @@ class EmailCollector:
         by_number = {n: url for n, _, url in links}
         items: list[Item] = []
         used: set[int] = set()
+        dropped = 0
         for story in stories if isinstance(stories, list) else []:
             if not isinstance(story, dict) or not isinstance(story.get("link"), int) or story["link"] in used:
                 continue
@@ -215,6 +218,9 @@ class EmailCollector:
                 continue
             used.add(story["link"])
             url = self._resolve(raw_url)
+            if url is None:
+                dropped += 1
+                continue
             blurb = strip_html(str(story.get("blurb") or ""))
             items.append(
                 Item(
@@ -226,6 +232,8 @@ class EmailCollector:
                     published_at=when,
                 )
             )
+        if dropped:
+            log.warning("%d story link(s) in %r dropped: unresolvable tracking URL", dropped, subject)
         return items
 
     def collect(self) -> list[Item]:

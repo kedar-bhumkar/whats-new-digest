@@ -147,14 +147,27 @@ def test_model_cannot_introduce_links_that_are_not_in_the_email():
     assert [i.title for i in items] == ["Good"]
 
 
-def test_tracking_link_that_fails_to_resolve_is_kept_as_is():
+def test_story_whose_tracking_link_cannot_be_resolved_is_dropped_not_published():
+    # An unresolved tracker URL carries a per-subscriber token; it must never reach a public page.
     def boom(request):
         raise httpx.ConnectError("down")
 
     imap = FakeImap({b"1": make_mail("TLDR AI <dan@tldrnewsletter.com>", "s", TLDR_HTML)})
     client = httpx.Client(transport=httpx.MockTransport(boom))
-    [item] = collector(imap, stub_extractor([{"link": 1, "title": "T", "blurb": "b"}]), client).collect()
-    assert item.url == "https://tracking.tldrnewsletter.com/c/AAA"
+    assert collector(imap, stub_extractor([{"link": 1, "title": "T", "blurb": "b"}]), client).collect() == []
+
+
+def test_bot_blocked_tracker_is_dropped_but_a_direct_article_link_is_kept():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "AAA" in str(request.url):
+            return httpx.Response(403)  # e.g. beehiiv refuses automated requests
+        return httpx.Response(200, content=b"article")  # a normal page, URL unchanged
+
+    imap = FakeImap({b"1": make_mail("TLDR AI <dan@tldrnewsletter.com>", "s", TLDR_HTML)})
+    stories = [{"link": 1, "title": "Blocked", "blurb": "b"}, {"link": 2, "title": "Direct", "blurb": "b"}]
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    items = collector(imap, stub_extractor(stories), client).collect()
+    assert [i.title for i in items] == ["Direct"]
 
 
 def test_reads_the_mailbox_without_changing_it():
@@ -234,7 +247,10 @@ def test_haiku_extractor_returns_nothing_on_garbage_or_errors():
     assert HaikuExtractor(broken)("s", "s", "b", []) == []
 
 
-def test_shipped_config_lists_the_newsletters_but_not_ainews():
-    senders = [s.lower() for s in load_config(ROOT / "config.yaml").email_senders]
-    assert "tldr" in senders and "rundown" in senders
-    assert not any("ainews" in s or "latent" in s for s in senders)  # AINews already arrives via the Latent Space feed
+def test_shipped_config_splits_newsletters_between_email_and_web_feeds():
+    conf = load_config(ROOT / "config.yaml")
+    senders = [s.lower() for s in conf.email_senders]
+    assert "tldr" in senders
+    # AINews arrives via the Latent Space feed and The Rundown via its public feed (its email links are unresolvable trackers).
+    assert not any(x in s for s in senders for x in ("ainews", "latent", "rundown"))
+    assert "https://www.therundown.ai/feed" in conf.feeds
