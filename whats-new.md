@@ -2,6 +2,30 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-14
+
+- **Claude Code v2.1.295-2.1.299** (AI/Claude tooling) - Run of releases adding fail-closed hooks, idle compaction and subagent compaction controls.
+  - Why it matters: `onFailure: "block"` on command/HTTP hooks makes guardrail hooks fail closed; idle compaction (conversations over 200K tokens that sit idle ~54 min) cuts cache-expiry cost; subagents get `autoCompactWindow`; Read tool gains `allow_large`; `claude plugin eval` gets `--disallow-tools`.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - New small, low-cost model (`claude-haiku-5-5`), 1M context, listed at $0.10/$0.50 per Mtok in the Claude Code release notes; now Claude Code's default Haiku (v2.1.293, Oct 7).
+  - Why it matters: A cheap fit for high-volume subagents, classification and extraction steps in agent pipelines.
+  - Link: https://www.anthropic.com/news
+
+- **modelcontextprotocol/servers v1.0.0** (AI/Claude tooling) - First 1.0.0 of the official MCP reference servers (Oct 11), with fixes for filesystem, memory and everything servers.
+  - Why it matters: The memory server now serializes and locks graph writes and validates entries; filesystem `edit_file` preserves line endings. Worth upgrading if you rely on these servers.
+  - Link: https://github.com/modelcontextprotocol/servers/releases
+
+- **mattpocock/skills** (GitHub repo) - Collection of agent skills for engineering workflows (TDD, bug diagnosis, architecture review, issue triage, specs, handoff) that works across several coding agents.
+  - Why it matters: Drop-in skills to structure agent work in Claude Code and similar tools.
+  - Link: https://github.com/mattpocock/skills
+  - Safety note: MIT license; star count (~290k) as shown on the repo page; last-commit date and contributor count were not visible to me, so vet before installing.
+
+- **heygen-com/hyperframes** (GitHub repo) - Write HTML and render it to video, built for agents (plugin and `npx skills add` install paths).
+  - Why it matters: Lets an agent produce videos from plain HTML/CSS, handy for demos or generated media.
+  - Link: https://github.com/heygen-com/hyperframes
+  - Safety note: Apache-2.0; ~63k stars; backed by a known company (HeyGen). Install commands fetch and run code (npx, plugin install) and the repo needs Git LFS (~240 MB of test videos), so review manifests first. Last-commit date not verified.
+
 ## 2026-10-13 (AKD)
 
 - **modelcontextprotocol/servers v1.0.0** (Top pick; agents_mcp_skills; github) - This is the first 1.0.0 release of the official MCP reference servers (filesystem, memory, fetch, git, time), so pin versions carefully since the changelog and tooling churn may affect existing MCP c…
