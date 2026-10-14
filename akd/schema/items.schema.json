@@ -45,6 +45,20 @@
             "novelty": { "$ref": "#/$defs/unit" }
           }
         },
+        "also": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": ["title", "url", "source"],
+            "additionalProperties": false,
+            "properties": {
+              "title": { "type": "string", "minLength": 1 },
+              "url": { "type": "string", "pattern": "^https?://" },
+              "source": { "type": "string", "enum": ["web", "github", "reddit", "youtube", "email", "x"] }
+            }
+          }
+        },
         "flags": {
           "type": "object",
           "required": ["low_confidence", "hype_p"],

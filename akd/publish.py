@@ -35,7 +35,12 @@ def _item_dict(sel: Selected) -> dict | None:
     if parts.scheme not in ("http", "https") or not parts.netloc:
         return None  # javascript:, data:, etc. never reach the site
     title = strip_html(s.item.title) or s.item.url
-    return {
+    also = [
+        {"title": strip_html(a.title) or a.url, "url": a.url, "source": a.source}
+        for a in s.also
+        if urlsplit(a.url).scheme in ("http", "https") and urlsplit(a.url).netloc
+    ]
+    out = {
         "id": s.item.id,
         "title": title,
         "url": s.item.url,
@@ -46,6 +51,9 @@ def _item_dict(sel: Selected) -> dict | None:
         "scores": {k: round(v, 4) for k, v in s.scores.items()},
         "flags": {"low_confidence": s.low_confidence, "hype_p": round(s.hype_p, 4)},
     }
+    if also:
+        out["also"] = also
+    return out
 
 
 def _tier(selected: list[Selected], tier: str) -> list[dict]:
@@ -73,7 +81,8 @@ def _md_section(day: date, selected: list[Selected]) -> str:
             continue
         label = "Top pick" if sel.tier == "pick" else "Notable"
         why = f" - {d['why']}" if d["why"] else ""
-        blocks.append(f"- **{d['title']}** ({label}; {d['category']}; {d['source']}){why}\n  - Link: {d['url']}\n")
+        also = "".join(f"\n  - Also covered by: [{a['title']}]({a['url']}) ({a['source']})" for a in d.get("also", []))
+        blocks.append(f"- **{d['title']}** ({label}; {d['category']}; {d['source']}){why}\n  - Link: {d['url']}{also}\n")
     return f"## {day.isoformat()} (AKD)\n\n" + "\n".join(blocks) + "\n"
 
 

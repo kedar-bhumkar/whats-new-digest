@@ -22,6 +22,7 @@ log = logging.getLogger("akd.pipeline")
 
 Scorer = Callable[[list[Item], str], list[Scored]]
 Summarizer = Callable[[list[Selected], str], list[Selected]]
+Grouper = Callable[[list[Scored]], list[Scored]]
 
 
 def published_ids_from(doc: dict, exclude_day: date) -> set[str]:
@@ -62,6 +63,7 @@ def run(
     site_dir: Path,
     now: datetime | None = None,
     on_scored: Callable[[list[Scored]], None] | None = None,
+    grouper: Grouper | None = None,
 ) -> list[Selected]:
     now = now or datetime.now(timezone.utc)
     items = gather(cfg, collectors, published_ids, now)
@@ -71,6 +73,11 @@ def run(
     ranked = rank_all(scorer(items, profile), cfg)
     if on_scored:
         on_scored(ranked)  # every scored item, selected or not, kept for debugging (spec 3.4)
+    if grouper:
+        try:
+            ranked = grouper(ranked)
+        except Exception:
+            log.exception("grouping failed; publishing without it")  # an enhancement, never a reason to publish nothing
     selected = select(ranked, cfg)
     if not selected:
         log.info("nothing above the rank floor; publishing nothing")

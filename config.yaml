@@ -9,6 +9,9 @@ per_source_pick_cap:   # at most this many Top picks from one source; the rest f
   reddit: 2
   youtube: 2
 max_notable: 10
+group_shortlist: 40       # top-ranked items compared pairwise by Jev for "same story"; 0 turns grouping off
+group_threshold: 0.5      # P(same story) at or above this folds an item under the higher-ranked one
+group_also_max: 5         # related links kept per published item
 max_notable_per_source: 4   # one source can fill at most this many 'Also notable' slots; it keeps its most relevant items
 min_notable_rank: 0.35
 hype_penalty: 0.5
