@@ -2,6 +2,53 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-14 (AKD)
+
+- **Google makes Gemini 4 Argon broadly available** (Top pick; model_release; email) - A new flagship multimodal model with a limited-time API price cut of about $2.10 per million tokens, worth benchmarking against your current Claude and Gemini calls for cost and quality.
+  - Link: https://venturebeat.com/technology/google-makes-gemini-4-argon-broadly-available-with-limited-time-low-api-pricing-of-2-10-per-1m-token?utm_source=tldrnewsletter
+
+- **[AINews] AI Engineer NYC: Gemini 4 Argon, Vals AI Benchmarks** (Top pick; model_release; web) - Gemini 4 Argon is now generally available in the paid Gemini API at introductory $2/$10 per million tokens, doubling to $4/$20 after November 30.
+  - Link: https://www.latent.space/p/ainews-ai-engineer-nyc-gemini-4-argon
+
+- **anthropics/claude-code v2.1.299** (Top pick; dev_tooling; github) - Claude Code v2.1.299 adds idle auto-compaction for long sessions and a new `CLAUDE_CODE_DISABLE_FILE_MENTIONS` flag, which changes how `@` file mentions reach the model and may affect existing workfl…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.299
+
+- **New model from Telperion: Qwen3.8-27B-MLA & Qwen3.8-27B-GLA-g2. 4x smaller KV cache, smarter, and more efficient reasoning.** (Top pick; model_release; reddit) - Telperion's Qwen3.8-27B MLA variant cuts KV cache about 4x and reports +6.58% on SWE-bench Verified, with an installable vLLM plugin, relevant for local long-context agent serving.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5wcnz/new_model_from_telperion_qwen3827bmla/
+
+- **Gemini 4 Argon Lands on Google Cloud** (Top pick; model_release; email) - Gemini 4 Argon is now on Google Cloud for long multi-step enterprise work, so it's a new model option to evaluate against Claude for agentic coding, though the item gives no benchmarks or API details.
+  - Link: https://cloud.google.com/blog/products/ai-machine-learning/gemini-4-argon-available-on-google-cloud?utm_source=tldrai
+
+- **anthropics/anthropic-sdk-python v1.14.0** (Notable; dev_tooling; github) - The SDK adds built-in OpenTelemetry tracing for API calls, streaming, and tool runs, plus fixes to streaming event-order handling, so existing streaming code may behave differently.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.14.0
+
+- **Walking away from a long Claude Code session used to cost you when you came back. That just changed…** (Notable; dev_tooling; x) - Claude Code 2.1.299 auto-compacts conversations over 200K tokens after about 54 idle minutes, cutting reprocessing cost on return; it can be disabled via settings.json.
+  - Link: https://x.com/RoundtableSpace/status/2110290764785766460
+
+- **Now in public beta, Claude Platform can send OpenTelemetry traces from the Messages API, Claude Man…** (Notable; dev_tooling; x) - Claude Platform now exports OpenTelemetry traces from the Messages API, Managed Agents, and SDKs, letting you wire agent runs into existing observability tooling.
+  - Link: https://x.com/ClaudeDevs/status/2110421732029063352
+
+- **OpenCode 2.0** (Notable; dev_tooling; email) - OpenCode 2.0's single background server and new SDK for embedding it as a library matter for anyone building agentic coding workflows on alternatives to Claude Code.
+  - Link: https://anoma.ly/notes/opencode-2-0/?utm_source=tldrai
+
+- **Bifrost** (Notable; repo_library; email) - Bifrost is an open-source gateway offering OpenAI-compatible routing, failover, caching, and MCP support, useful if you run agents across multiple model providers and need cost and reliability contro…
+  - Link: https://github.com/maximhq/bifrost?utm_source=tldrdev
+
+- **290K GitHub stars for the Claude Code skills one engineer uses every day. Matt Pocock built them to…** (Notable; agents_mcp_skills; x) - Matt Pocock's Claude Code skills (/grill-me, /tdd, /diagnosing-bugs, /grill-with-docs) target common agent failure modes and install in one command, so they're a low-effort workflow test.
+  - Link: https://x.com/RoundtableSpace/status/2110366262450647202
+
+- **ComfyUI v0.40.0 released** (Notable; dev_tooling; reddit) - A new ComfyUI release (v0.40.0) matters for your AI image and video tooling, but the item gives no changelog, so check its release notes for breaking node or API changes before upgrading.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5nu99/comfyui_v0400_released/
+
+- **Your AI Isn’t the Problem. Your Infrastructure Is. — Jiachen Jiang, Coder** (Notable; agents_mcp_skills; youtube) - An agent that holds destructive credentials can act on them despite written instructions, so enforced sandboxing, short-lived tokens, and out-of-reach audit logs matter more than prompt-level rules.
+  - Link: https://www.youtube.com/watch?v=Wb2v9Phhnns
+
+- **A Year of Fast Apply: The Path to 10k Tokens per Second** (Notable; model_release; email) - Relace Apply 3 is a fast code-edit applying model (reported 10k tokens/sec, 256k context) relevant to agentic coding tools that apply diffs, though its speed claims are vendor-reported and unverified.
+  - Link: https://relace.ai/old/blog/relace-apply-3?utm_source=tldrdev
+
+- **Updated list of official MCP servers (300+), well-known and widely used projects only** (Notable; agents_mcp_skills; reddit) - A curated directory of 280+ officially maintained MCP servers, useful as a shortlist of vendor-backed integrations to evaluate before writing your own.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5j0p7/updated_list_of_official_mcp_servers_300/
+
 ## 2026-10-14
 
 - **Claude Code v2.1.295-2.1.299** (AI/Claude tooling) - Run of releases adding fail-closed hooks, idle compaction and subagent compaction controls.
