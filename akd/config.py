@@ -28,6 +28,7 @@ class Config:
     x_min_likes: int = 50
     x_max_items: int = 150
     per_source_pick_cap: dict[str, int] = field(default_factory=dict)
+    max_notable_per_source: int = 0  # 0 = unlimited
     email_senders: list[str] = field(default_factory=list)
     email_mailbox: str = "INBOX"
     email_max_messages: int = 6
@@ -56,6 +57,7 @@ def load_config(path: Path) -> Config:
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
+        max_notable_per_source=int(raw.get("max_notable_per_source", 0)),
         per_source_pick_cap={str(k): int(v) for k, v in (raw.get("per_source_pick_cap") or {}).items()},
         email_senders=[str(s) for s in email.get("senders") or []],
         email_mailbox=str(email.get("mailbox", "INBOX")),

@@ -9,6 +9,7 @@ per_source_pick_cap:   # at most this many Top picks from one source; the rest f
   reddit: 2
   youtube: 2
 max_notable: 10
+max_notable_per_source: 4   # one source can fill at most this many 'Also notable' slots; it keeps its most relevant items
 min_notable_rank: 0.35
 hype_penalty: 0.5
 low_confidence_threshold: 0.4
