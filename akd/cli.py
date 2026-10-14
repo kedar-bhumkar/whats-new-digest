@@ -14,6 +14,7 @@ from pathlib import Path
 
 import httpx
 
+from akd.collectors.email import EmailCollector
 from akd.collectors.github import GitHubCollector
 from akd.collectors.reddit import RedditCollector
 from akd.collectors.web import WebCollector
@@ -86,6 +87,7 @@ def _collectors(cfg, client: httpx.Client):
         WebCollector(cfg, client),
         YouTubeCollector(cfg, client, token=os.environ.get("APIFY_TOKEN")),
         XCollector(cfg, client, token=os.environ.get("APIFY_TOKEN")),
+        EmailCollector(cfg, client, os.environ.get("GMAIL_ADDRESS"), os.environ.get("GMAIL_APP_PASSWORD")),
     ]
 
 

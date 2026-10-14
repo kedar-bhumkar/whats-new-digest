@@ -56,3 +56,13 @@ x:
   searches: []             # e.g. ["claude code", "MCP server"]
   min_likes: 50            # drops low-engagement noise
   max_items: 150           # hard cap per run; this bounds the Apify bill
+
+# Email newsletters (dedicated Gmail inbox, read over IMAP with an app password): off unless the
+# GMAIL_ADDRESS and GMAIL_APP_PASSWORD secrets are set. `senders` match the From name/address as
+# case-insensitive text; the run logs every sender it sees so you can tighten this list.
+# AINews is deliberately absent: it already arrives through the Latent Space web feed.
+email:
+  mailbox: INBOX
+  senders: [tldr, rundown]
+  max_messages: 6          # newest matching emails processed per run
+  max_stories: 15          # stories kept per email

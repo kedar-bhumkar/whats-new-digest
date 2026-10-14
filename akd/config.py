@@ -28,6 +28,10 @@ class Config:
     x_min_likes: int = 50
     x_max_items: int = 150
     per_source_pick_cap: dict[str, int] = field(default_factory=dict)
+    email_senders: list[str] = field(default_factory=list)
+    email_mailbox: str = "INBOX"
+    email_max_messages: int = 6
+    email_max_stories: int = 15
 
 
 def load_config(path: Path) -> Config:
@@ -38,6 +42,7 @@ def load_config(path: Path) -> Config:
     if abs(sum(weights.values()) - 1.0) > 1e-9:
         raise ValueError("weights must sum to 1.0")
     x = raw.get("x") or {}
+    email = raw.get("email") or {}
     return Config(
         weights=weights,
         max_picks=int(raw["max_picks"]),
@@ -52,6 +57,10 @@ def load_config(path: Path) -> Config:
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
         per_source_pick_cap={str(k): int(v) for k, v in (raw.get("per_source_pick_cap") or {}).items()},
+        email_senders=[str(s) for s in email.get("senders") or []],
+        email_mailbox=str(email.get("mailbox", "INBOX")),
+        email_max_messages=int(email.get("max_messages", 6)),
+        email_max_stories=int(email.get("max_stories", 15)),
         x_handles=[str(h).lstrip("@") for h in x.get("handles") or []],
         x_searches=[str(t) for t in x.get("searches") or []],
         x_min_likes=int(x.get("min_likes", 50)),

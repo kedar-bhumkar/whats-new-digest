@@ -51,6 +51,8 @@ jobs:
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}   # optional: X stays off while unset
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}   # optional: email stays off while unset
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           if [ "$DRY_RUN" = "true" ]; then
