@@ -15,6 +15,17 @@ from akd.models import Item
 log = logging.getLogger("akd.collectors.web")
 
 
+def _body(entry) -> str:
+    """The richest text a feed entry offers: many feeds (Substack among them) put a short teaser in `summary`
+    and the real article in `content`, and the scorer needs the article."""
+    body = strip_html(entry.get("summary", ""))
+    for block in entry.get("content") or []:
+        full = strip_html(block.get("value", ""))
+        if len(full) > len(body):
+            body = full
+    return body
+
+
 class WebCollector:
     """Configured RSS/Atom feeds (vendor blogs, aggregators)."""
 
@@ -44,7 +55,7 @@ class WebCollector:
                         source="web",
                         title=strip_html(entry.get("title", "")),
                         url=link,
-                        text=clip(strip_html(entry.get("summary", ""))),
+                        text=clip(_body(entry)),
                         published_at=published,
                     )
                 )

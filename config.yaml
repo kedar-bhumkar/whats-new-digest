@@ -23,6 +23,7 @@ subreddits:
 
 feeds:
   - https://openai.com/news/rss.xml
+  - https://www.latent.space/feed
   - https://hnrss.org/newest?q=Claude&points=100
   - https://hnrss.org/newest?q=LLM&points=150
   - https://hnrss.org/newest?q=MCP&points=50

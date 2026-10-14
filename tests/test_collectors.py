@@ -413,3 +413,21 @@ def test_shipped_config_caps_youtube_picks():
     caps = load_config(ROOT / "config.yaml").per_source_pick_cap
     assert caps.get("youtube") == 2 and caps.get("reddit") == 2
 
+FULL_BODY_RSS = b"""<?xml version="1.0"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>t</title>
+<item><title>Newsletter</title><link>https://e.com/n</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0000</pubDate>
+<description>Short teaser.</description>
+<content:encoded><![CDATA[<p>Teaser.</p><p>The full body has the real detail about Gemini 4 and the benchmark results.</p>]]></content:encoded></item>
+<item><title>Plain</title><link>https://e.com/p</link><pubDate>Mon, 12 Oct 2026 11:00:00 +0000</pubDate><description>Only a description here.</description></item>
+</channel></rss>"""
+
+
+def test_web_prefers_the_full_content_body_over_a_short_summary():
+    items = WebCollector(cfg(), client_for({"": FULL_BODY_RSS})).collect()
+    by_title = {i.title: i for i in items}
+    assert "real detail about Gemini 4" in by_title["Newsletter"].text
+    assert by_title["Plain"].text == "Only a description here."
+
+
+def test_shipped_config_includes_latent_space():
+    assert "https://www.latent.space/feed" in cfg().feeds
+
