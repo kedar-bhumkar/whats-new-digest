@@ -21,6 +21,7 @@ from akd.collectors.web import WebCollector
 from akd.collectors.x import XCollector
 from akd.collectors.youtube import YouTubeCollector
 from akd.config import load_config, load_profile
+from akd.group import group_stories, pairs_report
 from akd.models import Item, Scored
 from akd.pipeline import format_tune, gather, published_ids_from, rank_all, run
 from akd.publish import ITEMS_RELPATH, MD_NAME
@@ -80,6 +81,22 @@ def _score_sync(items: list[Item], profile: str, low_conf: float) -> list[Scored
     return asyncio.run(go())
 
 
+def _group_sync(ranked: list[Scored], cfg, pairs_path: Path) -> list[Scored]:
+    """Fold same-story items under their highest-ranked match with Jev; keep the raw pair scores for tuning."""
+    from typesafe_sdk import AsyncTypeSafeClient
+
+    async def go():
+        async with AsyncTypeSafeClient() as client:
+            return await group_stories(ranked, cfg, client)
+
+    grouped, probs = asyncio.run(go())
+    pairs_path.parent.mkdir(parents=True, exist_ok=True)
+    pairs_path.write_text(
+        json.dumps(pairs_report(ranked[: cfg.group_shortlist], probs), ensure_ascii=False, indent=1), encoding="utf-8"
+    )
+    return grouped
+
+
 def _collectors(cfg, client: httpx.Client):
     return [
         GitHubCollector(cfg, client),
@@ -128,6 +145,7 @@ def cmd_run(args) -> int:
             digest_dir,
             site_dir,
             on_scored=lambda ranked: save_scored(ranked, args.out / "scored.json"),
+            grouper=lambda ranked: _group_sync(ranked, cfg, args.out / "pairs.json"),
         )
     print(f"published {len(selected)} items for {day} ({'dry-run -> ' + str(args.out) if args.dry_run else 'live'})")
     return 0

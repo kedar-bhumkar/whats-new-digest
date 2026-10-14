@@ -29,6 +29,9 @@ class Config:
     x_max_items: int = 150
     per_source_pick_cap: dict[str, int] = field(default_factory=dict)
     max_notable_per_source: int = 0  # 0 = unlimited
+    group_threshold: float = 0.5
+    group_shortlist: int = 40  # 0 = grouping off
+    group_also_max: int = 5
     email_senders: list[str] = field(default_factory=list)
     email_mailbox: str = "INBOX"
     email_max_messages: int = 6
@@ -57,6 +60,9 @@ def load_config(path: Path) -> Config:
         feeds=list(raw.get("feeds", [])),
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
+        group_threshold=float(raw.get("group_threshold", 0.5)),
+        group_shortlist=int(raw.get("group_shortlist", 40)),
+        group_also_max=int(raw.get("group_also_max", 5)),
         max_notable_per_source=int(raw.get("max_notable_per_source", 0)),
         per_source_pick_cap={str(k): int(v) for k, v in (raw.get("per_source_pick_cap") or {}).items()},
         email_senders=[str(s) for s in email.get("senders") or []],

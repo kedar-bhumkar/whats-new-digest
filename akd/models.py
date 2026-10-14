@@ -26,6 +26,7 @@ class Scored:
     confidence: float
     rank: float = 0.0
     low_confidence: bool = False
+    also: list[Item] = field(default_factory=list)  # other items covering the same story (see group.py)
 
 
 @dataclass
