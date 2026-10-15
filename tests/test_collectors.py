@@ -524,3 +524,64 @@ def test_web_limits_article_fetches_per_run():
     items = collector.collect()
     assert len(items) == len(links)
     assert len(fetched) == MAX_ARTICLE_FETCHES
+
+
+def test_web_stops_fetching_from_a_host_after_its_first_failure():
+    links = [f"https://news.example.com/articles/{n}" for n in range(6)]
+    pages = {u: (403, b"") for u in links}
+    collector, fetched = web_with_pages(rss(*[(f"T{n}", u, TEASER) for n, u in enumerate(links)]), pages)
+    items = collector.collect()
+    assert len(items) == len(links) and all(i.text == TEASER for i in items)
+    assert len(fetched) == 1
+
+
+def test_web_a_blocked_feed_does_not_starve_the_next_feed_of_article_fetches():
+    from dataclasses import replace
+
+    from akd.collectors.web import MAX_ARTICLE_FETCHES
+
+    blocked = [f"https://blocked.example.com/a/{n}" for n in range(MAX_ARTICLE_FETCHES + 5)]
+    open_links = [f"https://open.example.com/a/{n}" for n in range(3)]
+    feeds = {
+        "https://blocked.example.com/feed": rss(*[(f"B{n}", u, TEASER) for n, u in enumerate(blocked)]),
+        "https://open.example.com/feed": rss(*[(f"O{n}", u, TEASER) for n, u in enumerate(open_links)]),
+    }
+    fetched: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        url = str(request.url)
+        if url in feeds:
+            return httpx.Response(200, content=feeds[url])
+        fetched.append(url)
+        return httpx.Response(403) if "blocked." in url else httpx.Response(200, content=ARTICLE_HTML.encode())
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    collector = WebCollector(replace(cfg(), feeds=list(feeds)), client, sleep=lambda s: None)
+    items = {i.title: i for i in collector.collect()}
+    assert [u for u in fetched if "open." in u] == open_links
+    assert all("full story about the model" in items[f"O{n}"].text for n in range(3))
+
+
+def test_web_article_fetch_cap_applies_per_feed():
+    from dataclasses import replace
+
+    from akd.collectors.web import MAX_ARTICLE_FETCHES
+
+    feeds = {}
+    for host in ("one", "two"):
+        feeds[f"https://{host}.example.com/feed"] = rss(
+            *[(f"{host}{n}", f"https://{host}.example.com/a/{n}", TEASER) for n in range(MAX_ARTICLE_FETCHES + 3)]
+        )
+    fetched: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        url = str(request.url)
+        if url in feeds:
+            return httpx.Response(200, content=feeds[url])
+        fetched.append(url)
+        return httpx.Response(200, content=ARTICLE_HTML.encode())
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    WebCollector(replace(cfg(), feeds=list(feeds)), client, sleep=lambda s: None).collect()
+    assert len([u for u in fetched if "one." in u]) == MAX_ARTICLE_FETCHES
+    assert len([u for u in fetched if "two." in u]) == MAX_ARTICLE_FETCHES

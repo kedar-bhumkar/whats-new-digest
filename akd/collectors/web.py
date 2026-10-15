@@ -18,7 +18,7 @@ from akd.models import Item
 log = logging.getLogger("akd.collectors.web")
 
 MIN_FEED_TEXT = 200  # shorter feed text is a teaser ("PLUS: ..."), not the story, and scores as a bare headline
-MAX_ARTICLE_FETCHES = 20  # article pages fetched per run, so a chatty feed cannot turn into a crawl
+MAX_ARTICLE_FETCHES = 20  # article pages fetched per feed per run, so a chatty feed cannot turn into a crawl
 
 
 def _body(entry) -> str:
@@ -67,13 +67,13 @@ def _host(url: str) -> str:
     return (urlsplit(url).hostname or "").removeprefix("www.")
 
 
-def _article_text(client: httpx.Client, url: str, sleep: Callable[[float], None]) -> str:
-    """The article's own summary and body, or "" when the page cannot be fetched or has no usable text."""
+def _article_text(client: httpx.Client, url: str, sleep: Callable[[float], None]) -> str | None:
+    """The article's own summary and body; "" when the page has no usable text; None when it cannot be fetched."""
     try:
         resp = get_with_retry(client, url, sleep)
     except httpx.HTTPError as exc:
         log.info("article fetch failed: %s (%s)", url, exc)
-        return ""
+        return None
     parser = _ArticleExtractor()
     parser.feed(resp.text)
     parser.close()
@@ -93,8 +93,9 @@ class WebCollector:
 
     def collect(self) -> list[Item]:
         items: list[Item] = []
-        fetches = 0
+        unreachable: set[str] = set()  # hosts whose pages failed once this run: a blocked site costs one request
         for feed_url in self.cfg.feeds:
+            fetches = 0
             try:
                 parsed = feedparser.parse(get_with_retry(self.client, feed_url, self.sleep).content)
             except Exception:
@@ -108,9 +109,13 @@ class WebCollector:
                 text = _body(entry)
                 # Teasers are replaced by the article itself, but only from the feed's own site: the aggregator
                 # feeds (Hacker News) link anywhere, and fetching arbitrary pages is not this collector's job.
-                if len(text) < MIN_FEED_TEXT and fetches < MAX_ARTICLE_FETCHES and _host(link) == _host(feed_url):
+                host = _host(link)
+                if len(text) < MIN_FEED_TEXT and fetches < MAX_ARTICLE_FETCHES and host == _host(feed_url) and host not in unreachable:
                     fetches += 1
-                    text = _article_text(self.client, link, self.sleep) or text
+                    article = _article_text(self.client, link, self.sleep)
+                    if article is None:
+                        unreachable.add(host)
+                    text = article or text
                 items.append(
                     Item(
                         id=item_id(link),
