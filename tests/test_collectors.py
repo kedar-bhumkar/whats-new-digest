@@ -431,3 +431,96 @@ def test_web_prefers_the_full_content_body_over_a_short_summary():
 def test_shipped_config_includes_latent_space():
     assert "https://www.latent.space/feed" in cfg().feeds
 
+
+
+# --- web: short feed teasers are replaced by the article's own text ---
+
+ARTICLE_HTML = """<html><head>
+<meta property="og:description" content="Meta&#x27;s new model lands near the frontier. Here&#x27;s what it means.">
+</head><body><nav>menu menu</nav>
+<article><h1>Big headline</h1><p>Good morning. The full story about the model, with real detail.</p>
+<script>var tracker = 1;</script></article><footer>footer links</footer></body></html>"""
+
+FEED_URL = "https://news.example.com/feed"
+TEASER = "PLUS: Put it to work"
+
+
+def rss(*entries):
+    body = "".join(
+        f"<item><title>{t}</title><link>{link}</link><description>{d}</description>"
+        f"<pubDate>Mon, 12 Oct 2026 10:00:00 GMT</pubDate></item>"
+        for t, link, d in entries
+    )
+    return f'<?xml version="1.0"?><rss version="2.0"><channel><title>t</title>{body}</channel></rss>'.encode()
+
+
+def web_with_pages(feed_xml, pages):
+    """A web collector for one feed; `pages` maps URL -> (status, body). Returns (collector, fetched page URLs)."""
+    from dataclasses import replace
+
+    fetched: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        url = str(request.url)
+        if url == FEED_URL:
+            return httpx.Response(200, content=feed_xml)
+        fetched.append(url)
+        status, body = pages.get(url, (404, b""))
+        return httpx.Response(status, content=body)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    one_feed = replace(cfg(), feeds=[FEED_URL])
+    return WebCollector(one_feed, client, sleep=lambda s: None), fetched
+
+
+def test_web_short_teaser_is_replaced_with_the_article_text():
+    link = "https://news.example.com/articles/meta"
+    collector, fetched = web_with_pages(rss(("Meta ships", link, TEASER)), {link: (200, ARTICLE_HTML.encode())})
+    (item,) = collector.collect()
+    assert fetched == [link]
+    assert "Meta's new model lands near the frontier" in item.text
+    assert "full story about the model" in item.text
+    assert "tracker" not in item.text and "menu menu" not in item.text and "footer links" not in item.text
+
+
+def test_web_long_feed_text_does_not_trigger_a_page_fetch():
+    link = "https://news.example.com/articles/long"
+    long_text = "A full length summary. " * 20
+    collector, fetched = web_with_pages(rss(("Long", link, long_text)), {link: (200, ARTICLE_HTML.encode())})
+    (item,) = collector.collect()
+    assert fetched == []
+    assert item.text.startswith("A full length summary.")
+
+
+def test_web_only_fetches_pages_on_the_feeds_own_host():
+    link = "https://other.example.org/story"
+    collector, fetched = web_with_pages(rss(("Elsewhere", link, TEASER)), {link: (200, ARTICLE_HTML.encode())})
+    (item,) = collector.collect()
+    assert fetched == []
+    assert item.text == TEASER
+
+
+def test_web_article_fetch_failure_keeps_the_teaser():
+    link = "https://news.example.com/articles/blocked"
+    collector, fetched = web_with_pages(rss(("Blocked", link, TEASER)), {link: (403, b"")})
+    (item,) = collector.collect()
+    assert fetched == [link]
+    assert item.text == TEASER
+
+
+def test_web_article_page_without_usable_text_keeps_the_teaser():
+    link = "https://news.example.com/articles/empty"
+    collector, _ = web_with_pages(rss(("Empty", link, TEASER)), {link: (200, b"<html><body>nothing here</body></html>")})
+    (item,) = collector.collect()
+    assert item.text == TEASER
+
+
+def test_web_limits_article_fetches_per_run():
+    from akd.collectors.web import MAX_ARTICLE_FETCHES
+
+    links = [f"https://news.example.com/articles/{n}" for n in range(MAX_ARTICLE_FETCHES + 5)]
+    pages = {u: (200, ARTICLE_HTML.encode()) for u in links}
+    collector, fetched = web_with_pages(rss(*[(f"T{n}", u, TEASER) for n, u in enumerate(links)]), pages)
+    items = collector.collect()
+    assert len(items) == len(links)
+    assert len(fetched) == MAX_ARTICLE_FETCHES
