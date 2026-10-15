@@ -144,6 +144,22 @@ Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry
 
 No GitHub repos today: my one search surfaced no fresh October trending list, and I could not verify license, maintainer history or install safety for any candidate, so I skipped them.
 
+## 2026-10-15
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's new small model (`claude-haiku-5-5`), released Oct 7, priced at $0.10/$0.50 per million input/output tokens (about 75% cheaper than Haiku 4.5 by Anthropic's account), with an adjustable effort setting.
+  - Why it matters: a cheap subagent for compaction, classification, summaries and DB queries next to Sonnet 5.5 / Opus 5.5. Anthropic's own benchmarks show it well behind Sonnet 5.5 on agentic coding (Terminal-Bench 4.0: 39.2% vs 70.6%), so keep it to narrow, well-scoped tasks. Sonnet 5.5 cache reads were also halved to $0.10 per million tokens. Computer/browser use is in beta in the Python and TypeScript SDKs.
+  - Link: https://www.anthropic.com/news/claude-haiku-5-5
+
+- **openqodex** (GitHub repo) - Runs scanners (secrets, SAST, dependencies, lint, IaC) on unpushed changes, then has a separate reviewer (your Claude Code or Codex login) triage each finding. Can install a pre-push hook and a push gate for coding agents.
+  - Why it matters: a drop-in pre-push review gate when AI agents write most of the code.
+  - Link: https://github.com/openqodex/openqodex
+  - Safety note: Apache-2.0, 709 stars, 56 forks, created 2026-10-02, active within the last day. Last-commit date and contributor count could not be confirmed from the repo page. A bundled scanner (Bearer) is under Elastic License 2.0, which is not OSI-approved. `npx openqodex init` writes hooks into your agent config and downloads scanner binaries, so read what it will write and prefer the pinned version.
+
+- **big-arrow-on-the-screen** (GitHub repo) - macOS CLI (`bigarrow`) that lets Claude Code or Codex draw click-through arrows, boxes and text on screen, packaged with an agent skill. It points only and does not click, type or capture the screen.
+  - Why it matters: a lightweight way for an agent to guide you through a UI.
+  - Link: https://github.com/franzenzenhofer/big-arrow-on-the-screen
+  - Safety note: MIT, 748 stars, created 2026-10-08, 161 commits. Contributor count and last-commit date could not be confirmed. Installs via a personal Homebrew tap, so review the formula first. The skill file shapes agent behaviour, so read it too.
+
 ## 2026-10-12
 
 - **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release: an agent can write a workflow program that fans out many agents in phases and combines their results, run server-side in the background.
