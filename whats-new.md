@@ -2,6 +2,21 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-16
+
+- **Claude Code v2.1.299 - v2.1.301** (AI / Claude tooling) - Idle compaction, richer OpenTelemetry tool-decision events, and Read/Grep fixes.
+  - Why it matters: v2.1.299 compacts conversations of 200K+ tokens idle ~54 min before the 1-hour prompt cache expires (tune with `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` or `"idleCompaction": false`), cutting reprocessing cost on resumed sessions. v2.1.301 adds `classifier_verdict` and `permission_mode` to OTel `tool_decision` events, `CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS` to stop unattended retries stuck on far-off usage limits, and fixes Read treating binary files (.parquet, .xlsm, .epub, .heic) as text and Grep/Glob reporting "no matches" on errors.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Code v2.1.296** (AI / Claude tooling) - Subagent and cost controls (released Oct 9, found while backfilling).
+  - Why it matters: `autoCompactWindow` in subagent frontmatter, `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` to pin all workflow agents to one model, MCP tool description limit raised from 2,048 to 4,096 chars, and Sonnet 5.5 cache reads now priced at $0.10/M tokens in `/cost` and the SDK.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **deepseek-ai/deepseek-harness** (GitHub repo) - Open-source agent harness from DeepSeek AI with an "everything-is-a-plugin" architecture.
+  - Why it matters: a pluggable agent runtime you can study or extend as an alternative to other coding-agent harnesses. Developer preview; the README warns of breaking changes.
+  - Link: https://github.com/deepseek-ai/deepseek-harness
+  - Safety note: MIT license, ~251k stars, 22k+ commits. Last commit date, contributor list and releases were not visible on the page, so treat as unvetted; review before installing and pin versions.
+
 ## 2026-10-15 (AKD)
 
 - **nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB · Hugging Face** (Top pick; model_release; reddit) - A 74B-total, 9B-active Mamba-Transformer VLM quantized to 2-bit to fit in 24GB, with 256K context, for local agentic use: a practical option if you run agents on a single consumer GPU.
