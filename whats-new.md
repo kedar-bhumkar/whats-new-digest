@@ -2,6 +2,60 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-16 (AKD)
+
+- **reflection/Beam-1.0-501B-A23B · Hugging Face** (Top pick; model_release; reddit) - Open-weight 501B-parameter MoE model (23B active, 1M context) that claims ~3x fewer reasoning tokens than leading open models, with MCP and agentic coding harness support.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x7g4k3/reflectionbeam10501ba23b_hugging_face/
+
+- **Muse Spark Open** (Top pick; model_release; email) - A new open-weight 816B multimodal model with a 1M-token context, built for agentic coding and runnable locally on two Apple M5 Ultra Mac Studios via MLX, which is directly relevant to self-hosted age…
+  - Link: https://research.meta.ai/blog/muse-spark-open?utm_source=tldrai
+  - Also covered by: [Meta unveils Muse Spark Open](https://venturebeat.com/technology/meta-unveils-muse-spark-open-the-new-top-u-s-open-weights-model-and-it-runs-on-two-paired-mac-desktops?utm_source=tldrnewsletter) (email)
+  - Also covered by: [META JUST RELEASED THE MOST CAPABLE US OPEN-WEIGHT MODEL TO DATE, AND YOU CAN RUN IT YOURSELF. > Mu…](https://x.com/RoundtableSpace/status/2111091037821440034) (x)
+  - Also covered by: [[AINews] Agents disprove Polysemanticity; greatly improve Interpretability & Alignment](https://www.latent.space/p/ainews-agents-disprove-polysemanticity) (web)
+  - Also covered by: [model: add Muse Spark Open (text, vision and audio) by ServeurpersoCom · Pull Request #30616 · ggml-org/llama.cpp](https://www.reddit.com/r/LocalLLaMA/comments/1x6youd/model_add_muse_spark_open_text_vision_and_audio/) (reddit)
+
+- **Opus 5.5 fast mode in the Claude Platform is no longer in research preview, and we’ve removed the w…** (Top pick; model_release; x) - Opus 5.5 fast mode is now generally available on the Claude Platform with no waitlist, up to 2.5x faster at $8/$40 per million tokens, and also on Azure Foundry.
+  - Link: https://x.com/ClaudeDevs/status/2110825294655562048
+
+- **Nvidia releases Nemotron 3.5 Super VL** (Top pick; model_release; email) - Nvidia's open multimodal reasoning model with NVFP4 quantized weights is relevant to agent builders evaluating self-hosted vision models that use fewer output tokens than the prior release.
+  - Link: https://developer.nvidia.com/blog/nvidia-nemotron-3-5-super-vl-powers-specialized-agents-with-multimodal-reasoning/?utm_source=tldrai
+
+- **Flux.3 Image Klein is now out** (Top pick; model_release; reddit) - A 5.6B open-weights image model that takes up to 10 reference images and runs locally in one model, relevant to your ComfyUI image tooling.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x6s7el/flux3_image_klein_is_now_out/
+  - Also covered by: [FLUX.3 Image Klein just got weights published on hugging face](https://www.reddit.com/r/LocalLLaMA/comments/1x6t5fc/flux3_image_klein_just_got_weights_published_on/) (reddit)
+  - Also covered by: [FLUX 3 Image Klein](https://bfl.ai/blog/flux-3-image-klein?utm_source=tldrai) (email)
+
+- **anthropics/anthropic-sdk-python v1.15.0** (Notable; dev_tooling; github) - The Python SDK v1.15.0 adds a `speed` parameter and `usage.speed` to Messages, plus `between_tools` thinking types, so you can adopt them without breaking existing calls; note that some models need a…
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.15.0
+
+- **anthropics/claude-code v2.1.301** (Notable; dev_tooling; github) - Claude Code v2.1.301 adds retry-watchdog usage-limit cutoffs and richer OpenTelemetry tool-decision events, and fixes a `fable`/`best` alias error that breaks requests when the newest Fable model isn…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.301
+
+- **New paper from Stanford, Together AI, UIUC, and Meta introduces Hybrid Reasoning Agents. These AI models think mostly in a hidden internal way (faster and cheaper), and only use normal text when they need tools or give the final answer.** (Notable; research; reddit) - It's a research paper on latent-space reasoning agents that claim roughly 10% accuracy gains, half the tokens, and 2x speed, but the post notes it's an adaptation for current text-reasoning models an…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x7a8i8/new_paper_from_stanford_together_ai_uiuc_and_meta/
+
+- **Perplexity open-sources its agent sandbox** (Notable; agents_mcp_skills; email) - Perplexity open-sourced SPACE, the sandbox behind its Computer agent, relevant to your interest in agent sandboxing and security.
+  - Link: https://www.perplexity.ai/hub/blog/open-sourcing-space?utm_source=tldrai
+
+- **Code Review is now generally available for Claude Team and Enterprise plans. Reviews are now faster…** (Notable; dev_tooling; x) - Claude Code Review is now GA on Team and Enterprise plans, with per-repo Quick, Standard, or Deep levels that an admin can set for automated PR reviews.
+  - Link: https://x.com/ClaudeDevs/status/2110866210573386065
+  - Also covered by: [Claude Code Review is now generally available for Team and Enterprise plans Reviews run about 3x fa…](https://x.com/RoundtableSpace/status/2110940042990592508) (x)
+
+- **open source framework that makes your AI agents generate UI elements** (Notable; repo_library; reddit) - OpenUI 1.0 is an MIT-licensed, model-agnostic framework letting agents compose UI from your own component library, a possible fit for React/Tailwind work and agent-driven interfaces.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x6yage/open_source_framework_that_makes_your_ai_agents/
+
+- **Introducing Devin Oncall** (Notable; agents_mcp_skills; email) - Devin Oncall is now GA for production incident triage, pairing a coding agent with company-specific skills and memory, plus a review agent that checks diagnoses. Relevant if you're evaluating agentic…
+  - Link: https://devin.ai/blog/introducing-devin-oncall?utm_source=tldrdev
+
+- **How Meta Built Forum With AI-Native Engineering** (Notable; agents_mcp_skills; email) - Meta's account of agents running planning, implementation, and verification in a real build offers concrete patterns (live app-state inspection, repeatable UI stress tests, excluding prototype code)…
+  - Link: https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/?utm_source=tldrdev
+
+- **OpenMOSS releases MOSS-Image** (Notable; model_release; reddit) - An Apache-licensed open-weight image model with a base variant, offering a self-hostable alternative to Qwen Image and Flux for local image generation experiments.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x7ey7i/openmoss_releases_mossimage/
+
+- **Graphicle-AI/graphicle** (Notable; repo_library; github) - Adds a Rust-based MCP server that gives Claude Code and other agents a persistent code graph and memory, a drop-in candidate to test against your own repos this week.
+  - Link: https://github.com/Graphicle-AI/graphicle
+
 ## 2026-10-16
 
 - **Claude Code v2.1.299 - v2.1.301** (AI / Claude tooling) - Idle compaction, richer OpenTelemetry tool-decision events, and Read/Grep fixes.
