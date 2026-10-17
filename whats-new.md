@@ -2,6 +2,34 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-17
+
+- **Claude Code v2.1.300–2.1.302** (AI/Claude tooling) - Three releases in three days (Oct 14–16).
+  - Why it matters: `CLAUDE_CODE_AUTO_MODE_MODEL` picks the model for the auto-mode classifier; fork subagents are now on by default in `claude -p`, the Agent SDK, desktop and VS Code; new OpenTelemetry GenAI span attributes and cache-creation token counts; the `fable` alias now falls back one model if the newest Fable isn't available to your org; Read tool now refuses images over 128 MB.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Managed Agents dynamic workflows (beta)** (AI/Claude tooling) - Agents can write workflows that fan out many agents in phases in the background (Oct 9).
+  - Why it matters: enable with `{"type": "multiagent_20261001", "workflows": {"type": "enabled"}}` and the `managed-agents-2026-04-01` beta header; progress arrives as `workflow_run.*` events. Useful for batch review/migration jobs without writing your own orchestrator.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **OpenTelemetry export for Messages API and Managed Agents (beta)** (AI/Claude tooling) - Trace API requests and agent sessions in your own observability backend (Oct 14). Python SDK v1.14.0 adds native OTel tracing that uses your global tracer provider automatically (opt out with `open_telemetry=False` or `ANTHROPIC_OPEN_TELEMETRY=false`).
+  - Why it matters: LLM calls show up in existing traces with no custom wrapper code; SDKs for Python, TypeScript, C#, Go, Java, PHP and Ruby emit spans.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+- **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude tooling) - 1M-token context, 128k max output, adaptive thinking on by default (Oct 7); Claude Code now defaults to it where Haiku is used.
+  - Why it matters: migrating from Haiku 4.5 can return 400 errors if you send `budget_tokens`, `temperature`, `top_p`, `top_k` or assistant prefill, or use the `computer_20250124` tool. Thinking text is hidden unless `thinking.display` is `"summarized"`. Python/TS SDKs also gained browser-use and computer-use tool classes (beta).
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Sonnet 5.5 cache-read price cut** (AI/Claude tooling) - Prompt cache reads dropped from $0.20 to $0.10 per million tokens (Oct 7); other prices unchanged.
+  - Why it matters: halves the cost of the cached-prefix portion of long agent loops and big-context workloads.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Managed Agents `limited` networking tightened** (AI/Claude tooling) - `allowed_hosts` now also governs `web_search` and `web_fetch`; `web_fetch` only fetches URLs already in the session context, else `url_not_in_prior_context` (Oct 7).
+  - Why it matters: a safer default against prompt-injected exfiltration, but agents that construct URLs themselves will need adjusting.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Repos:** none added today. The one trending candidate surfaced (deepseek-ai/deepseek-harness, MIT, developer preview) has unverifiable activity/contributor data and star/fork counts I couldn't corroborate, so I'm skipping it until it can be vouched for.
+
 ## 2026-10-16 (AKD)
 
 - **reflection/Beam-1.0-501B-A23B · Hugging Face** (Top pick; model_release; reddit) - Open-weight 501B-parameter MoE model (23B active, 1M context) that claims ~3x fewer reasoning tokens than leading open models, with MCP and agentic coding harness support.
