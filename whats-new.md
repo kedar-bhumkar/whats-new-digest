@@ -2,6 +2,38 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-18
+
+- **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude) - New small Claude model with a 1M context window (launched Oct 7).
+  - Why it matters: cheap, fast model for sub-agents and classification steps; some Haiku 4.5 request patterns now return 400s, so check the migration guide before swapping.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Fast mode GA for Claude Opus 5.5** (AI/Claude) - Fast mode left research preview on Oct 15; the beta header is no longer required, and it is available on Microsoft Foundry.
+  - Why it matters: lower-latency Opus for interactive agent loops without special opt-in code.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **OpenTelemetry export for Messages API and Managed Agents (beta)** (AI/Claude) - Trace API requests and Managed Agents sessions with OTel (Oct 14).
+  - Why it matters: plugs agent runs into existing observability stacks for debugging and cost tracking.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Managed Agents dynamic workflows (beta) and scheduled deployments** (AI/Claude) - Dynamic workflows landed Oct 9; scheduled deployments reached Claude Platform on AWS Oct 14.
+  - Why it matters: server-hosted agents that run on a schedule or build their own workflow, without your own orchestration code.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Python/TypeScript SDK computer-use and browser-use tool classes** (AI/Claude) - SDKs added tool classes for browser use and computer use (Oct 7), alongside Sonnet 5.5 prompt-cache reads dropping to $0.10/MTok.
+  - Why it matters: less hand-written tool schema glue for UI-automation agents; cheaper repeated-context workloads.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Tracely-ai** (GitHub) - Trace-native CI/CD for AI agents: grades production traces, clusters failures, freezes them into replayable regression tests and blocks PRs that regress. Self-hostable.
+  - Why it matters: a ready-made way to turn agent failures into regression tests in CI.
+  - Link: https://github.com/jwuthri-cloud/Tracely-ai
+  - Safety note: MIT; created 2026-10-11, repo updated 2026-10-18; only 19 commits and a single visible owner, so it is young. Setup uses docker compose/pip; no curl-to-shell, though `npx skills add` fetches a package. Stars (977) grew fast, so review before relying on it.
+
+- **reason-network** (GitHub) - Peer-to-peer daemon (Rust, iroh) that lets a team's coding agents (Claude Code, Codex, Cursor, etc.) see each other's sessions and message each other through MCP tools.
+  - Why it matters: an approach to multi-agent coordination across machines without a central server.
+  - Link: https://github.com/reason-machines/reason-network
+  - Safety note: MIT OR Apache-2.0; created 2026-10-16, 93 commits. Primary install is `curl | sh` and it adds hooks/MCP servers to every detected agent and runs a background service, so read install.sh first. Default relay is run by n0 (sees encrypted bytes only). Vouch only after code review.
+
 ## 2026-10-17 (AKD)
 
 - **Black Forest Labs has released FLUX 3 Image Klein, a 5.6-billion-parameter image model with downloa…** (Top pick; model_release; x) - Downloadable 5.6B-parameter image model that runs on 8 GB consumer GPUs (INT8), with editing and commercial use free under $5M revenue, relevant to your ComfyUI and image tooling work.
