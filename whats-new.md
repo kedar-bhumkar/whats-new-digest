@@ -2,6 +2,53 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-18 (AKD)
+
+- **FLUX 3 Image Klein** (Top pick; model_release; email) - A 5.6B-parameter open-weight image model with native 4K output and multi-reference editing, a fit for your ComfyUI workflow if you want to test it locally.
+  - Link: https://bfl.ai/blog/flux-3-image-klein?utm_source=tldrai
+
+- **Claude Dashboards and Claude Motion are in beta, and Docs/Slides/Design are now on the Free plan** (Top pick; dev_tooling; reddit) - The standalone claude.ai/design site shuts down December 14 and folds into Claude, so chats and comments won't migrate, while Claude Dashboards (beta, paid plans) can connect to Salesforce and wareho…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x8pgnt/claude_dashboards_and_claude_motion_are_in_beta/
+
+- **[AINews] Agents disprove Polysemanticity; greatly improve Interpretability & Alignment** (Top pick; model_release; web) - Goodfire's essay argues many polysemanticity cases are resolvable by agentic analysis, and Meta's Muse Spark Open (816B MoE, 1M context) is a new top-scoring US open-weight model worth evaluating for…
+  - Link: https://www.latent.space/p/ainews-agents-disprove-polysemanticity
+
+- **Agens Volundr 32B v1: we fixed what you flagged in the Preview. 0/50 loops, session continuation, and an MIT engine that runs it with 262K context (measured to 239K) within a 16 GB budget** (Top pick; model_release; reddit) - Agens Volundr 32B v1 adds session continuation, reducing follow-up turn latency about 2.9x, and its MIT-licensed engine targets 262K context on a 16 GB GPU, relevant for local agentic coding.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x8yc8d/agens_volundr_32b_v1_we_fixed_what_you_flagged_in/
+
+- **Claude Code can now work like a research scientist. K-Dense open-sourced 177 science skills for cod…** (Top pick; agents_mcp_skills; x) - Open-source MIT library of 177 science skills for Claude Code, Codex, and Cursor, covering drug discovery, RDKit, and Scanpy, directly usable as agent skills.
+  - Link: https://x.com/RoundtableSpace/status/2111755415717302527
+
+- **PSA: OpenCode breach - my stored Anthropic key was used to drain ~$158 overnight. Revoke yours.** (Notable; dev_tooling; reddit) - A breach at OpenCode exposed stored Anthropic keys and drained one user's balance overnight, so revoke any keys saved there and set spend limits now.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x8o35r/psa_opencode_breach_my_stored_anthropic_key_was/
+
+- **Anthropic made two official Claude Code plugins that show exactly what your usage bought you. Recei…** (Notable; agents_mcp_skills; x) - Two official Claude Code plugins, receipts and session-report, report local token usage and session history; installable now via /plugin with a clear first step.
+  - Link: https://x.com/RoundtableSpace/status/2111640635396542696
+
+- **Teach Your Agent to Prove It's Done — Nick Nisi & Zack Proser, WorkOS** (Notable; agents_mcp_skills; youtube) - Shows concrete verification loops (CLI health checks, browser snapshots, LLM judges) you can adopt this week to stop agents from declaring false completion.
+  - Link: https://www.youtube.com/watch?v=q4WC4TowkBo
+
+- **How to Know If Your AI Agent Is Any Good: Evals With Phoenix & Claude — Laurie Voss, Arize AI** (Notable; agents_mcp_skills; youtube) - A hands-on workshop on building evals for Claude-powered agents with Arize Phoenix, covering tracing, LLM judges, and CI gating, directly applicable to the reader's agent work.
+  - Link: https://www.youtube.com/watch?v=SHMCGrNJJGc
+
+- **d1-ultra: Liquid AI's Decision Model** (Notable; model_release; email) - A cheap multimodal model with calibrated answers (about $0.042 per million input tokens) on the Liquid API, though Vercel and OpenRouter access is still coming soon, so it's not yet a drop-in option…
+  - Link: https://www.liquid.ai/blog/d1-ultra?utm_source=tldrai
+
+- **Claude Code now starts answering about 3x faster. Anthropic cut p90 time to first token for local s…** (Notable; dev_tooling; x) - Anthropic reports Claude Code's p90 time to first token dropped from 4.07s to 1.33s locally and ~17s to 6s in cloud sessions, which affects day-to-day agent responsiveness.
+  - Link: https://x.com/RoundtableSpace/status/2111657269997826380
+
+- **I built a free Claude connector for live stock market data (SEC filings, earnings calls, 13F, short interest). It's an MCP server and works in ChatGPT too** (Notable; agents_mcp_skills; reddit) - A free, MCP-based Claude connector for SEC filings, earnings transcripts, 13F, and short interest, listed in Claude's connector directory and usable in ChatGPT, with citations back to the source fili…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x8iv1t/i_built_a_free_claude_connector_for_live_stock/
+
+- **I Tested Jev 1.14 on 32 Thumbnails (And It Corrected Me)!** (Notable; model_release; youtube) - Jev 1.14 adds a bounding-box question for locating objects in images, and this video benchmarks its accuracy, latency (431 ms), and cost ($0.116 per 1,000 images) on real thumbnails.
+  - Link: https://www.youtube.com/watch?v=7KGTu1D4bm4
+
+- **fzn0x/idx** (Notable; repo_library; github) - Offers an MCP server for querying Indonesian stock market data (IHSG prices, fundamentals, screening) with no API keys, a ready-made tool for agent experiments, though it's niche and only relevant if…
+  - Link: https://github.com/fzn0x/idx
+
+- **3 small Claude Code habits from other people's setups that I liked** (Notable; agents_mcp_skills; reddit) - Three practical Claude Code habits (subagent selection with tool-access trimming, a Notification hook for waiting-on-input, and a separate reviewer model) are directly adoptable this week, though the…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x8lae3/3_small_claude_code_habits_from_other_peoples/
+
 ## 2026-10-18
 
 - **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude) - New small Claude model with a 1M context window (launched Oct 7).
