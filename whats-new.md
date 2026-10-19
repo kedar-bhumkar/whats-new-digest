@@ -2,6 +2,17 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-19
+
+- **Claude Code v2.1.299–v2.1.303** (AI/Claude tooling) - Run of releases from Oct 14–18 adding idle compaction, fork subagents on by default, and cheaper API requests.
+  - Why it matters: idle compaction compacts >200K-token conversations left idle ~54 min before the 1h prompt cache expires (tune via `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS`); fork subagents are now default in `claude -p` and the Agent SDK (`CLAUDE_CODE_FORK_SUBAGENT=0` to disable); request bodies to api.anthropic.com are gzip-compressed by default; `CLAUDE_CODE_AUTO_MODE_MODEL` picks the auto-mode classifier model; OTel events gained cache-creation 5m/1h token counts and classifier verdicts. Note `--sandbox`/`--no-sandbox` were removed from `claude remote-control`.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **DeepSeek Harness (`dsh`)** (GitHub repo) - Open-source agent harness from DeepSeek AI with an "everything-is-a-plugin" architecture built on Cordis.
+  - Why it matters: a plugin-based harness you can study or extend when building your own agent loops; README labels it a developer preview with breaking changes expected.
+  - Link: https://github.com/deepseek-ai/deepseek-harness
+  - Safety note: MIT license, ~254k stars / ~30.7k forks. Last-commit date and contributor list were not visible in my fetch, so review the code and install steps yourself before running it.
+
 ## 2026-10-18 (AKD)
 
 - **FLUX 3 Image Klein** (Top pick; model_release; email) - A 5.6B-parameter open-weight image model with native 4K output and multi-reference editing, a fit for your ComfyUI workflow if you want to test it locally.
