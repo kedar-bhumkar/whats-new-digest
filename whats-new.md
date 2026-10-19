@@ -2,6 +2,58 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-19 (AKD)
+
+- **modelcontextprotocol/servers v2.0.0** (Top pick; agents_mcp_skills; github) - This is a major-version release of the official MCP reference servers (filesystem, memory, fetch, git, time) that moves them to the modern MCP spec while still answering legacy clients, so check your…
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.0.0
+
+- **DeepSeek-V4.1-Flash-1017 released** (Top pick; model_release; email) - A new open DeepSeek model with roughly 1/8 the KV cache footprint of V4-Flash and better coding and agentic benchmarks, relevant if you self-host or price long-context agent runs.
+  - Link: https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017?utm_source=tldrai
+  - Also covered by: [DeepSeek Just Made Reasoning WAY More Efficient!](https://www.youtube.com/watch?v=YGEz40RSpTE) (youtube)
+
+- **Google open-sourced ARTEMIS. It lets AI use a real Android phone the way a person does. You tell it…** (Top pick; repo_library; x) - Open-source ARTEMIS drives a real Android phone via Claude Code, Cursor, or Codex over USB debugging, a directly testable agent-testing setup worth trying on a spare device.
+  - Link: https://x.com/RoundtableSpace/status/2112170651813597425
+
+- **inclusionAI releases Ming-3.0-audio-flash: 126B MoE / 6.5B active, audio understanding + speech output, MIT** (Top pick; model_release; reddit) - MIT-licensed 126B MoE (6.5B active) audio-in, speech-out model, but its validated setups need four to eight high-memory GPUs, so it's a serious local-deployment test rather than a quick adopt.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9yrfi/inclusionai_releases_ming30audioflash_126b_moe/
+  - Also covered by: [inclusionAI/Ming-3.0-audio-flash · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1x9yd01/inclusionaiming30audioflash_hugging_face/) (reddit)
+
+- **72 hours, four big open weights drops. The only one that fits in 24GB came from NVIDIA, of all companies.** (Top pick; model_release; reddit) - Of the four open-weights drops this week, only NVIDIA's Nemotron 3.5 Bolt (22GB quantized) fits a 24GB GPU, so it's the one practically runnable locally.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one/
+
+- **Cloudflare open-sourced the security audit skill that seeded its own vulnerability hunting harness.…** (Notable; agents_mcp_skills; x) - Cloudflare's MIT-licensed security audit skill runs a multi-phase bug hunt in your coding agent, installable now via `npx skills add ... --skill security-audit`.
+  - Link: https://x.com/RoundtableSpace/status/2112125353594401162
+
+- **Hybrid Reasoning Agents: LLM agents that think in latent space, act through text** (Notable; research; web) - Relevant to agent infrastructure: a research paper and open-source repo (togethercomputer/HybridAgent) proposing agents that reason in latent space and act via text, which could affect how you design…
+  - Link: https://arxiv.org/abs/2610.18861
+  - Also covered by: [HybridAgent Thinks in Latent Space and Acts in Text](https://www.stacksweep.dev/hybridagent-latent-reasoning-text-tool-use/?utm_source=tldrdev) (email)
+
+- **Google Open Sources Harness2 for Self Improving AI Agents** (Notable; agents_mcp_skills; reddit) - Google's open-source Harness2 lets an agent iteratively rewrite its own system prompt, tools, memory, and subagents per task, a direct fit for agent-infrastructure work, though the source is a Reddit…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9gfnb/google_open_sources_harness2_for_self_improving/
+
+- **MiniMax M3.1 Flash released, Model weights Oct 23** (Notable; model_release; reddit) - MiniMax M3.1 Flash is announced with open weights due October 23, a possible self-hostable option to evaluate for agent workloads, though the post itself gives no benchmarks or API details.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9uzv9/minimax_m31_flash_released_model_weights_oct_23/
+  - Also covered by: [MiniMax M3.1 Flash just dropped and the pricing is almost free. >⁠$0.15 input, $0.60 output, $0.015…](https://x.com/RoundtableSpace/status/2112178201577590796) (x)
+  - Also covered by: [Minimax M3.1 Flash is 428B 23a](https://www.reddit.com/r/LocalLLaMA/comments/1x9xc0c/minimax_m31_flash_is_428b_23a/) (reddit)
+
+- **Circle, the company behind USDC, released official skills that teach Claude Code to build with stab…** (Notable; agents_mcp_skills; x) - Official Circle skills and MCP server let Claude Code build USDC payments, x402 per-call charging, and CCTP bridging, installable now via a plugin marketplace.
+  - Link: https://x.com/RoundtableSpace/status/2112042306387824875
+
+- **The Model Swap Workshop: GPT-5.5 vs Kimi vs DeepSeek vs Mistral — Pamela Fox, Microsoft** (Notable; research; youtube) - Shows how GPT-5.5, Kimi K2.6, DeepSeek V4 Flash, and Mistral Large 3 differ on tool calling, RAG groundedness, and vision, plus a practical eval workflow (string checks, LLM-as-judge, ASSERT, DSPy) f…
+  - Link: https://www.youtube.com/watch?v=UGjk3Uk0MxM
+
+- **Replit switches default AI provider to OpenAI** (Notable; industry_business; email) - Replit has made OpenAI its default provider for Replit Agent, though Claude remains selectable, so Claude-based workflows built on Replit may see different defaults and behavior.
+  - Link: https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/?utm_source=tldrai
+
+- **SAVE THIS: 4 GitHub repos trending this week. 1. Ponytail (~165K stars) Makes your coding agent thi…** (Notable; repo_library; x) - Four trending repos, two directly usable for Claude Code: Matt Pocock's skills (one-line install) and ECC's harness, plus Ponytail's "check if code is needed" approach, which fits your agentic-workfl…
+  - Link: https://x.com/RoundtableSpace/status/2112012107428384799
+
+- **Sphinx** (Notable; agents_mcp_skills; email) - Sphinx adds a human comprehension gate before agent-written code reaches protected branches, with a separate reviewer and logged bypasses, relevant to agent security and workflow.
+  - Link: https://sphinx-six-theta.vercel.app/?utm_source=tldrdev
+
+- **Stop Telling Agents How — Dan Barrett, Raymond Weitekamp & Jose Montes de Oca, OpenProse** (Notable; agents_mcp_skills; youtube) - OpenProse proposes writing multi-agent workflows as plain-markdown declarative contracts that Claude Code and Codex can compile and run, a concrete alternative to hand-orchestrated prompt chains wort…
+  - Link: https://www.youtube.com/watch?v=7T-gldvgfpo
+
 ## 2026-10-19
 
 - **Claude Code v2.1.299–v2.1.303** (AI/Claude tooling) - Run of releases from Oct 14–18 adding idle compaction, fork subagents on by default, and cheaper API requests.
