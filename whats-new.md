@@ -2,6 +2,19 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-20
+
+- **Claude Code v2.1.300–v2.1.304** (AI/Claude tooling) - A week of releases adds `/auto-mode-setup`, `CLAUDE_CODE_AUTO_MODE_MODEL` for the auto-mode classifier, fork subagents on by default in `claude -p` and the Agent SDK, and worktree-safety fixes.
+  - Why it matters: fork subagents now default on in headless/SDK runs, so check any scripted pipelines; the worktree fixes stop `--worktree` exits from silently deleting unpushed commits. `/claude-api managed-agents-secure` audits Managed Agents settings against Anthropic's security guide.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **HyperFrames (heygen-com/hyperframes)** (GitHub repo) - Open-source framework that renders HTML/CSS/animations into deterministic MP4 video via headless Chrome and FFmpeg, with a CLI and agent skills so coding agents can produce video.
+  - Why it matters: lets an agent generate demo videos, explainers or release clips from plain HTML, reproducibly and testable in CI.
+  - Link: https://github.com/heygen-com/hyperframes
+  - Safety note: Apache-2.0, ~68k stars, 5.7k commits, backed by a known company. Last-commit date not confirmed. Its Claude Code marketplace suggests auto-update and `skills update` pulls from `main`, so review before enabling auto-update.
+
+- Skipped: mksglu/context-mode (trending MCP context-saver) because its license is ELv2, not OSI-approved; morluto/rea because its star count looked anomalous and I could not vouch for it. No new Anthropic model announcements since Haiku 5.5 (Oct 7), per anthropic.com/news.
+
 ## 2026-10-19 (AKD)
 
 - **modelcontextprotocol/servers v2.0.0** (Top pick; agents_mcp_skills; github) - This is a major-version release of the official MCP reference servers (filesystem, memory, fetch, git, time) that moves them to the modern MCP spec while still answering legacy clients, so check your…
