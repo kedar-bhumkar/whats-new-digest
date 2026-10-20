@@ -2,6 +2,55 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-20 (AKD)
+
+- **Google open-sourced Harness². It lets an AI agent improve its own setup on every new task, without …** (Top pick; agents_mcp_skills; x) - Harness² (Apache-2.0) lets an agent edit its own prompts, tools, memory and skills per task, a concrete option for tuning agent setups without retraining; runnable demo, no API keys needed.
+  - Link: https://x.com/RoundtableSpace/status/2112298997599904015
+
+- **Y Combinator open-sourced QM, an AI agent your whole team can use in Slack. 15.5K stars. Most AI ag…** (Top pick; agents_mcp_skills; x) - YC's open-source QM gives each employee a sandboxed agent that works in Slack and CI, self-hosted with your own keys, MIT-licensed, and worth evaluating for team-agent infrastructure.
+  - Link: https://x.com/RoundtableSpace/status/2112465092105121872
+
+- **MiniMax M3.1 Flash** (Top pick; model_release; email) - MiniMax M3.1 Flash targets agentic coding and computer use with roughly 3x faster inference and 70% lower cost via API, with weights promised later, so it's worth a benchmark against your current age…
+  - Link: https://www.minimax.io/blog/minimax-m31f?utm_source=tldrai
+  - Also covered by: [[AINews] not much happened today](https://www.latent.space/p/ainews-not-much-happened-today-f09) (web)
+
+- **anthropics/claude-code v2.1.304** (Top pick; dev_tooling; github) - This Claude Code release adds `/auto-mode-setup`, a `decider: "person"` option for plugin hooks, and a Managed Agents security check, all directly useful to someone building on Claude Code and agent…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.304
+
+- **You can now run 290B-parameter open-source AI models on a gaming PC. FreeToken is a free engine tha…** (Top pick; dev_tooling; x) - FreeToken offers an OpenAI- and Anthropic-compatible local endpoint that could point Claude Code at self-hosted 290B-class open models on RTX 30/40/50 hardware, though the claims are unverified promo…
+  - Link: https://x.com/RoundtableSpace/status/2112472641680638313
+
+- **SAVE THIS: Anthropic, OpenAI, Cloudflare and Google have all released AI tools that hunt security b…** (Notable; agents_mcp_skills; x) - Four security-audit tools from Anthropic, OpenAI, Cloudflare and Google are now installable, and Claude Security and Cloudflare's skill fit directly into the Claude Code and skills workflow the reade…
+  - Link: https://x.com/RoundtableSpace/status/2112397145412091969
+
+- **anthropics/anthropic-sdk-python v1.16.0** (Notable; dev_tooling; github) - The Python SDK's google-cloud client now targets v1 endpoints and SSE streams can surface unrecognized event names, so check Vertex/Bedrock-adjacent code and any event-type switch statements for brea…
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.16.0
+
+- **DeepSeek Just Made Reasoning WAY More Efficient!** (Notable; model_release; youtube) - DeepSeek V4.1 Flash 1017 is an open model update that cuts thinking-token use by roughly a third to 45% on the video author's reruns, lowering cost per task, not just per token.
+  - Link: https://www.youtube.com/watch?v=YGEz40RSpTE
+
+- **A lot of what your AI coding agent reads is repetitive: logs, search results, tool output. Headroom…** (Notable; dev_tooling; x) - Headroom wraps Claude Code and similar agents to compress logs and tool output locally before the model sees them, cutting token use roughly 30–57% in the author's published tests, with a reversible…
+  - Link: https://x.com/RoundtableSpace/status/2112306547187667383
+
+- **Claude Code can now keep working while your laptop is closed. Routines run a saved Claude Code task…** (Notable; dev_tooling; x) - Claude Code Routines run saved tasks in Anthropic's cloud on schedules, PR events, or API triggers, so an unattended agent with repo access needs scoped permissions.
+  - Link: https://x.com/RoundtableSpace/status/2112382044802331100
+
+- **Claude Code has a built-in research mode that fact-checks itself before it answers. /deep-research …** (Notable; dev_tooling; x) - Claude Code's `/deep-research` and "ultracode:" workflow prompts run parallel agents with cross-checked, cited output, but the post is secondhand (48 likes), so verify the commands in your own Claude…
+  - Link: https://x.com/RoundtableSpace/status/2112412243594019016
+  - Also covered by: [Ask Claude to research something and it usually reads the top few results and summarizes them. This…](https://x.com/RoundtableSpace/status/2112321647176753444) (x)
+
+- **Making reverseengineering.wiki - A opensource wiki for agents** (Notable; agents_mcp_skills; reddit) - An open-source MCP-accessible wiki of reverse-engineering facts (formats, structs, symbols) built with Claude Code, directly usable by your agents for binary analysis and Ghidra/IDA script generation.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xa7t1w/making_reverseengineeringwiki_a_opensource_wiki/
+
+- **tomtomsatnav/agent-orchestration-standard** (Notable; agents_mcp_skills; github) - A local-first dashboard for Claude Code sessions (agent graph, token use, tool feed, replay) that ships as a plugin with an MCP server, useful for monitoring multi-agent workflows.
+  - Link: https://github.com/tomtomsatnav/agent-orchestration-standard
+
+- **kanaworksai-hue/audio-studio-mcp** (Notable; agents_mcp_skills; github) - A local MCP server that generates background music and sound effects inside Claude Code on Apple Silicon or NVIDIA GPUs, with no cloud or API key needed.
+  - Link: https://github.com/kanaworksai-hue/audio-studio-mcp
+
+- **Rakazo** (Notable; agents_mcp_skills; email) - Rakazo is a self-hosted, open-source agent with persistent memory and tool access, relevant to agent infrastructure and sandboxing, though still in beta.
+  - Link: https://github.com/elie222/rakazo?utm_source=tldrdev
+
 ## 2026-10-20
 
 - **Claude Code v2.1.300–v2.1.304** (AI/Claude tooling) - A week of releases adds `/auto-mode-setup`, `CLAUDE_CODE_AUTO_MODE_MODEL` for the auto-mode classifier, fork subagents on by default in `claude -p` and the Agent SDK, and worktree-safety fixes.
