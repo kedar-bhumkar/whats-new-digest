@@ -256,3 +256,41 @@ def test_shipped_config_splits_newsletters_between_email_and_web_feeds():
     assert not any(x in s for s in senders for x in ("latent", "rundown"))
     assert "https://www.therundown.ai/feed" in conf.feeds
     assert "https://www.latent.space/feed" in conf.feeds
+
+
+def test_dropped_links_report_the_http_status_and_host(caplog):
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(403)
+
+    imap = FakeImap({b"1": make_mail("TLDR AI <dan@tldrnewsletter.com>", "Subject One", TLDR_HTML)})
+    stories = [{"link": 1, "title": "A", "blurb": "b"}, {"link": 2, "title": "B", "blurb": "b"}]
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    with caplog.at_level("WARNING", logger="akd.collectors.email"):
+        assert collector(imap, stub_extractor(stories), client).collect() == []
+    message = " ".join(r.getMessage() for r in caplog.records)
+    assert "HTTP 403 from tracking.tldrnewsletter.com x2" in message
+    assert "AAA" not in message and "BBB" not in message  # the per-subscriber token never reaches the log
+
+
+def test_dropped_links_report_when_the_resolve_limit_was_reached(caplog, monkeypatch):
+    import akd.collectors.email as email_module
+
+    monkeypatch.setattr(email_module, "MAX_RESOLVES", 1)
+    imap = FakeImap({b"1": make_mail("TLDR AI <dan@tldrnewsletter.com>", "Subject One", TLDR_HTML)})
+    stories = [{"link": 1, "title": "A", "blurb": "b"}, {"link": 2, "title": "B", "blurb": "b"}]
+    client = httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(200, content=b"page")))
+    with caplog.at_level("WARNING", logger="akd.collectors.email"):
+        items = collector(imap, stub_extractor(stories), client).collect()
+    assert [i.title for i in items] == ["A"]
+    assert "resolve limit reached x1" in " ".join(r.getMessage() for r in caplog.records)
+
+
+def test_dropped_links_report_connection_errors_by_type(caplog):
+    def boom(request):
+        raise httpx.ConnectError("down")
+
+    imap = FakeImap({b"1": make_mail("TLDR AI <dan@tldrnewsletter.com>", "s", TLDR_HTML)})
+    client = httpx.Client(transport=httpx.MockTransport(boom))
+    with caplog.at_level("WARNING", logger="akd.collectors.email"):
+        collector(imap, stub_extractor([{"link": 1, "title": "T", "blurb": "b"}]), client).collect()
+    assert "ConnectError from tracking.tldrnewsletter.com x1" in " ".join(r.getMessage() for r in caplog.records)

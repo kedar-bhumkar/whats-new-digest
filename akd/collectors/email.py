@@ -4,11 +4,13 @@ import imaplib
 import json
 import logging
 import re
+from collections import Counter
 from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
 from email import message_from_bytes, policy
 from email.utils import parseaddr, parsedate_to_datetime
 from html.parser import HTMLParser
+from urllib.parse import urlsplit
 
 import httpx
 
@@ -160,18 +162,25 @@ class EmailCollector:
         self.imap_factory = imap_factory or (lambda: imaplib.IMAP4_SSL(IMAP_HOST, timeout=30))
         self.now = now or datetime.now(timezone.utc)
         self._resolves = 0
+        self._reasons: Counter[str] = Counter()  # why links of the message being processed were dropped
 
     def _resolve(self, url: str) -> str | None:
         """Follow a tracking redirect to the real article URL. Returns None when the link stays an
         unresolved, unreachable URL: that is a per-subscriber tracker, which must not be published."""
         if self._resolves >= MAX_RESOLVES:
+            self._reasons["resolve limit reached"] += 1
             return None
         self._resolves += 1
+        host = urlsplit(url).hostname or "?"  # reasons name the host and status only: the URL carries a subscriber token
         try:
             with self.client.stream("GET", url, headers={"User-Agent": USER_AGENT}, timeout=8, follow_redirects=True) as resp:
                 final = str(resp.url)
-                return None if final == url and resp.status_code >= 400 else final
-        except httpx.HTTPError:
+                if final == url and resp.status_code >= 400:
+                    self._reasons[f"HTTP {resp.status_code} from {host}"] += 1
+                    return None
+                return final
+        except httpx.HTTPError as exc:
+            self._reasons[f"{type(exc).__name__} from {host}"] += 1
             return None
 
     def _matching_messages(self, imap) -> list[tuple[datetime, bytes]]:
@@ -194,6 +203,7 @@ class EmailCollector:
         return found[: self.cfg.email_max_messages]
 
     def _items_from(self, imap, num: bytes, when: datetime) -> list[Item]:
+        self._reasons = Counter()
         _, parts = imap.fetch(num, "(BODY.PEEK[])")
         msg = message_from_bytes(parts[0][1], policy=policy.default)
         body = msg.get_body(preferencelist=("html", "plain"))
@@ -233,7 +243,8 @@ class EmailCollector:
                 )
             )
         if dropped:
-            log.warning("%d story link(s) in %r dropped: unresolvable tracking URL", dropped, subject)
+            reasons = ", ".join(f"{reason} x{n}" for reason, n in self._reasons.most_common())
+            log.warning("%d story link(s) in %r dropped: unresolvable tracking URL (%s)", dropped, subject, reasons)
         return items
 
     def collect(self) -> list[Item]:
