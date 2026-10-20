@@ -27,11 +27,15 @@ subreddits:
 
 feeds:
   - https://openai.com/news/rss.xml
-  - https://www.latent.space/feed
+  - https://www.latent.space/feed   # AINews issues are skipped here (feed_exclude_title_prefixes) and read from email
   - https://www.therundown.ai/feed
   - https://hnrss.org/newest?q=Claude&points=100
   - https://hnrss.org/newest?q=LLM&points=150
   - https://hnrss.org/newest?q=MCP&points=50
+
+# Web items whose title starts with one of these (case-insensitive) are dropped: AINews arrives by email instead.
+feed_exclude_title_prefixes:
+  - "[AINews]"
 
 github_topics:
   - llm
@@ -65,10 +69,10 @@ x:
 # Email newsletters (dedicated Gmail inbox, read over IMAP with an app password): off unless the
 # GMAIL_ADDRESS and GMAIL_APP_PASSWORD secrets are set. `senders` match the From name/address as
 # case-insensitive text; the run logs every sender it sees so you can tighten this list.
-# AINews and The Rundown are deliberately absent: they arrive as public web feeds (Latent Space, therundown.ai),
-# because The Rundown's email links are bot-blocked trackers that cannot be resolved to a real URL.
+# The Rundown is deliberately absent: it arrives as a public web feed (therundown.ai), because its email links are
+# bot-blocked trackers that cannot be resolved to a real URL. AINews is read here, and its web copies are skipped.
 email:
   mailbox: INBOX
-  senders: [tldr]
-  max_messages: 6          # newest matching emails processed per run
+  senders: [tldr, ainews]
+  max_messages: 8          # newest matching emails processed per run (TLDR x3 + AINews = 4 a day)
   max_stories: 15          # stories kept per email

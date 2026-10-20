@@ -431,3 +431,30 @@ def test_web_prefers_the_full_content_body_over_a_short_summary():
 def test_shipped_config_includes_latent_space():
     assert "https://www.latent.space/feed" in cfg().feeds
 
+
+
+def _titled_feed(*titles):
+    items = "".join(
+        f"<item><title>{t}</title><link>https://example.com/{n}</link><description>{'body ' * 60}</description>"
+        f"<pubDate>Mon, 12 Oct 2026 10:00:00 GMT</pubDate></item>"
+        for n, t in enumerate(titles)
+    )
+    return f'<?xml version="1.0"?><rss version="2.0"><channel><title>t</title>{items}</channel></rss>'.encode()
+
+
+def test_web_skips_titles_with_an_excluded_prefix_case_insensitively():
+    from dataclasses import replace
+
+    feed = _titled_feed("[AINews] Big day for models", "[ainews] lower case too", "A Latent Space essay", "Why [AINews] matters")
+    one_feed = replace(cfg(), feeds=["https://example.com/feed"], feed_exclude_title_prefixes=["[AINews]"])
+    items = WebCollector(one_feed, client_for({"": feed}), sleep=lambda s: None).collect()
+    assert [i.title for i in items] == ["A Latent Space essay", "Why [AINews] matters"]
+
+
+def test_web_keeps_everything_when_no_prefixes_are_configured():
+    from dataclasses import replace
+
+    feed = _titled_feed("[AINews] Big day", "Other")
+    one_feed = replace(cfg(), feeds=["https://example.com/feed"], feed_exclude_title_prefixes=[])
+    items = WebCollector(one_feed, client_for({"": feed}), sleep=lambda s: None).collect()
+    assert len(items) == 2

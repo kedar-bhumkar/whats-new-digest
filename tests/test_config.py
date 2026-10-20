@@ -70,3 +70,15 @@ def test_youtube_channels_load_with_default_name_and_empty_list(tmp_path):
     assert load_config(p).youtube_channels == [{"id": "UCx", "name": "X"}, {"id": "UCy", "name": "UCy"}]
     p.write_text(base, encoding="utf-8")
     assert load_config(p).youtube_channels == []
+
+
+def test_feed_exclude_title_prefixes_default_to_empty_and_load(tmp_path):
+    assert load_config(write(tmp_path, CONFIG_YAML)).feed_exclude_title_prefixes == []
+    cfg = load_config(write(tmp_path, CONFIG_YAML + "feed_exclude_title_prefixes: ['[AINews]', ' Sponsored:']\n"))
+    assert cfg.feed_exclude_title_prefixes == ["[AINews]", "Sponsored:"]
+
+
+def test_repo_config_routes_ainews_through_email_not_web():
+    cfg = load_config(Path(__file__).resolve().parent.parent / "config.yaml")
+    assert "ainews" in [s.lower() for s in cfg.email_senders]
+    assert "[ainews]" in [p.lower() for p in cfg.feed_exclude_title_prefixes]

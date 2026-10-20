@@ -38,6 +38,7 @@ class WebCollector:
 
     def collect(self) -> list[Item]:
         items: list[Item] = []
+        excluded = tuple(p.lower() for p in self.cfg.feed_exclude_title_prefixes)
         for feed_url in self.cfg.feeds:
             try:
                 parsed = feedparser.parse(get_with_retry(self.client, feed_url, self.sleep).content)
@@ -45,6 +46,9 @@ class WebCollector:
                 log.exception("feed failed: %s", feed_url)
                 continue
             for entry in parsed.entries:
+                title = strip_html(entry.get("title", ""))
+                if excluded and title.lower().startswith(excluded):
+                    continue
                 link = entry.get("link")
                 published = entry_datetime(entry)
                 if not link or published is None:
@@ -53,7 +57,7 @@ class WebCollector:
                     Item(
                         id=item_id(link),
                         source="web",
-                        title=strip_html(entry.get("title", "")),
+                        title=title,
                         url=link,
                         text=clip(_body(entry)),
                         published_at=published,

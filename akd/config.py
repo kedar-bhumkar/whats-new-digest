@@ -36,6 +36,7 @@ class Config:
     email_mailbox: str = "INBOX"
     email_max_messages: int = 6
     email_max_stories: int = 15
+    feed_exclude_title_prefixes: list[str] = field(default_factory=list)
 
 
 def load_config(path: Path) -> Config:
@@ -58,6 +59,7 @@ def load_config(path: Path) -> Config:
         max_age_days=int(raw.get("max_age_days", 3)),
         subreddits=list(raw.get("subreddits", [])),
         feeds=list(raw.get("feeds", [])),
+        feed_exclude_title_prefixes=[str(p).strip() for p in raw.get("feed_exclude_title_prefixes") or [] if str(p).strip()],
         github_topics=list(raw.get("github_topics", [])),
         github_watchlist=list(raw.get("github_watchlist", [])),
         group_threshold=float(raw.get("group_threshold", 0.5)),
