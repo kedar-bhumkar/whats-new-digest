@@ -78,7 +78,9 @@ def test_feed_exclude_title_prefixes_default_to_empty_and_load(tmp_path):
     assert cfg.feed_exclude_title_prefixes == ["[AINews]", "Sponsored:"]
 
 
-def test_repo_config_routes_ainews_through_email_not_web():
+def test_repo_config_keeps_ainews_on_the_web_feed():
+    # AINews emails are Substack redirect links that answer 403 to automated requests; the feed has the full issue.
     cfg = load_config(Path(__file__).resolve().parent.parent / "config.yaml")
-    assert "ainews" in [s.lower() for s in cfg.email_senders]
-    assert "[ainews]" in [p.lower() for p in cfg.feed_exclude_title_prefixes]
+    assert "ainews" not in [s.lower() for s in cfg.email_senders]
+    assert "https://www.latent.space/feed" in cfg.feeds
+    assert "[ainews]" not in [p.lower() for p in cfg.feed_exclude_title_prefixes]

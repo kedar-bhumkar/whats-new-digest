@@ -250,10 +250,10 @@ def test_haiku_extractor_returns_nothing_on_garbage_or_errors():
 def test_shipped_config_splits_newsletters_between_email_and_web_feeds():
     conf = load_config(ROOT / "config.yaml")
     senders = [s.lower() for s in conf.email_senders]
-    assert "tldr" in senders and "ainews" in senders
-    # The Rundown arrives via its public feed (its email links are unresolvable trackers); Latent Space stays a web feed
-    # for its own posts, with the AINews issues in it skipped because they are read from email.
-    assert not any(x in s for s in senders for x in ("latent", "rundown"))
+    assert "tldr" in senders
+    # AINews arrives via the Latent Space feed and The Rundown via its public feed: both emails are redirect links
+    # that refuse automated requests (403) and cannot be resolved to a real URL.
+    assert not any(x in s for s in senders for x in ("ainews", "latent", "rundown"))
     assert "https://www.therundown.ai/feed" in conf.feeds
     assert "https://www.latent.space/feed" in conf.feeds
 
