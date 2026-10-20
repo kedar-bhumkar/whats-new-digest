@@ -294,3 +294,10 @@ def test_dropped_links_report_connection_errors_by_type(caplog):
     with caplog.at_level("WARNING", logger="akd.collectors.email"):
         collector(imap, stub_extractor([{"link": 1, "title": "T", "blurb": "b"}]), client).collect()
     assert "ConnectError from tracking.tldrnewsletter.com x1" in " ".join(r.getMessage() for r in caplog.records)
+
+
+def test_resolve_limit_covers_a_full_run_at_the_configured_sizes():
+    import akd.collectors.email as email_module
+
+    conf = load_config(ROOT / "config.yaml")
+    assert email_module.MAX_RESOLVES >= conf.email_max_messages * conf.email_max_stories

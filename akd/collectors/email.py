@@ -24,7 +24,7 @@ log = logging.getLogger("akd.collectors.email")
 IMAP_HOST = "imap.gmail.com"
 SCAN_LIMIT = 100  # recent messages whose headers are inspected, to find the newsletters
 MAX_TEXT_FOR_MODEL = 12000
-MAX_RESOLVES = 80  # tracking-link lookups per run
+MAX_RESOLVES = 200  # tracking-link lookups per run; must cover email.max_messages x email.max_stories (8 x 15 = 120)
 MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 SKIP_LINK_WORDS = ("unsubscribe", "manage preferences", "manage your preferences", "view in browser", "view online")
 
