@@ -2,6 +2,32 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-21
+
+- **Claude Code v2.1.304 - v2.1.306** (AI/Claude tooling) - Three releases in three days (19-21 Oct).
+  - Why it matters: `/auto-mode-setup` (guided auto-mode config, now on Bedrock/Vertex/Foundry), `decider: "person"` so only a human can approve a hook/mod permission ask, `/claude-api managed-agents-secure` to audit a Managed Agents config against Anthropic's security guide, and `sandbox.allowNestedUserNamespaces` (note: lets sandboxed commands bypass file protections, so enable deliberately). 2.1.306 fixes `claude -p` "Not logged in" in cloud sessions and a spurious "prompt is too long" with many MCP tools.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **reason-machines/reason-network** (GitHub repo) - Rust, peer-to-peer (iroh) network that lets a team's coding agents talk to each other, exposed via MCP.
+  - Why it matters: a possible building block for multi-agent workflows across developers' machines without a central server.
+  - Link: https://github.com/reason-machines/reason-network
+  - Safety note: Apache-2.0; created 2026-10-16, last push 2026-10-21; ~850 stars; org-owned. Only repo metadata checked, code not audited.
+
+- **Leonxlnx/earshot** (GitHub repo) - "Ears for coding agents": lets an AI agent hear, review and generate sound, CPU-only, MCP/Claude Code integration.
+  - Why it matters: gives agents a way to verify audio output (games, apps, sound design) instead of working blind.
+  - Link: https://github.com/Leonxlnx/earshot
+  - Safety note: MIT; created 2026-10-15, last push 2026-10-18; ~2.0k stars in 6 days, so fast growth, single maintainer. Metadata only; review before installing.
+
+- **kitlangton/scrawl** (GitHub repo) - Rust/GPUI macOS tool to mark up the screen, record, and send the result to a coding agent ("show an agent a problem").
+  - Why it matters: faster visual bug reports to Claude Code/opencode than describing UI issues in text.
+  - Link: https://github.com/kitlangton/scrawl
+  - Safety note: MIT; created 2026-10-14, last push 2026-10-21; ~615 stars; maintainer is an established open-source developer. Screen-recording tool, so check permissions before use. Metadata only.
+
+- **jwuthri-cloud/Tracely-ai** (GitHub repo) - Self-hostable "trace-native CI/CD for AI agents": grades production traces, clusters failures, freezes them into replayable regression tests, blocks regressing PRs.
+  - Why it matters: concrete pattern for regression-testing agents from real traces rather than hand-written evals.
+  - Link: https://github.com/jwuthri-cloud/Tracely-ai
+  - Safety note: MIT; created 2026-10-11, last push 2026-10-19; ~1.2k stars; 22 open issues, young project. Metadata only.
+
 ## 2026-10-20 (AKD)
 
 - **Google open-sourced Harness². It lets an AI agent improve its own setup on every new task, without …** (Top pick; agents_mcp_skills; x) - Harness² (Apache-2.0) lets an agent edit its own prompts, tools, memory and skills per task, a concrete option for tuning agent setups without retraining; runnable demo, no API keys needed.
