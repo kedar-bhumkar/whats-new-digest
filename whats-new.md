@@ -2,6 +2,60 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-22 (AKD)
+
+- **Claude API version 2026-10-21 is now available** (Top pick; dev_tooling; email) - A new Claude API version (2026-10-21), the first since 2023, with SDKs and CLI defaulting to it and a migration guide, so check your integrations for breaking changes.
+  - Link: https://threadreaderapp.com/thread/2113013247209021918.html?utm_source=tldrai
+
+- **Alibaba open-sourced the AI code reviewer its own engineers have used for two years. Open Code Revi…** (Top pick; dev_tooling; x) - Alibaba's open-source AI code reviewer (Apache-2.0, installable via npm) reportedly beat Claude Code on precision with the same model at about one-ninth the tokens, a claim worth verifying against yo…
+  - Link: https://x.com/RoundtableSpace/status/2113197417805877329
+
+- **Before you install that AI skill someone shared on X, scan it. In an analysis of 31,132 AI agent sk…** (Top pick; agents_mcp_skills; x) - NVIDIA's open-source SkillSpector scans Claude Code, Codex, and Gemini CLI skills for 71 attack patterns (prompt injection, poisoned MCP tools, data theft) before you install them, with a no-LLM fast…
+  - Link: https://x.com/RoundtableSpace/status/2113114370406293672
+
+- **anthropics/claude-code v2.1.307** (Top pick; dev_tooling; github) - Claude Code v2.1.307 adds `/claude-api api-version` for migrating Claude API code to version 2026-10-21 and fixes several MCP retry and auth bugs, so MCP-heavy workflows should upgrade.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.307
+
+- **If your website runs on PHP (WordPress, Laravel, most shared hosting), check it today. Two critical…** (Top pick; other; x) - Two critical unauthenticated PHP flaws (PHP2Shell) are under active attack and affect most PHP hosting, so check your PHP version and patch to 8.5.12/8.4.27/8.3.36/8.2.35 now; OpenAI's checker helps.
+  - Link: https://x.com/RoundtableSpace/status/2113099271582937596
+  - Also covered by: [The internet is having a very bad cybersecurity day](https://techcrunch.com/2026/10/21/the-internet-is-having-a-very-bad-cybersecurity-day/?utm_source=tldrnewsletter) (email)
+  - Also covered by: [PHP warns of two critical flaws, emergency patches coming](https://www.bleepingcomputer.com/news/security/php-warns-admins-of-two-critical-flaws-emergency-patches-coming-tomorrow/?utm_source=tldrnewsletter) (email)
+  - Also covered by: [Today's PHP Security Release, and How We're Strengthening PHP Security](https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/?utm_source=tldrnewsletter) (email)
+
+- **Ant Ling just announced a second model today: Ling-3.0-flash-Sante (124B, 5.1B active)** (Notable; model_release; reddit) - Open-weights healthcare model (124B total, 5.1B active, 256K context) from InclusionAI, built on Ling-3.0-flash; a niche domain model rather than a general-purpose upgrade for your stack.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xcljvi/ant_ling_just_announced_a_second_model_today/
+  - Also covered by: [inclusionAI/Ling-3.0-flash-Sante · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1xclfkp/inclusionailing30flashsante_hugging_face/) (reddit)
+
+- **Kitten-TTS 2: New Open-source SOTA 1.58 bit TTS (CPU-only with voice cloning, multilingual, emotion control)** (Notable; model_release; reddit) - Open-weight 1.58-bit (ternary) TTS with zero-shot voice cloning from under 5 seconds of audio that runs real-time on CPU, a self-hostable alternative to hosted TTS APIs like ElevenLabs.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xc48or/kittentts_2_new_opensource_sota_158_bit_tts/
+
+- **[AINews] DeepSeek DeepInfer: Open Source SOTA Inference running 155T toks/day/cluster making $22m/day at ~80% margin for a 81 day payback** (Notable; dev_tooling; web) - DeepSeek open-sourced DeepInfer, a vLLM-based production inference stack with long-lived prompt caching, though its KV cache, disaggregation, and load balancing stay closed.
+  - Link: https://www.latent.space/p/ainews-deepseek-deepinfer-open-source
+  - Also covered by: [DeepInfer](https://github.com/deepseek-ai/DeepInfer?utm_source=tldrai) (email)
+
+- **Introducing Flint** (Notable; model_release; email) - Flint is a 40B-total, 2.5B-active MoE model claiming 125+ tokens/sec on an M4 Pro for fully local agentic coding, which could replace API calls in Claude Code-style workflows, though speed claims nee…
+  - Link: https://recursive.com/updates/introducing-recursive-flint?utm_source=tldrai
+  - Also covered by: [Recursive Flint - the "Qwen3.8 35B" we've all been waiting for?](https://www.reddit.com/r/LocalLLaMA/comments/1xc23iq/recursive_flint_the_qwen38_35b_weve_all_been/) (reddit)
+  - Also covered by: [Flint 40B by Recursive: Fast Local Coding AI Tested](https://www.youtube.com/watch?v=WsQxIOM9io0) (youtube)
+
+- **You read a great book once. Three months later you can't remember chapter 7 even existed. book-to-s…** (Notable; agents_mcp_skills; x) - A Claude Code-compatible tool that turns a book or doc folder into per-chapter skills an agent can query, claiming 24–51x fewer tokens than pasting the full text.
+  - Link: https://x.com/RoundtableSpace/status/2113227616299942097
+
+- **anthropics/anthropic-sdk-python v2.1.0** (Notable; dev_tooling; github) - The Anthropic Python SDK v2.1.0 adds user-profile enforcement status, actions, and filter fields, which matters if you call user-profile endpoints and want to read or filter enforcement state program…
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.1.0
+
+- **OpenAI models are coming to Google Cloud** (Notable; industry_business; web) - OpenAI's frontier models and Codex are coming to Google Cloud's Model Garden and Marketplace, giving you a second cloud path for OpenAI APIs alongside existing Azure and direct access.
+  - Link: https://openai.com/index/openai-models-google-cloud
+
+- **Omnara** (Notable; agents_mcp_skills; email) - Omnara is an open-source managed agent platform with a TypeScript SDK and sandboxed tool execution, relevant to agent infrastructure and security you track.
+  - Link: https://github.com/omnara-ai/omnara?utm_source=tldrdev
+
+- **ECC (Everything Claude Code) is a free, MIT-licensed pack: 70+ subagents, 300+ skills and about 95 …** (Notable; agents_mcp_skills; x) - A free MIT-licensed Claude Code pack of 70+ subagents, 300+ skills and about 95 commands, with a plan-first, test-first workflow and a config security scanner; install only from the official repo, si…
+  - Link: https://x.com/RoundtableSpace/status/2113174768207671577
+
+- **stalemap is an open-source tool that tells coding agents which dependencies changed after their tra…** (Notable; agents_mcp_skills; x) - Relevant to a Claude Code and TypeScript workflow: stalemap writes version-drift notes into CLAUDE.md and adds an MCP tool, so agents stop using stale APIs, though the 89% vs 68% result is a single a…
+  - Link: https://x.com/RoundtableSpace/status/2113084171115704776
+
 ## 2026-10-21 (AKD)
 
 - **anthropics/anthropic-sdk-python v2.0.0** (Top pick; dev_tooling; github) - The Anthropic Python SDK v2.0.0 is a major-version release marked with breaking changes tied to the new 2026-10-21 API version, so upgrading without reviewing the changelog risks migration breakage.
