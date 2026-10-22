@@ -78,6 +78,17 @@ Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry
   - Why it matters: concrete pattern for regression-testing agents from real traces rather than hand-written evals.
   - Link: https://github.com/jwuthri-cloud/Tracely-ai
   - Safety note: MIT; created 2026-10-11, last push 2026-10-19; ~1.2k stars; 22 open issues, young project. Metadata only.
+## 2026-10-22
+
+- **Claude Code v2.1.307** (AI/Claude tooling) - Adds `/claude-api api-version` to move Claude API code to API version `2026-10-21`, plus a new `claude_code.safety_event` OpenTelemetry event.
+  - Why it matters / where it could be used: Pairs with SDK v2.0.0 (yesterday) for migrating API code. The safety event lets you log every time a permission rule, hook, auto mode or sandbox blocks or prompts on a tool call. MCP fixes: HTTP tool calls are no longer sent twice on a mid-call disconnect (only read-only/idempotent tools are retried), and tool calls with unparseable output are retried up to twice.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **anthropic-sdk-python v2.1.0** (AI/Claude tooling) - Follow-up to v2.0.0 (same day, API version 2026-10-21). It adds enforcement status, actions and filter to user profiles in the API.
+  - Why it matters / where it could be used: Anyone upgrading to v2.x gets this on top of the breaking v2.0.0 changes. The release notes don't spell out what breaks, so read the full changelog before bumping.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+_Quiet day: searches found no other primary-source items from the last 48 hours that I could verify, and no GitHub repos I could vouch for. Claude Code v2.1.308 (22 Oct) lists only bug fixes._
 
 ## 2026-10-20 (AKD)
 
