@@ -2,6 +2,55 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-23 (AKD)
+
+- **[AINews] Black October** (Top pick; other; web) - Several critical disclosures landed within 48 hours, including unauthenticated RCEs in PHP, GitLab (CVSS 10, releases since 2014), and Node.js, plus a LiteLLM supply-chain compromise, so check your d…
+  - Link: https://latent.space/p/ainews-black-october/
+
+- **If someone on X offers your crypto project funding, grants or free Claude and Gemini credits, and a…** (Top pick; agents_mcp_skills; x) - A fake "Apex Accelerator" npm package set shipped a stealer and redirected OpenRouter traffic and injected an MCP server, so check `claude mcp list` and your npm globals for @apexacc, @apexfdn, or @c…
+  - Link: https://x.com/RoundtableSpace/status/2113552255664505258
+
+- **anthropics/claude-code v2.1.309** (Top pick; agents_mcp_skills; github) - Claude Code v2.1.309 is a security-focused patch fixing sandbox escapes, MCP config tampering, and Bash permission bypasses, so update promptly if you run agents with sandboxing or MCP.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.309
+
+- **Google's GPT-3 Moment for Time Series & Forecasting (TimesFM 3.0)** (Top pick; model_release; youtube) - A zero-shot time-series forecasting model that needs no training on your data, with a 2.5-to-3.0 comparison; relevant if you ever forecast metrics or capacity, though the weights carry a non-commerci…
+  - Link: https://www.youtube.com/watch?v=ByKEkRohzt8
+
+- **The internet is having a very bad cybersecurity day** (Top pick; other; email) - Three of these hit your stack directly: NSA urges PHP updates, Node.js shipped four high-severity fixes, and the compromised LiteLLM package means checking any agent or proxy dependency for injected…
+  - Link: https://techcrunch.com/2026/10/21/the-internet-is-having-a-very-bad-cybersecurity-day/?utm_source=tldrnewsletter
+
+- **anthropics/anthropic-sdk-python v2.2.0** (Notable; dev_tooling; github) - Adds tool-runner fixes for `set_messages_params()` and `append_messages()` behavior changes, so check any code that relies on runner history or callback tool handling before upgrading.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.2.0
+
+- **API version 2026-10-21 is now available. The Claude API has evolved a lot, but this is our first of…** (Notable; dev_tooling; x) - A new dated Claude API version (2026-10-21) is out, the first formal version release since 2023, and it signals future breaking changes will be versioned in advance, though 2023-06-01 remains support…
+  - Link: https://x.com/ClaudeDevs/status/2113013247209021918
+
+- **We’ve added a new way to access Claude on Google Cloud. You can now use the full Claude API from yo…** (Notable; dev_tooling; x) - Anthropic's full Claude API, including Managed Agents and code execution, is now accessible through Google Cloud accounts, which may suit teams already billing on GCP.
+  - Link: https://x.com/ClaudeDevs/status/2113381868364271743
+  - Also covered by: [Claude Platform available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed?utm_source=tldrai) (email)
+
+- **AWS released an official Claude Code plugin that connects your coding agent to AWS Security Agent a…** (Notable; agents_mcp_skills; x) - Adoptable this week: AWS's official Claude Code plugin adds codebase and pre-commit security scans, STRIDE threat models, and incident checks, free in preview, installed via `/plugin install`.
+  - Link: https://x.com/RoundtableSpace/status/2113529606238294157
+
+- **MiniMax-M3.1-Flash** (Notable; model_release; reddit) - A new open-weight MiniMax model release on Hugging Face, relevant as a local or self-hosted alternative for agentic coding if it benchmarks well and runs on your hardware.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xd0fgs/minimaxm31flash/
+
+- **nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB · Hugging Face** (Notable; model_release; reddit) - NVIDIA's Nemotron-3.5-Bolt-E4B is a small Gemma-4-based model tuned for multi-turn tool use at 4GB, a practical option for local agent experiments with GGUF builds available.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xdiecx/nvidianvidianemotron35bolte4b4gb_hugging_face/
+
+- **Anthropic donates Agent Skills to Linux Foundation** (Notable; agents_mcp_skills; email) - Anthropic's Agent Skills format is now an open standard under Linux Foundation governance, so skills you build for Claude Code and the Agent SDK are less likely to be tied to one vendor.
+  - Link: https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation?utm_source=tldrai
+  - Also covered by: [We're donating Agent Skills to the Agentic AI Foundation (@AgenticAIFdn), the same foundation we do…](https://x.com/ClaudeDevs/status/2113328526413996100) (x)
+
+- **NVIDIA OpenShell** (Notable; agents_mcp_skills; email) - NVIDIA's OpenShell gives agents policy-enforced sandboxes with kernel-level file and network limits, directly relevant to securing Claude Code and Agent SDK workloads.
+  - Link: https://github.com/NVIDIA/OpenShell?utm_source=tldrdev
+
+- **Flint 40B by Recursive: Fast Local Coding AI Tested** (Notable; model_release; youtube) - A 40B mixture-of-experts coding model from Recursive that runs locally, with a hands-on install and speed test that shows whether it's practical for local coding agents.
+  - Link: https://www.youtube.com/watch?v=WsQxIOM9io0
+
+- **SAVE THIS: you scan AI skills before you install them. Now scan the ones you've already installed. …** (Notable; agents_mcp_skills; x) - A practical security sweep for the reader's existing Claude Code and MCP setup: scanners for leaked API keys in chat history and for malicious or injection-prone MCP servers and skills already instal…
+  - Link: https://x.com/RoundtableSpace/status/2113484307624821117
+
 ## 2026-10-23
 
 - **Claude Code v2.1.307-v2.1.309** (AI/Claude tooling) - Three releases in 48h: `/claude-api api-version` migrates code to API version 2026-10-21, new `claude_code.safety_event` OpenTelemetry event, HTTP MCP calls no longer double-sent on mid-call disconnects, and v2.1.309 closes several sandbox/permission gaps (shell startup files, `--mcp-config` edits, Bash redirect trust).
