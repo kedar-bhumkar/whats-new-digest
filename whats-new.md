@@ -2,6 +2,26 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-23
+
+- **Claude Code v2.1.307-v2.1.309** (AI/Claude tooling) - Three releases in 48h: `/claude-api api-version` migrates code to API version 2026-10-21, new `claude_code.safety_event` OpenTelemetry event, HTTP MCP calls no longer double-sent on mid-call disconnects, and v2.1.309 closes several sandbox/permission gaps (shell startup files, `--mcp-config` edits, Bash redirect trust).
+  - Why it matters: upgrade if you run MCP-heavy or sandboxed agents; the safety event lets you audit blocked tool calls in your own telemetry.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's small model (`claude-haiku-5-5`), first Haiku with an adjustable effort setting; $0.10/$0.50 input and $0.50/$2.50 output per MTok, about 75% cheaper to run than Haiku 4.5. Anthropic says Sonnet/Opus 5.5 remain better for complex agentic coding.
+  - Why it matters: a cheap choice for subagents, summarization, compaction, classification and browser-use steps in agent pipelines.
+  - Link: https://www.anthropic.com/news/claude-haiku-5-5
+
+- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec revision, marked Latest on the spec repo (published earlier than this window; the repo's release page doesn't itemize changes).
+  - Why it matters: target this revision when building or updating MCP servers/clients; check the linked changelog for breaking changes.
+  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
+
+- **NVIDIA SkillSpector** (GitHub repo) - Open-source scanner for AI agent skills; runs a static pass (AST, taint tracking, YARA, regex rules for prompt injection and exfiltration), checks dependencies against OSV.dev, and has an optional LLM pass. Outputs a 0-100 risk score.
+  - Why it matters: run it on third-party Claude Code/agent skills before installing them. Not a new release (older than 7 days), included as a useful safety tool.
+  - Link: https://github.com/NVIDIA/SkillSpector (docs: https://docs.nvidia.com/skills/scanning-agent-skills)
+  - Safety note: Apache-2.0, about 21.1k stars, 1,698 commits, from NVIDIA; last-commit date and contributor count not confirmed.
+
+
 ## 2026-10-22 (AKD)
 
 - **Claude API version 2026-10-21 is now available** (Top pick; dev_tooling; email) - A new Claude API version (2026-10-21), the first since 2023, with SDKs and CLI defaulting to it and a migration guide, so check your integrations for breaking changes.
