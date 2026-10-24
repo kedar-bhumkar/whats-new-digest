@@ -2,6 +2,57 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-24 (AKD)
+
+- **Anthropic’s new guide (Oct 22) argues most agents should have fewer subagents: one main loop, skills and tool search instead. Includes “we cut Claude Code’s system prompt by over 80%”** (Top pick; agents_mcp_skills; reddit) - Anthropic's Oct 22 guide advises collapsing most subagent setups into one main loop with skills and tool search, which directly affects how Claude Code multi-agent configs should be structured.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xdwquj/anthropics_new_guide_oct_22_argues_most_agents/
+
+- **anthropics/claude-code v2.1.310** (Top pick; agents_mcp_skills; github) - Claude Code v2.1.310 adds the Monitor tool to Bedrock, Vertex, and Foundry, and fixes gateway breakage from the effort beta value and mid-conversation system messages, which matters if you route thro…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.310
+
+- **Anthropic Joins the AI Agent Race With Claude Duet** (Top pick; agents_mcp_skills; email) - Claude Duet is a new Anthropic agent that connects to 6,000+ apps and can make purchases, with a waitlist for Pro and Max users, so it's relevant to agent security and permission design.
+  - Link: https://www.nytimes.com/2026/10/21/technology/anthropic-ai-agent-claude-duet.html?unlocked_article_code=1.KlE.QAgO.72jJWCZG7Z62&smid=url-share&utm_source=tldrnewsletter
+  - Also covered by: [Claude Duet: Anthropic's New AI Agent That Messages You First](https://www.youtube.com/watch?v=0xyHuhsRdb4) (youtube)
+  - Also covered by: [Claude Duet](https://claude.com/resources/articles/claude-duet?utm_source=tldrai) (email)
+  - Also covered by: [Introducing Claude Duet](https://www.youtube.com/watch?v=Fb-68zqcSVs) (youtube)
+
+- **Baidu open-sourced an OCR model that reads a whole multi-page PDF in one pass. 28.3K stars. Unlimit…** (Top pick; model_release; x) - Baidu's open-source multi-page PDF OCR model (Unlimited-OCR, built on DeepSeek-OCR) runs locally via Transformers or vLLM on an NVIDIA GPU, usable as a document-to-text step in agent pipelines.
+  - Link: https://x.com/RoundtableSpace/status/2113884444457304243
+
+- **Harness² Explained: Self-Improving Agents Without Training** (Top pick; research; youtube) - Relevant because it describes an agent rewriting its own prompts, skills, and hooks per task without retraining, with open code (google-research/harness2) to compare against Claude Code and Codex set…
+  - Link: https://www.youtube.com/watch?v=pW2ktrJlsyE
+
+- **[AINews] Kimi 3.1 Pro 104BA-2.8T: Fable-5.1-Class Open Weights narrows Closed-AI lead to 1 month... and Pro Highspeed API with 2-3× speed** (Notable; model_release; web) - A 2.8T open-weights model (Kimi K3.1 Pro) claims to beat Fable 5.1 and offers a 2-3x faster Pro Highspeed API, which matters if you're evaluating open models for agent workloads or considering API sw…
+  - Link: https://latent.space/p/ainews-kimi-31/
+  - Also covered by: [Kimi K3.1 Pro: Most Capable Open-Weight Model Now](https://www.youtube.com/watch?v=XwTNOdTcWHA) (youtube)
+
+- **anthropics/anthropic-sdk-python v2.3.0** (Notable; dev_tooling; github) - Python SDK v2.3.0 stops sending hardcoded query params in endpoint paths and drops the `beta=true` query param in favor of a beta route qualifier, so check any custom request code or proxies relying…
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.3.0
+
+- **Full Claude Platform available on Google Cloud** (Notable; dev_tooling; email) - Claude's full platform features now run on Google Cloud with GCP auth and billing, so teams already on GCP can adopt them without a separate Anthropic account.
+  - Link: https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed?utm_source=tldrai
+
+- **[Release] ISTA GSQ-RCO GGUFs for DeepSeek-V4.1-Flash-1017** (Notable; model_release; reddit) - A 763B-parameter DeepSeek MoE model now ships as 1.75–2.25 bpw GGUFs with a shared memory-mapped Engram file, runnable on a single 12 GB GPU via the Strata runtime.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xe2wg8/release_ista_gsqrco_ggufs_for_deepseekv41flash1017/
+
+- **Real AI Agent Attacks and What Would Have Stopped Them — Andrey Rybka, Bloomberg** (Notable; agents_mcp_skills; youtube) - This talk maps real agent security incidents to concrete controls (scoped per-agent credentials, a deterministic tool broker, default-deny egress including DNS), directly relevant to anyone building…
+  - Link: https://www.youtube.com/watch?v=5O6jLtoeKrg
+
+- **We’re adding support for MCP Tasks and Elicitations in Claude. Tasks let Claude give plugins long-r…** (Notable; agents_mcp_skills; x) - Claude is adding MCP Tasks, so long-running MCP plugin jobs (like deep research) can run asynchronously and report back, relevant to your MCP server work.
+  - Link: https://x.com/ClaudeDevs/status/2113698001889927608
+
+- **Broccoli2Shell: Brotli decoder RCE (CVE-2026-111497) in Node.js, Python and more** (Notable; other; reddit) - A remote code execution flaw (CVE-2026-111497) in Brotli decoders across Node.js and Python matters because any service decompressing untrusted input needs patching now.
+  - Link: https://www.reddit.com/r/programming/comments/1xe7dp8/broccoli2shell_brotli_decoder_rce_cve2026111497/
+
+- **Your Claude quota ran out mid-task? magpie switches your agent to the next account or model before …** (Notable; dev_tooling; x) - Magpie is an open-source router that auto-fails over coding agents like Claude Code to other models or accounts on quota exhaustion, but its post warns that routing subscriptions outside their own ap…
+  - Link: https://x.com/RoundtableSpace/status/2113899543876268344
+
+- **We're donating Agent Skills to the Agentic AI Foundation (@AgenticAIFdn), the same foundation we do…** (Notable; agents_mcp_skills; x) - Anthropic is donating the Agent Skills standard to the Agentic AI Foundation, the same body that holds MCP, so skills you write for Claude should stay portable across 70+ agent platforms.
+  - Link: https://x.com/ClaudeDevs/status/2113328526413996100
+
+- **How to Let AI Agents Sign Up for Your App Safely — Isabelle Williams, WorkOS** (Notable; agents_mcp_skills; youtube) - Shows how to make an app agent-ready with auth.md, anonymous trial mode, ID-JAG identity assertions, and scoped revocable agent tokens, all directly relevant to agent auth and sandboxing.
+  - Link: https://www.youtube.com/watch?v=uTrY8slys0w
+
 ## 2026-10-24
 
 - **Claude Code v2.1.307–v2.1.310** (AI/Claude tooling) - Run of releases adding safety telemetry, sandbox hardening, and Monitor-tool support on cloud providers.
