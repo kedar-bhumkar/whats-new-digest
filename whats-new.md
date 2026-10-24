@@ -2,6 +2,39 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-24
+
+- **Claude Code v2.1.307–v2.1.310** (AI/Claude tooling) - Run of releases adding safety telemetry, sandbox hardening, and Monitor-tool support on cloud providers.
+  - Why it matters: v2.1.307 adds a `claude_code.safety_event` OpenTelemetry event for each tool call stopped/prompted by a permission rule, hook or sandbox (good for auditing agents), and retries HTTP MCP calls only when idempotent. v2.1.309 closes sandbox escapes (shell startup files, `--mcp-config` tampering); v2.1.310 brings Monitor/plugin monitors to Bedrock, Vertex and Foundry.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude API version 2026-10-21 + new SDKs / `ant` CLI** (AI/Claude tooling) - New API version with breaking changes; SDKs and CLI default to it and move to the Apache 2.0 license.
+  - Why it matters: pinned SDK upgrades may break existing code, so read the migration notes before bumping. Same week: user profiles (tag requests by end customer), org webhooks (beta), OpenTelemetry export (beta).
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Managed Agents: dynamic workflows (beta) and scheduled deployments** (AI/Claude tooling) - An agent can run many sub-agents in phases (Oct 9); scheduled deployments reached Claude Platform on AWS (Oct 14).
+  - Why it matters: fan-out/verify pipelines (e.g. review → verify) without hand-rolled orchestration code.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude models on Google Cloud, Opus 5.5 fast mode GA** (AI/Claude tooling) - Anthropic-managed Claude via your GCP project (IAM, Marketplace billing) as of Oct 22; Opus 5.5 fast mode left research preview Oct 15 with no beta header needed.
+  - Why it matters: simpler procurement on GCP, and faster Opus for latency-sensitive agent loops.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **cloudflare/security-audit-skill** (agent skill, repo) - Multi-phase security-audit skill for coding agents (recon, hunting, validation, structured `findings.json`, independent verification).
+  - Why it matters: drop-in `npx skills add` skill to audit your own or AI-generated code with machine-readable output.
+  - Link: https://github.com/cloudflare/security-audit-skill
+  - Safety note: MIT; ~43k stars, official Cloudflare org; last-commit date not visible to me. Installs via `npx` and the skill can run target builds/tests, so use an OS sandbox with networking disabled as its README requires.
+
+- **NVIDIA/OpenShell** (agent runtime, repo) - Sandboxed runtime for autonomous agents enforcing file, syscall and network policy, injecting credentials only at approved endpoints.
+  - Why it matters: a safer place to run coding agents with real tool access; SDKs for Python, TypeScript, Go, Rust.
+  - Link: https://github.com/NVIDIA/OpenShell
+  - Safety note: Apache-2.0; ~19k stars, official NVIDIA org, 1,861 commits; last-commit date not visible. Quickstart is curl-to-shell (read `install.sh` first); telemetry on by default (`OPENSHELL_TELEMETRY_ENABLED=false` disables).
+
+- **aws/agent-toolkit-for-aws** (MCP/skills, repo) - Official AWS MCP server, skills and plugins (core, Bedrock/AgentCore, data analytics, DevSecOps) for Claude Code, Cursor, Codex and others.
+  - Why it matters: lets an agent do AWS work (CDK/CloudFormation, deploys, incident investigation) with guardrails.
+  - Link: https://github.com/aws/agent-toolkit-for-aws
+  - Safety note: Apache-2.0; ~3k stars, official AWS org, 357 commits; last-commit date not visible.
+
 ## 2026-10-23 (AKD)
 
 - **[AINews] Black October** (Top pick; other; web) - Several critical disclosures landed within 48 hours, including unauthenticated RCEs in PHP, GitLab (CVSS 10, releases since 2014), and Node.js, plus a LiteLLM supply-chain compromise, so check your d…
