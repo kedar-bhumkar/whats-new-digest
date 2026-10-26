@@ -2,6 +2,34 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-26
+
+- **Claude Code v2.1.308–v2.1.310** (AI/Claude) - Sandbox and permission hardening plus gateway compatibility fixes.
+  - Why it matters: v2.1.309 stops shell startup files running outside the sandbox, blocks sandboxed edits to the `--mcp-config` file, closes several Bash permission bypasses, and makes PowerShell hooks block on exit code 2 (no longer failing open without Git for Windows). v2.1.310 adds the Monitor tool on Bedrock/Vertex/Foundry. Worth updating if you run unattended agents or hooks.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Agent Skills donated to the Agentic AI Foundation** (AI/Claude) - Anthropic lists (Oct 22) that the Agent Skills open standard is being donated to the Agentic AI Foundation.
+  - Why it matters: Skills are becoming a vendor-neutral format, so skills you write should stay portable across agent harnesses. Only the newsroom headline was verified; the detail page was not retrievable.
+  - Link: https://www.anthropic.com/news
+
+- **MCP reference servers v2.0.0 / v2.1.0** (AI/Claude) - Servers move to the modern-era MCP spec and TS SDK v2, then v2.1.0 (Oct 25) fixes eight vulnerabilities.
+  - Why it matters: Unknown tools now return JSON-RPC -32602 instead of an isError result, and the time server returns structuredContent. Upgrade filesystem/everything to 2.0.1 and fetch to 2026.10.24 (filesystem fix is partial on Windows).
+  - Link: https://github.com/modelcontextprotocol/servers/releases
+
+- **Claude Haiku 5.5** (AI/Claude) - Fast small model introduced Oct 7; Claude Code aggregators report it as a default model since v2.1.293 (secondary source).
+  - Why it matters: A cheap, fast tier for sub-agents, classification and high-volume steps.
+  - Link: https://www.anthropic.com/news
+
+- **NVIDIA/SkillSpector** (GitHub) - Security scanner for agent skills (Claude Code, Codex, MCP) that flags prompt injection, exfiltration and supply-chain risks and gives a 0-100 risk score.
+  - Why it matters: Run it before installing third-party skills; it also ships as an MCP server so an agent can vet skills itself.
+  - Link: https://github.com/NVIDIA/SkillSpector
+  - Safety note: Apache-2.0, ~21.8k stars, 1,698 commits, vendor-backed (NVIDIA). Last-commit date not shown on the page; install is via uv from git, so review before running.
+
+- **Nutlope/hallmark** (GitHub) - Design skill for Claude Code, Codex, Cursor and OpenCode that steers UI output away from generic AI styling (48 themes, browser lint, audit/redesign commands).
+  - Why it matters: Drop-in way to get better-looking front ends from coding agents.
+  - Link: https://github.com/Nutlope/hallmark
+  - Safety note: MIT, ~35.2k stars, 297 commits; trending #1 today. Last-commit date and contributor count not verified; it installs via `npx skills add`, so inspect the skill files first.
+
 ## 2026-10-25 (AKD)
 
 - **modelcontextprotocol/servers v2.1.0** (Top pick; agents_mcp_skills; github) - Security fixes for MCP filesystem and fetch servers, including a symlink write-escape that is only partly fixed on Windows, so upgrade to 2.0.1 and the 2026.10.24 fetch release now.
@@ -991,50 +1019,3 @@ No GitHub repos made the cut today: the trending ones I checked either use a non
 
 Not included: mksglu/context-mode (interesting context-window tool, but Elastic License 2.0 is not OSI-approved); other trending repos I did not vet (morluto/rea, AnyPS5, storytold/artcraft).
 
-## 2026-10-09
-
-- **Claude Code v2.1.295** (AI/Claude tooling) - Released Oct 8 (with v2.1.294 earlier that day).
-  - Why it matters: New `onFailure: "block"` option for command and HTTP hooks, so a hook that fails to start, times out or exits unexpectedly blocks the action instead of letting it through (a fail-closed guardrail). Also adds `CLAUDE_CODE_RETRY_WATCHDOG_MAX_WAIT_MS` to cap unattended retry waits on 429/529, remote MCP servers now reconnect with backoff, and `claude -p` no longer drops earlier responses when background work starts another turn. v2.1.292 (Oct 6) added an `effort` parameter on the Agent tool for sub-agents.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Managed Agents web-tool restrictions and SDK browser/computer-use classes** (AI/Claude tooling) - API release notes for Oct 7: with `limited` networking, `allowed_hosts` now also governs `web_search`/`web_fetch`; `web_fetch` only fetches URLs already seen in the session; the Python/TypeScript SDKs add beta classes where you subclass and implement one method per browser/computer-use tool.
-  - Why it matters: Safer egress control for agents that browse, and less boilerplate for custom browser or computer-use agents. Note `allowed_domains` outside `allowed_hosts` now fails with a 400. Max and Team plans also now include monthly API credits.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **alibaba/open-code-review** (GitHub repo) - `ocr` CLI that reviews Git diffs (or whole files via `ocr scan`) by pairing deterministic pipelines with a tool-using LLM agent, producing line-level comments with a model provider you configure.
-  - Why it matters: A drop-in AI review step for CI or pre-merge checks that is provider-configurable rather than tied to one assistant.
-  - Link: https://github.com/alibaba/open-code-review
-  - Safety note: Apache-2.0; ~44.9k stars, 787 commits, listed on GitHub Trending today. I could not see last-commit or creation dates or contributor count on the page. The project's own benchmark (AACR-Bench) is self-reported and it says recall is lower than general-purpose agents like Claude Code. Install is via npm (`@alibaba-group/open-code-review`); an install script is also offered, so prefer npm. Needs your own LLM API key. I did not audit the source.
-
-- **diagram-design** (GitHub repo, cathrynlavery) - Agent skill that generates editorial-style diagrams as self-contained HTML/SVG (42 diagram types), can match a site's brand, redraw draw.io/Mermaid/Excalidraw sources, and export PNG/SVG.
-  - Why it matters: Gives Claude Code and similar agents a consistent way to produce architecture diagrams and docs visuals.
-  - Link: https://github.com/cathrynlavery/diagram-design
-  - Safety note: MIT; ~47.4k stars, 265 commits, trending today. Last-commit date and contributors not visible to me. Brand onboarding fetches your website and diagrams load Google Fonts (see its PRIVACY.md); PNG export needs Playwright/Chromium. README warns of unofficial copies under other names, so install only from this repo. I did not audit the source.
-
-Not included: other trending repos I did not vet (morluto/rea, AnyPS5, storytold/artcraft, lingbot-map).
-
-## 2026-10-08
-
-- **Claude Haiku 5.5** (AI/Claude tooling) - New small/fast model, `claude-haiku-5-5`, released Oct 7 and now the default Haiku on the Anthropic API (also in Claude Code v2.1.293).
-  - Why it matters: Per the API release notes: 1M-token context, 128k max output, adaptive thinking with the `effort` parameter, and availability on Bedrock, Google Cloud and Foundry. Good fit for high-volume sub-agents and routing steps. Migrating from Haiku 4.5: manual `budget_tokens` extended thinking now returns a 400, and thinking blocks appear by default (more tokens). The release notes page did not list prices; check the pricing page.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude API changes, Oct 5-8** (AI/Claude tooling) - Sonnet 5.5 cache reads cut from $0.20 to $0.10 per million tokens (cache writes unchanged); Python/TypeScript SDKs add beta classes for the browser-use and computer-use tools where the SDK runs the tool loop; Managed Agents `allowed_hosts` now also governs `web_search`/`web_fetch`; Models API gains `capabilities.server_tools` and `capabilities.thinking.types.disabled`.
-  - Why it matters: Cheaper long-context agent loops, less hand-written tool-loop code, and programmatic capability checks when choosing a model. Note Sonnet 4.5 retires Nov 30, 2026.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude Code v2.1.293 / v2.1.294** (AI/Claude tooling) - Released Oct 7 and Oct 8.
-  - Why it matters: 2.1.294 fixes `prompt`/`agent` hooks written as plain instructions (e.g. "Block commands that...") failing to block what they should, and improves Stop/SubagentStop hook judging. 2.1.293 fixes an HTTP MCP connection memory leak and Claude treating pre-compaction actions as done after compaction. Upgrade if you rely on hooks or long sessions.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **HyperFrames** (GitHub repo, heygen-com) - Turns HTML/CSS/media and seekable animations (GSAP, Lottie, Three.js) into deterministic MP4s by seeking frames in headless Chrome and encoding with FFmpeg; ships a Claude Code plugin and standalone skills.
-  - Why it matters: Lets an agent produce video by writing plain HTML, which it can already do well, with reproducible output. Useful for generated demos, changelog videos or social clips.
-  - Link: https://github.com/heygen-com/hyperframes
-  - Safety note: Apache-2.0; listed on GitHub Trending this week; page shows ~58.9k stars (I could not confirm creation or last-commit dates from the page). Installs run third-party packages via `npx` and a plugin marketplace, so review them like any dependency. I did not audit the source.
-
-- **OpenRig** (GitHub repo, mvschwarz) - Local daemon, CLI, TUI and MCP server on tmux for defining teams of Claude Code, Codex and Pi agents in YAML, with roles, shared context and persistent sessions.
-  - Why it matters: A concrete way to run multi-agent setups with durable roles instead of ad hoc terminals.
-  - Link: https://github.com/mvschwarz/openrig
-  - Safety note: Apache-2.0; ~6.0k stars, 3,673 commits, trending this week (creation/last-commit dates not visible to me). Invasive: it writes hooks, status-line commands and trust settings into `~/.claude` and `~/.codex/config.toml`, offers `curl | sh` and a postinstall check, and has optional permission-bypass modes. No credential requests seen. Try it in a disposable environment and prefer the npm route over `curl | sh`.
-
-Not included: other trending repos I did not vet (claude-mem, mattpocock/skills, Agent-Reach, text-to-cad, cursor/plugins).
