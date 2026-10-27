@@ -10,13 +10,25 @@ Each run writes two outputs:
 ## How it works
 
 ```mermaid
-flowchart LR
-    A[Collectors] --> B[Dedupe]
-    B --> C[Jev scoring]
-    C --> D[Weighted rank]
-    D --> E[Group same story]
-    E --> F[Claude summary]
-    F --> G[Publish]
+flowchart TD
+    CRON[GitHub Actions daily cron] --> COL[Collectors]
+    RSS[Web feeds RSS and Atom] --> COL
+    GH[GitHub API topics and releases] --> COL
+    RED[Reddit] --> COL
+    YT[YouTube channel feeds] --> COL
+    APIFY[Apify actors] -->|X posts and YouTube fallback| COL
+    GMAIL[Gmail IMAP newsletters] --> COL
+    COL --> DEDUPE[Dedupe by URL and title]
+    DEDUPE --> JEV1[Jev TypeSafe scoring]
+    PROFILE[profile.yaml reader profile] --> JEV1
+    JEV1 --> RANK[Weighted rank from config.yaml]
+    RANK --> JEV2[Jev same-story grouping]
+    JEV2 --> CLAUDE[Claude summaries]
+    CLAUDE --> PUB[Publish]
+    PUB --> MD[whats-new.md in this repo]
+    PUB --> SITE[items.json in site repo]
+    SITE --> VERCEL[Vercel deploy]
+    VERCEL --> TAB[What's New tab]
 ```
 
 1. **Collect.** Each source is a collector with `collect() -> list[Item]`. A failing collector is logged and skipped; the run continues.
