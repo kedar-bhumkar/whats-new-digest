@@ -2,6 +2,18 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-27
+
+- **Claude Code v2.1.311** (AI/Claude) - Released Oct 26; context, subagent and hook fixes.
+  - Why it matters: standard-context sessions that exceed 200K tokens now compact and continue instead of stopping with a "Usage credits required for 1M context" error; subagents can use MCP tools from servers that finish connecting after the subagent starts; `SubagentStop` hooks now fire once per subagent (previously about twice a minute); stale MEMORY.md/CLAUDE.md content is no longer seen right after auto-compaction; `ultrathink` runs at xhigh effort on Opus 5.5, Sonnet 5.5, Haiku 5.5 and Fable 5.1 via the Anthropic API. New `self-hosted-runner` flags `--hold-idle-file` and `--max-hold-min`. Worth updating if you run long agent sessions or hooks.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Tag API (beta) + anthropic-sdk-python v2.2.0/v2.3.0** (AI/Claude) - Enterprise-only `/v1/organizations/claude_tag/` endpoints (Oct 23, requires beta header `experimental-claude-tag-2026-10-21`) to read and change Claude Tag settings for Slack channels and workspaces; Python SDK 2.3.0 adds the endpoints.
+  - Why it matters: lets admins script Claude Tag configuration. SDK 2.2.0 also adds message threads and usage/cost reports by dimension, and changes tool-runner behavior (`append_messages()` leaves history to the caller), so recheck any tool-runner code before upgrading.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- GitHub repos: none included today. The recently created AI/MCP repos I found did not pass vetting (one gained ~975 stars and 239 forks within a day, a clone-farm pattern; another is a dual-use attack-surface scanner), and I could not vouch for either.
+
 ## 2026-10-26 (AKD)
 
 - **Every MCP server and agent you install can read your SSH keys and .env files. Anthropic open-source…** (Top pick; agents_mcp_skills; x) - Anthropic's open-source sandbox-runtime (npm, Mac/Linux) restricts MCP servers and agents to allowed folders and domains, directly addressing SSH key and .env exposure risks in your Claude Code setup.
@@ -1023,49 +1035,4 @@ No GitHub repos today: my one search surfaced no fresh October trending list, an
   - Link: https://platform.claude.com/docs/en/release-notes/api
 
 No GitHub repos made the cut today: the trending ones I checked either use a non-OSI license (mksglu/context-mode is ELv2) or had anomalous star growth I could not vouch for.
-
-## 2026-10-11
-
-- **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude tooling) - Launched Oct 7: 1M context, 128k max output, adaptive thinking.
-  - Why it matters: Cheap/fast tier for subagents and high-volume steps. Migration gotcha: Haiku 4.5 patterns now return 400s (`budget_tokens`, `temperature`/`top_p`/`top_k`, assistant prefill, and the `computer_20250124` tool), so audit existing calls before swapping the model ID.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **SDK computer-use and browser-use classes (beta)** (AI/Claude tooling) - Oct 7 API release: Python and TypeScript SDKs let you subclass a computer or browser class and implement one method per tool against your own automation backend.
-  - Why it matters: Less glue code for custom computer-use agents (e.g. driving your own Playwright or VM harness). Same release: Managed Agents `limited` networking now also restricts `web_search`/`web_fetch` via `allowed_hosts`, and `web_fetch` only fetches URLs already seen in the session.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude Code v2.1.295 / v2.1.294** (AI/Claude tooling) - Released Oct 8.
-  - Why it matters: New `onFailure: "block"` for command and HTTP hooks makes a hook that fails to start, times out, or crashes block the action instead of letting it through (fail-closed guardrails). Also: `prompt`/`agent` hooks phrased as instructions no longer allow actions they should block, remote MCP servers back off up to 30s instead of reconnect-looping, and OSC 7501 lets terminals show working/waiting/done status.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **strands-agents/box** (GitHub repo) - Rust sandbox for running AI agents with OS isolation, default-deny network/file/exec policies, and credential injection so secrets stay outside the agent. macOS on Apple silicon today; Linux planned.
-  - Why it matters: A way to run coding agents or MCP tools with least privilege instead of trusting prompt-level rules; relevant to any agent that executes untrusted code or holds API keys.
-  - Link: https://github.com/strands-agents/box
-  - Safety note: Apache-2.0; created Oct 2, last push Oct 11; ~319 stars, 14 forks; under the `strands-agents` org. Young project (41 open issues), so review before relying on it for real isolation.
-
-- **dzhng/jevgrep** (GitHub repo) - CLI for coding agents that finds code by describing what it does, using the Jev model to pick relevant files and source context.
-  - Why it matters: Semantic code retrieval for Claude Code/Codex without hand-built embeddings pipelines; a concrete example of a typed/judgment model replacing grep-and-guess steps.
-  - Link: https://github.com/dzhng/jevgrep
-  - Safety note: MIT; created Sep 26, last push Oct 2; ~2.6k stars, 187 forks. I checked repo metadata only, not the code or install scripts, so inspect before installing.
-
-## 2026-10-10
-
-- **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release notes: an agent can write a program that runs many agents in phases, executed server-side as a workflow run.
-  - Why it matters: Fan-out/pipeline orchestration (review, research, migration jobs) without hosting your own orchestrator. Enable via the agent's `multiagent` field set to `{"type": "multiagent_20261001", "workflows": {"type": "enabled"}}` with the `managed-agents-2026-04-01` beta header; progress arrives as `workflow_run.*` events.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Sonnet 5.5 cheaper cache reads + Models API capability fields** (AI/Claude tooling) - Prompt cache reads on Claude Sonnet 5.5 dropped from $0.20 to $0.10 per million tokens (Oct 7). The Models API also gained `capabilities.server_tools` (Oct 6) and `capabilities.thinking.types.disabled` (Oct 5).
-  - Why it matters: Halves the cost of cache-heavy agent loops; the capability fields let code check programmatically whether a model accepts web search/code execution tools or `thinking: {type: "disabled"}` instead of hardcoding per-model assumptions.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude Code v2.1.296** (AI/Claude tooling) - Released Oct 9.
-  - Why it matters: Subagents (frontmatter and `--agents`) get `autoCompactWindow` to compact earlier than the main conversation; `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` pins one model for all workflow agents; Read tool gains `allow_large`; the MCP tool-description/instructions limit rises from 2,048 to 4,096 characters. Fixes: managed `PreToolUse` hooks that deny with `"continue": false` no longer end the turn, Edit/NotebookEdit refuse non-UTF-8 files instead of corrupting them, and Bash permission checks no longer auto-approve `BASH_ARGV0` assignment tricks.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **mattpocock/skills** (GitHub repo) - Collection of agent skills from the author's own `.agents` directory: engineering skills (e.g. `tdd`, `grill-with-docs`, `to-spec`, `code-review`) and productivity skills (`grill-me`, `handoff`, `teach`), packaged as plugins for Claude Code, Codex, Copilot and Gemini CLI.
-  - Why it matters: Ready-made, reusable workflows (spec grilling, TDD, handoff notes) you can install into your own agent setup rather than writing prompts from scratch.
-  - Link: https://github.com/mattpocock/skills
-  - Safety note: MIT; ~284k stars, 545 commits, trending today. Last-commit date and contributor list not visible to me. Install via one method per agent only (otherwise skills duplicate). Skills are prompt files that steer your agent, so skim them before enabling. I did not audit the source.
-
-Not included: mksglu/context-mode (interesting context-window tool, but Elastic License 2.0 is not OSI-approved); other trending repos I did not vet (morluto/rea, AnyPS5, storytold/artcraft).
 
