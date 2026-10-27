@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-27 (AKD)
+
+- **Ling-3.1-flash-1019 weights are out, and they released the base model too** (Top pick; model_release; reddit) - Ling-3.1-flash-1019 weights and a BF16 base checkpoint are now on Hugging Face (560B total, 25B active, 1M context), and the README's SGLang example still points to the old model path, so update it t…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xgrr8n/ling31flash1019_weights_are_out_and_they_released/
+  - Also covered by: [inclusionAI/Ling-3.1-flash-1019 · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1xgpo4q/inclusionailing31flash1019_hugging_face/) (reddit)
+
+- **anthropics/claude-code v2.1.311** (Top pick; dev_tooling; github) - Claude Code v2.1.311 fixes several agent-loop bugs (MCP tool access in subagents, stale CLAUDE.md/MEMORY.md after compaction, SubagentStop hook firing repeatedly), so upgrading is worthwhile for anyo…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.311
+
+- **How Anthropic ships the #1 LLM in the World safely: Separating the Brain from the Hands** (Top pick; model_release; web) - This Latent Space interview covers Anthropic's Managed Agents architecture (decoupling brain, harness, and sandbox) and Claude Opus 5.5 launch details, directly relevant to agent infrastructure desig…
+  - Link: https://latent.space/p/how_anthropic_ships_the_1_llm_in_the_world_safely_separating_the_brain_from_the_hands/
+
+- **LiquidAI/LFM3-1.7B · Hugging Face** (Top pick; model_release; reddit) - A 1.7B open-weight model with a 256K context and about 1 GB footprint at 4-bit, post-trained for local agent harnesses like Hermes Agent and OpenClaw, though the card explicitly warns against agentic…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xgy8s3/liquidailfm317b_hugging_face/
+
+- **Apple's 20B On-Device Model** (Top pick; model_release; email) - Apple's 20B on-device model streams weights from flash to run on about 2GB of RAM, a practical option for local inference, though its weaker math performance limits it for coding-heavy tasks.
+  - Link: https://www.airealist.ai/p/exploring-apple-on-device-model?utm_source=tldrai
+
+- **Theo just open-sourced the agent skills he uses every day in Claude Code and Codex. Say "full send"…** (Notable; agents_mcp_skills; x) - Theo's open-sourced skills add "full send" (change to merged PR), "council" (multi-model review), "babysit" (CI fixing), and "takeover" (finishing others' branches) for Claude Code and Codex, install…
+  - Link: https://x.com/RoundtableSpace/status/2115047105853288754
+
+- **Qwen investigation traces release** (Notable; research; reddit) - A Reddit post from Cohere releasing traces and a reproduction script for a Qwen3.8 investigation into strange embedded links, relevant to model safety and open-weight behavior.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xgbm28/qwen_investigation_traces_release/
+  - Also covered by: [Concerning behavior from a popular open-weight AI model](https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model?utm_source=tldrai) (email)
+
+- **OpenBot** (Notable; agents_mcp_skills; email) - OpenBot gives persistent per-agent workspaces for Claude Code and Codex, but its preview runs agents with broad access and no per-action approvals, so review its sandboxing before adopting.
+  - Link: https://github.com/nightly-labs/openbot?utm_source=tldrdev
+
+- **Andrej Karpathy listed exactly how AI coders mess up: they assume instead of asking, write 1,000 li…** (Notable; repo_library; x) - A widely starred CLAUDE.md distilling four rules (ask when unsure, keep it simple, change only what's asked, define done) that can be dropped into any Claude Code project or installed as a plugin tod…
+  - Link: https://x.com/RoundtableSpace/status/2115009357142266115
+
+- **SenseNova 6.8 Code2Video: an open-sourced model that writes and revises code to make videos** (Notable; model_release; reddit) - Open-source model that writes and revises video-rendering code with a companion Skill, relevant to the reader's HyperFrames/Remotion workflow and agent-driven motion graphics.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xgvcnu/sensenova_68_code2video_an_opensourced_model_that/
+
+- **Introducing GPT-6.1 Terra** (Notable; model_release; web) - A new OpenAI model, GPT-6.1 Terra, is pitched for computer use, which matters if you build agents or automate browsers and desktops; the item itself gives no API details, pricing, or availability, so…
+  - Link: https://openai.com/index/introducing-gpt-6-1-terra
+
+- **How the Claude Code team does code review** (Notable; agents_mcp_skills; email) - Claude Code's team reports machine-led code review cut the revert rate by over 40% while merged PRs more than doubled, a concrete workflow model for agentic teams.
+  - Link: https://claude.dev/blog/solving-code-review-at-anthropic/?utm_source=tldrnewsletter
+  - Also covered by: [How the Claude Code Team Does Code Review](https://x.com/addyosmani/status/2114604912520921136?utm_source=tldrdev) (email)
+
+- **300 Agents, 60 People: How We Secured Our Own AI Agents - Aiden Sochowski, Runlayer** (Notable; agents_mcp_skills; youtube) - A practical field report on securing 300+ daily production agents, covering prompt injection via email, over-permissioned bots, and a 100x cost spike from a model switch, all relevant to agent gatewa…
+  - Link: https://www.youtube.com/watch?v=BgLdvF7Qkh8
+
+- **Uncle Bob, the author of Clean Code, just wrote a skill that makes AI agents code the way he would.…** (Notable; agents_mcp_skills; x) - A drop-in Claude Code skill (ub-mode) that enforces test-first, root-cause fixes and mutation testing, installable by copying one SKILL.md into ~/.claude/skills/.
+  - Link: https://x.com/RoundtableSpace/status/2115062205116772676
+
+- **Spark-X2.6-1.7B, almost the same perf as 4b** (Notable; model_release; reddit) - A 1.7B open model scoring 59.8 on SWE-bench Verified (vs 62.8 for its 4B sibling) could be a cheap local option for agentic coding workflows.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xgw2qm/sparkx2617b_almost_the_same_perf_as_4b/
+
 ## 2026-10-27
 
 - **Claude Code v2.1.311** (AI/Claude) - Released Oct 26; context, subagent and hook fixes.
