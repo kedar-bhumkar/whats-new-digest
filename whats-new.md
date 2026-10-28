@@ -1065,35 +1065,3 @@ _Quiet day: searches found no other primary-source items from the last 48 hours 
 
 No GitHub repos today: my one search surfaced no fresh October trending list, and I could not verify license, maintainer history or install safety for any candidate, so I skipped them.
 
-## 2026-10-15
-
-- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's new small model (`claude-haiku-5-5`), released Oct 7, priced at $0.10/$0.50 per million input/output tokens (about 75% cheaper than Haiku 4.5 by Anthropic's account), with an adjustable effort setting.
-  - Why it matters: a cheap subagent for compaction, classification, summaries and DB queries next to Sonnet 5.5 / Opus 5.5. Anthropic's own benchmarks show it well behind Sonnet 5.5 on agentic coding (Terminal-Bench 4.0: 39.2% vs 70.6%), so keep it to narrow, well-scoped tasks. Sonnet 5.5 cache reads were also halved to $0.10 per million tokens. Computer/browser use is in beta in the Python and TypeScript SDKs.
-  - Link: https://www.anthropic.com/news/claude-haiku-5-5
-
-- **openqodex** (GitHub repo) - Runs scanners (secrets, SAST, dependencies, lint, IaC) on unpushed changes, then has a separate reviewer (your Claude Code or Codex login) triage each finding. Can install a pre-push hook and a push gate for coding agents.
-  - Why it matters: a drop-in pre-push review gate when AI agents write most of the code.
-  - Link: https://github.com/openqodex/openqodex
-  - Safety note: Apache-2.0, 709 stars, 56 forks, created 2026-10-02, active within the last day. Last-commit date and contributor count could not be confirmed from the repo page. A bundled scanner (Bearer) is under Elastic License 2.0, which is not OSI-approved. `npx openqodex init` writes hooks into your agent config and downloads scanner binaries, so read what it will write and prefer the pinned version.
-
-- **big-arrow-on-the-screen** (GitHub repo) - macOS CLI (`bigarrow`) that lets Claude Code or Codex draw click-through arrows, boxes and text on screen, packaged with an agent skill. It points only and does not click, type or capture the screen.
-  - Why it matters: a lightweight way for an agent to guide you through a UI.
-  - Link: https://github.com/franzenzenhofer/big-arrow-on-the-screen
-  - Safety note: MIT, 748 stars, created 2026-10-08, 161 commits. Contributor count and last-commit date could not be confirmed. Installs via a personal Homebrew tap, so review the formula first. The skill file shapes agent behaviour, so read it too.
-
-## 2026-10-12
-
-- **Dynamic workflows for Claude Managed Agents (beta)** (AI/Claude tooling) - Oct 9 API release: an agent can write a workflow program that fans out many agents in phases and combines their results, run server-side in the background.
-  - Why it matters: Lets you hand a task too big for one conversation (e.g. reviewing hundreds of documents) to a hosted agent without writing your own orchestrator. Enable with beta header `managed-agents-2026-04-01` and `"multiagent": {"type": "multiagent_20261001", "workflows": {"type": "enabled"}}`; follow progress via `workflow_run.*` events.
-  - Link: https://platform.claude.com/docs/en/managed-agents/workflow-runs
-
-- **Claude Code v2.1.296** (AI/Claude tooling) - Released Oct 9.
-  - Why it matters: `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` pins all workflow agents to one model (cost control); `autoCompactWindow` in subagent frontmatter lets a subagent compact earlier; Read tool gains `allow_large`; MCP tool description/instruction limit raised from 2,048 to 4,096 chars; managed `PreToolUse` deny hooks with `"continue": false` no longer end the turn.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Sonnet 5.5 prompt-cache reads halved** (AI/Claude tooling) - Oct 7: cache reads now $0.10 per million tokens (was $0.20).
-  - Why it matters: Long-context agent loops and repeated-prefix workloads get cheaper with no code change; worth re-checking cost estimates for caching-heavy designs.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-No GitHub repos made the cut today: the trending ones I checked either use a non-OSI license (mksglu/context-mode is ELv2) or had anomalous star growth I could not vouch for.
-
