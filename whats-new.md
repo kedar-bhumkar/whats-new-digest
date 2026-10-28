@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-28 (AKD)
+
+- **anthropics/claude-code v2.1.312** (Top pick; dev_tooling; github) - Claude Code v2.1.312 fixes a CLAUDE.md/rules overwrite bug where Write could clobber large files after reading only their start, plus skills lookup after a Bash `cd` in git repos, both relevant to ag…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.312
+
+- **Liquid AI Launches LFM3 Models for On Device AI** (Top pick; model_release; email) - Open-weight LFM3 models, starting at 2B, run on-device with a 256K context and a 1.7B text model that beats the prior 2.6B, which suits local agent and edge experiments.
+  - Link: https://www.liquid.ai/blog/lfm3?utm_source=tldrai
+  - Also covered by: [Liquid AI just dropped LFM3, a family of 6 tiny models across text, audio, vision and omni. LFM3-VL…](https://x.com/RoundtableSpace/status/2115417043415781385) (x)
+  - Also covered by: [LiquidAI/LFM3-Omni-2B-GGUF](https://www.reddit.com/r/LocalLLaMA/comments/1xh1rwn/liquidailfm3omni2bgguf/) (reddit)
+  - Also covered by: [New audio model: LFM3-Audio-2B](https://www.reddit.com/r/LocalLLaMA/comments/1xh50at/new_audio_model_lfm3audio2b/) (reddit)
+
+- **Exploits Now Beat Patches: Open Source Security in the AI Era - Patrick Smyth, Chainguard** (Top pick; agents_mcp_skills; youtube) - Argues exploits now land before patches and that 30-day remediation windows fail, with concrete hardening steps (cooldowns, SLSA/Sigstore signing, agent skill hardening) relevant to securing agent an…
+  - Link: https://www.youtube.com/watch?v=xZX3pmaB8Hk
+
+- **Google Introduces Genie 4** (Top pick; model_release; email) - Genie 4 is a world model for generating interactive environments with audio, relevant mainly to AI image and video tooling, though it has no API or adoptable first step yet.
+  - Link: https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/?utm_source=tldrai
+
+- **How Anthropic ships Claude with Claude: Separating the Brain from the Hands** (Top pick; model_release; web) - The article covers Anthropic's Opus 5.5 launch and API integration changes, including cost and verbosity shifts that could affect existing Claude API integrations, so it's worth reading for migration…
+  - Link: https://latent.space/p/opus55/
+
+- **Stop Giving Your Agent Tools. Give It a Sandbox - Mikyo King, Arize AI** (Notable; agents_mcp_skills; youtube) - Shows a concrete code-mode pattern (sandboxed code instead of tool catalogs) with measured results of 43% fewer tokens and 31% lower cost, directly relevant to agent architecture and sandboxing.
+  - Link: https://www.youtube.com/watch?v=dAoOYFx7ZYw
+
+- **nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B · Hugging Face** (Notable; model_release; reddit) - A new NVIDIA speech-to-text model (30B total, 4B active MoE) on Hugging Face, usable locally for transcription without relying on a hosted API.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xhqy12/nvidianvidianemotron35transcribe30ba4b_hugging/
+
+- **Every MCP server you add to an AI coding agent is code and instructions your agent trusts. safemcp,…** (Notable; agents_mcp_skills; x) - A new MIT-licensed CLI that audits MCP server configs for Claude Code and similar agents, flagging unpinned packages and auto-approve settings; it's days old, and its `--live` mode runs configured se…
+  - Link: https://x.com/RoundtableSpace/status/2115356645110804552
+
+- **Your coding agents forget what the last one did. A new CLI called agentlog is built to fix that. It…** (Notable; dev_tooling; x) - A CLI letting one coding agent search another's Claude Code, Codex, or Copilot session logs; useful for cross-agent handoff, but reads can be token-heavy and logs may contain secrets.
+  - Link: https://x.com/RoundtableSpace/status/2115371744688996845
+
+- **Hallmark: anti-AI-slop design skill for coding agents** (Notable; agents_mcp_skills; email) - A drop-in open-source skill for Claude Code that generates and audits HTML/CSS pages, directly usable in your existing agentic workflow this week.
+  - Link: https://github.com/Nutlope/hallmark?utm_source=tldrnewsletter
+
+- **REA lets your agent reverse engineer any app. Someone rebuilt it as one 8 KB file that's faster and…** (Notable; agents_mcp_skills; x) - A lean single-file SKILL.md rebuild of REA claims 38% faster, 35% cheaper, and 60% fewer tokens on reverse-engineering tasks, with a drop-in install for agent skills folders.
+  - Link: https://x.com/RoundtableSpace/status/2115296247066333184
+
+- **How the Claude Code Team Does Code Review** (Notable; agents_mcp_skills; email) - The Claude Code team reports doubled merged PRs and 40%+ fewer reverts, with a concrete review process worth copying: automated checks, risk-scaled human approval, and a cap on agent review loops.
+  - Link: https://x.com/addyosmani/status/2114604912520921136?utm_source=tldrdev
+
+- **Show HN: Hob - Open-source, on device alternative to Claude Cowork and ChatGPT** (Notable; repo_library; web) - Open-source desktop app running Gemma 4 or gpt-oss locally with file access, sandboxed code execution, and MCP support, a self-hosted alternative to Claude Desktop-style workflows.
+  - Link: https://github.com/FrigadeHQ/hob
+
+- **Claude Code usage exploded 8x today. Anthropic confirmed service errors consume our paid limits — and they won't compensate users** (Notable; industry_business; reddit) - Anthropic confirmed that elevated API errors on Claude Sonnet 5.5 caused retries that consumed paid Claude Code limits, and it declined to compensate affected users, which matters for anyone relying…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xh3yyu/claude_code_usage_exploded_8x_today_anthropic/
+
+- **omux is a native macOS terminal for running multiple Claude Code sessions side by side, grouped by …** (Notable; dev_tooling; x) - A native macOS terminal for running several Claude Code sessions per project with live status, but its usage meter relies on an undocumented, unofficial endpoint.
+  - Link: https://x.com/RoundtableSpace/status/2115220750496084460
+
 ## 2026-10-28
 
 - **Claude Code v2.1.310-v2.1.312** (AI/Claude tooling) - Three releases in five days, covering the Monitor tool, subagent MCP access and compaction fixes.
