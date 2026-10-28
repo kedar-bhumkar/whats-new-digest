@@ -2,6 +2,17 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-28
+
+- **Claude Code v2.1.310-v2.1.312** (AI/Claude tooling) - Three releases in five days, covering the Monitor tool, subagent MCP access and compaction fixes.
+  - Why it matters: v2.1.310 makes the Monitor tool available on Bedrock, Vertex and Foundry and fixes compaction after "Prompt is too long" errors. v2.1.311 lets subagents use MCP tools from servers that connect later, and lets sessions over 200K tokens compact and continue instead of erroring. v2.1.312 adds `oidc.user_id_claim` for gateway auth and caps prompt/agent hooks at 24 concurrent per session. Worth upgrading if you run long agent loops or cloud/gateway setups.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **CopilotKit/OpenDuet** (GitHub repo) - MIT-licensed template for a proactive AI agent (morning brief, mail/calendar triage, per-agent computers) with approval prompts before sending, paying or deleting.
+  - Why it matters: a working reference for human-in-the-loop approval flows in agent apps. It is early-stage and needs a CopilotKit Intelligence project key to run.
+  - Link: https://github.com/CopilotKit/OpenDuet
+  - Safety note: MIT, from the established CopilotKit org, about 976 stars, created 2026-10-21. Telemetry is on by default (disable with `DO_NOT_TRACK=1`). The quick start runs unpinned `npx copilotkit@latest`, writes keys to `.env`, and starts Docker containers. Review before running. I could not confirm the last commit date or the contributor count.
+
 ## 2026-10-27 (AKD)
 
 - **Ling-3.1-flash-1019 weights are out, and they released the base model too** (Top pick; model_release; reddit) - Ling-3.1-flash-1019 weights and a BF16 base checkpoint are now on Hugging Face (560B total, 25B active, 1M context), and the README's SGLang example still points to the old model path, so update it t…
