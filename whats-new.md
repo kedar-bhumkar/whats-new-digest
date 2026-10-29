@@ -2,6 +2,58 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-29 (AKD)
+
+- **mistralai/Mistral-Large-4-1T-A52B · Hugging Face** (Top pick; model_release; reddit) - A new open-weight 1T-parameter MoE model with a 1M context and text/image input, with GGUF builds ready for local runners like llama.cpp.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xil58b/mistralaimistrallarge41ta52b_hugging_face/
+  - Also covered by: [Mistral Large 4 (Le Chonk) is now open weight](https://www.reddit.com/r/LocalLLaMA/comments/1xil3qy/mistral_large_4_le_chonk_is_now_open_weight/) (reddit)
+
+- **modelcontextprotocol/servers v2.2.0** (Top pick; agents_mcp_skills; github) - Several MCP servers depend on the Node.js runtime and certifi bundle for HTTPS trust, so the eMudhra CA removal requires updating Node and certifi on any host running them.
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.2.0
+
+- **[AINews] Gemini 4 Carbon tops leaderboards, launches for cyber defenders** (Top pick; model_release; web) - Gemini 4 Carbon is a new frontier model with limited cyber-defender access first, so no near-term API adoption, but its pricing ($2/$10 vs. $4/$20 list, with a launch discount) is still unsettled.
+  - Link: https://latent.space/p/ainews-gemini-4-carbon/
+  - Also covered by: [Google DeepMind just shipped Gemini 4 Carbon, only two weeks after Argon. Per The Decoder, Carbon s…](https://x.com/RoundtableSpace/status/2115605786915172399) (x)
+  - Also covered by: [Gemini 4 Carbon: 15 of 17 Wins, and You Can't Use It](https://www.youtube.com/watch?v=TIjxokl5Qkk) (youtube)
+  - Also covered by: [Google unveils Gemini 4 Carbon](https://venturebeat.com/technology/google-unveils-gemini-4-carbon-retaking-the-worlds-no-1-spot-on-updated-harder-benchmarks-but-access-is-limited?utm_source=tldrnewsletter) (email)
+
+- **ServiceNow-AI/Apriel-Voice-27B-preview · Hugging Face** (Top pick; model_release; reddit) - An open 27B speech-and-tool-use model built on a Gemma 4 backbone that outputs text and tool calls, so voice agents need a separate TTS layer.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xipftk/servicenowaiaprielvoice27bpreview_hugging_face/
+
+- **Anthropic just showed an unreleased Claude research model autonomously discovering and chaining cri…** (Top pick; research; x) - An unreleased Claude research model autonomously chained real exploits across Chrome, Safari, Android, Windows, and Linux, signaling that AI-driven vulnerability scanning of your own code is now prac…
+  - Link: https://x.com/RoundtableSpace/status/2115802081307005341
+
+- **Jim Manico, one of the best-known names in app security, just released free threat-modeling skills …** (Notable; agents_mcp_skills; x) - Free Claude Code/Codex threat-modeling skill from app-security figure Jim Manico, directly relevant to agent security work and adoptable in minutes via a symlink into ~/.claude/skills.
+  - Link: https://x.com/RoundtableSpace/status/2115734132345163819
+  - Also covered by: [jmanico/grim-prompter](https://github.com/jmanico/grim-prompter) (github)
+
+- **How Anthropic Merges 30,000 Code Changes a Day - Manish Kapur, Sonar & Addy Osmani, Anthropic** (Notable; agents_mcp_skills; youtube) - Anthropic's account of scaling Claude-driven first-pass PR review to 30,000 merged changes a day, with verification evidence, is directly applicable to anyone running coding agents in production.
+  - Link: https://www.youtube.com/watch?v=AnsXWH2_EBU
+
+- **Introducing Vercel CI** (Notable; dev_tooling; email) - Vercel's beta CI runs only tasks affected by a change, cutting git push to CI pass time 2-6x, which matters for agent-driven commit volume on Vercel projects.
+  - Link: https://vercel.com/blog/introducing-vercel-ci?utm_source=tldrai
+
+- **Your coding agent can run rm -rf and git push. A new repo, ai-setup, makes it ask first. It install…** (Notable; agents_mcp_skills; x) - One shared permission policy for Claude Code and OpenCode that gates commits, pushes, and deletes behind approval and generates an OS-level sandbox, though its guard has known gaps.
+  - Link: https://x.com/RoundtableSpace/status/2115590687588499695
+
+- **multi-agent-repo-protocol is a new MIT repo that stops parallel coding agents from deleting each ot…** (Notable; repo_library; x) - Directly relevant to running parallel Claude Code agents: it adds git worktrees, path-claim tracking, and commit hooks to prevent agents overwriting each other's uncommitted work, but its installer c…
+  - Link: https://x.com/RoundtableSpace/status/2115651085952340108
+
+- **Claude Code regularly sends each background agent’s transcript to its model** (Notable; agents_mcp_skills; web) - Claude Code reportedly sends each background agent's full transcript back to the model, which matters for anyone relying on background agents to keep sensitive context contained or for cost and token…
+  - Link: https://gist.github.com/flamerix-ai/c3905705cc4205e5de3011fa2e74efce
+
+- **SafeAgents: an open-source proxy that checks every tool call your coding agent makes before it runs** (Notable; agents_mcp_skills; reddit) - A local proxy that screens every tool call a coding agent makes before execution, blocking undeclared tools and suspicious hosts, useful if you run Claude Code-style agents against your own model ser…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xii45s/safeagents_an_opensource_proxy_that_checks_every/
+
+- **6 open-source repos for AI coding agents, all created in the last week. 1. kanzo: a kanban board th…** (Notable; repo_library; x) - A roundup of six brand-new agent repos; the most adoptable for this reader is kanzo, a git-synced kanban MCP server for shared agent task lists, though its no-auth design means keeping it off the net…
+  - Link: https://x.com/RoundtableSpace/status/2115666184888537433
+
+- **XiaoyeCodes/code-animation-prompts** (Notable; repo_library; github) - A Claude Code and Codex skill bundling 341 code-animation style prompts with reference frames and an offline picker for rendering HTML videos, a direct fit for the HyperFrames and Remotion tooling in…
+  - Link: https://github.com/XiaoyeCodes/code-animation-prompts
+
+- **Anthropic launches tools to track AI spending** (Notable; dev_tooling; email) - Anthropic now offers spend and productivity reporting for Claude Code usage, useful if you track or justify agentic coding costs for clients.
+  - Link: https://techcrunch.com/2026/10/28/anthropic-just-launched-tools-to-show-companies-what-their-ai-spending-is-buying/?utm_source=tldrai
+
 ## 2026-10-29
 
 - **JetBrains/thinkrail** (GitHub repo) - Agentic IDE built around the `pi` coding agent: isolated git-worktree workspaces, Monaco editor, `SPEC.md`-based "Specs" the agent reads and maintains, plus skills, workflows and MCP support.
