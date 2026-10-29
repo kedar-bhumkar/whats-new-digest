@@ -2,6 +2,15 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-29
+
+- **JetBrains/thinkrail** (GitHub repo) - Agentic IDE built around the `pi` coding agent: isolated git-worktree workspaces, Monaco editor, `SPEC.md`-based "Specs" the agent reads and maintains, plus skills, workflows and MCP support.
+  - Why it matters: a worked example of spec-driven, worktree-per-task agent workflows you can borrow for your own setups; trending today.
+  - Link: https://github.com/JetBrains/thinkrail
+  - Safety note: Apache-2.0, ~5.7k stars, 605 commits, labelled a JetBrains incubator project. Creation date, last-commit date and contributor count not shown on the page. Basic usage/error telemetry is always on (extra sharing optional; `--no-analytics`). Linux builds unsigned and macOS CLI not notarized; the CLI install script checks a SHA-256 checksum, but read it first.
+
+- Quiet day otherwise: Claude Code's latest release is still v2.1.312 (already covered), and Anthropic's platform release notes show nothing newer than Oct 23 (Claude Tag API beta). Other trending repos (e.g. openbot, hallmark-style skill packs) were already covered or could not be vouched for.
+
 ## 2026-10-28 (AKD)
 
 - **anthropics/claude-code v2.1.312** (Top pick; dev_tooling; github) - Claude Code v2.1.312 fixes a CLAUDE.md/rules overwrite bug where Write could clobber large files after reading only their start, plus skills lookup after a Bash `cd` in git repos, both relevant to ag…
