@@ -2,6 +2,29 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-30
+
+- **Claude Code v2.1.314** (AI/Claude tooling) - New `permissions.blockWritesOutsideWorkingDirectories` setting; idle conversations over 200K tokens get auto-summarized; `claude -p` now exits 1 on startup errors.
+  - Why it matters: the write-path restriction is a cheap guardrail for unattended or scheduled agents, and the exit-code fix makes headless runs safe to script in CI.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Code v2.1.311/v2.1.312** (AI/Claude tooling) - `SubagentStop` hooks now fire once per subagent, long-context sessions compact instead of failing past 200K tokens, `ultrathink` runs at xhigh effort on several 5.5-series models, and new `oidc.user_id_claim` for the Claude apps gateway.
+  - Why it matters: fixes noisy hooks in multi-agent workflows and removes a hard failure in long sessions; the OIDC claim helps SSO setups such as Entra ID.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **anthropic-sdk-python v2.3.0 (and v2.2.0)** (AI/Claude tooling) - Adds message threads, usage and cost reports by dimension, Claude Tag endpoints for Enterprise orgs, and several `tool_runner` fixes (tools removed from `tools` stop running, betas preserved).
+  - Why it matters: if you build agent loops on `tool_runner`, upgrade for the correctness fixes; cost-by-dimension reports help with per-feature spend tracking.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+- **modelcontextprotocol/servers v2.2.0 / v2.1.0** (AI/Claude tooling) - Security-heavy releases: Filesystem 2.0.1/2.1.0 keeps writes inside allowed directories and closes symlink leaks; Everything's HTTP/SSE transports reject cross-origin requests and mask credential-like env values; Fetch refuses autonomous fetches on robots.txt 5xx; Git patches GHSA-w766-5x43-whvw.
+  - Why it matters: anyone running these reference servers locally with an agent should upgrade, since a visited web page could previously call Everything's tools.
+  - Link: https://github.com/modelcontextprotocol/servers/releases
+
+- **cloudflare/security-audit-skill** (GitHub repo) - A coding-agent skill that runs a six-phase security audit (recon, hunting, validation, structured `findings.json`, independent verification, report).
+  - Why it matters: a ready-made, structured audit workflow you can point an agent at before shipping code; machine-readable findings slot into CI or triage tooling.
+  - Link: https://github.com/cloudflare/security-audit-skill
+  - Safety note: MIT license; published by the Cloudflare org; ~53k stars reported on the page. Install is user-run `npx skills add ...`, with no credential requests. It requires an OS-enforced, network-disabled sandbox to execute target code. Last-commit date was not visible on the page, so check it yourself before use.
+
 ## 2026-10-29 (AKD)
 
 - **mistralai/Mistral-Large-4-1T-A52B · Hugging Face** (Top pick; model_release; reddit) - A new open-weight 1T-parameter MoE model with a 1M context and text/image input, with GGUF builds ready for local runners like llama.cpp.
@@ -1033,75 +1056,4 @@ _Quiet day: searches found no other primary-source items from the last 48 hours 
 
 - **Working on a tool to help Claude make good pixel art** (Notable; agents_mcp_skills; reddit) - A Claude Code skill (pxl) that gives Claude a pixel-art DSL with a live viewer, installable by cloning a repo into ~/.claude/skills.
   - Link: https://www.reddit.com/r/ClaudeAI/comments/1x6akki/working_on_a_tool_to_help_claude_make_good_pixel/
-
-## 2026-10-14 (AKD)
-
-- **Google makes Gemini 4 Argon broadly available** (Top pick; model_release; email) - A new flagship multimodal model with a limited-time API price cut of about $2.10 per million tokens, worth benchmarking against your current Claude and Gemini calls for cost and quality.
-  - Link: https://venturebeat.com/technology/google-makes-gemini-4-argon-broadly-available-with-limited-time-low-api-pricing-of-2-10-per-1m-token?utm_source=tldrnewsletter
-
-- **[AINews] AI Engineer NYC: Gemini 4 Argon, Vals AI Benchmarks** (Top pick; model_release; web) - Gemini 4 Argon is now generally available in the paid Gemini API at introductory $2/$10 per million tokens, doubling to $4/$20 after November 30.
-  - Link: https://www.latent.space/p/ainews-ai-engineer-nyc-gemini-4-argon
-
-- **anthropics/claude-code v2.1.299** (Top pick; dev_tooling; github) - Claude Code v2.1.299 adds idle auto-compaction for long sessions and a new `CLAUDE_CODE_DISABLE_FILE_MENTIONS` flag, which changes how `@` file mentions reach the model and may affect existing workfl…
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.299
-
-- **New model from Telperion: Qwen3.8-27B-MLA & Qwen3.8-27B-GLA-g2. 4x smaller KV cache, smarter, and more efficient reasoning.** (Top pick; model_release; reddit) - Telperion's Qwen3.8-27B MLA variant cuts KV cache about 4x and reports +6.58% on SWE-bench Verified, with an installable vLLM plugin, relevant for local long-context agent serving.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5wcnz/new_model_from_telperion_qwen3827bmla/
-
-- **Gemini 4 Argon Lands on Google Cloud** (Top pick; model_release; email) - Gemini 4 Argon is now on Google Cloud for long multi-step enterprise work, so it's a new model option to evaluate against Claude for agentic coding, though the item gives no benchmarks or API details.
-  - Link: https://cloud.google.com/blog/products/ai-machine-learning/gemini-4-argon-available-on-google-cloud?utm_source=tldrai
-
-- **anthropics/anthropic-sdk-python v1.14.0** (Notable; dev_tooling; github) - The SDK adds built-in OpenTelemetry tracing for API calls, streaming, and tool runs, plus fixes to streaming event-order handling, so existing streaming code may behave differently.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.14.0
-
-- **Walking away from a long Claude Code session used to cost you when you came back. That just changed…** (Notable; dev_tooling; x) - Claude Code 2.1.299 auto-compacts conversations over 200K tokens after about 54 idle minutes, cutting reprocessing cost on return; it can be disabled via settings.json.
-  - Link: https://x.com/RoundtableSpace/status/2110290764785766460
-
-- **Now in public beta, Claude Platform can send OpenTelemetry traces from the Messages API, Claude Man…** (Notable; dev_tooling; x) - Claude Platform now exports OpenTelemetry traces from the Messages API, Managed Agents, and SDKs, letting you wire agent runs into existing observability tooling.
-  - Link: https://x.com/ClaudeDevs/status/2110421732029063352
-
-- **OpenCode 2.0** (Notable; dev_tooling; email) - OpenCode 2.0's single background server and new SDK for embedding it as a library matter for anyone building agentic coding workflows on alternatives to Claude Code.
-  - Link: https://anoma.ly/notes/opencode-2-0/?utm_source=tldrai
-
-- **Bifrost** (Notable; repo_library; email) - Bifrost is an open-source gateway offering OpenAI-compatible routing, failover, caching, and MCP support, useful if you run agents across multiple model providers and need cost and reliability contro…
-  - Link: https://github.com/maximhq/bifrost?utm_source=tldrdev
-
-- **290K GitHub stars for the Claude Code skills one engineer uses every day. Matt Pocock built them to…** (Notable; agents_mcp_skills; x) - Matt Pocock's Claude Code skills (/grill-me, /tdd, /diagnosing-bugs, /grill-with-docs) target common agent failure modes and install in one command, so they're a low-effort workflow test.
-  - Link: https://x.com/RoundtableSpace/status/2110366262450647202
-
-- **ComfyUI v0.40.0 released** (Notable; dev_tooling; reddit) - A new ComfyUI release (v0.40.0) matters for your AI image and video tooling, but the item gives no changelog, so check its release notes for breaking node or API changes before upgrading.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5nu99/comfyui_v0400_released/
-
-- **Your AI Isn’t the Problem. Your Infrastructure Is. — Jiachen Jiang, Coder** (Notable; agents_mcp_skills; youtube) - An agent that holds destructive credentials can act on them despite written instructions, so enforced sandboxing, short-lived tokens, and out-of-reach audit logs matter more than prompt-level rules.
-  - Link: https://www.youtube.com/watch?v=Wb2v9Phhnns
-
-- **A Year of Fast Apply: The Path to 10k Tokens per Second** (Notable; model_release; email) - Relace Apply 3 is a fast code-edit applying model (reported 10k tokens/sec, 256k context) relevant to agentic coding tools that apply diffs, though its speed claims are vendor-reported and unverified.
-  - Link: https://relace.ai/old/blog/relace-apply-3?utm_source=tldrdev
-
-- **Updated list of official MCP servers (300+), well-known and widely used projects only** (Notable; agents_mcp_skills; reddit) - A curated directory of 280+ officially maintained MCP servers, useful as a shortlist of vendor-backed integrations to evaluate before writing your own.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x5j0p7/updated_list_of_official_mcp_servers_300/
-
-## 2026-10-14
-
-- **Claude Code v2.1.295-2.1.299** (AI/Claude tooling) - Run of releases adding fail-closed hooks, idle compaction and subagent compaction controls.
-  - Why it matters: `onFailure: "block"` on command/HTTP hooks makes guardrail hooks fail closed; idle compaction (conversations over 200K tokens that sit idle ~54 min) cuts cache-expiry cost; subagents get `autoCompactWindow`; Read tool gains `allow_large`; `claude plugin eval` gets `--disallow-tools`.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Haiku 5.5** (AI/Claude tooling) - New small, low-cost model (`claude-haiku-5-5`), 1M context, listed at $0.10/$0.50 per Mtok in the Claude Code release notes; now Claude Code's default Haiku (v2.1.293, Oct 7).
-  - Why it matters: A cheap fit for high-volume subagents, classification and extraction steps in agent pipelines.
-  - Link: https://www.anthropic.com/news
-
-- **modelcontextprotocol/servers v1.0.0** (AI/Claude tooling) - First 1.0.0 of the official MCP reference servers (Oct 11), with fixes for filesystem, memory and everything servers.
-  - Why it matters: The memory server now serializes and locks graph writes and validates entries; filesystem `edit_file` preserves line endings. Worth upgrading if you rely on these servers.
-  - Link: https://github.com/modelcontextprotocol/servers/releases
-
-- **mattpocock/skills** (GitHub repo) - Collection of agent skills for engineering workflows (TDD, bug diagnosis, architecture review, issue triage, specs, handoff) that works across several coding agents.
-  - Why it matters: Drop-in skills to structure agent work in Claude Code and similar tools.
-  - Link: https://github.com/mattpocock/skills
-  - Safety note: MIT license; star count (~290k) as shown on the repo page; last-commit date and contributor count were not visible to me, so vet before installing.
-
-- **heygen-com/hyperframes** (GitHub repo) - Write HTML and render it to video, built for agents (plugin and `npx skills add` install paths).
-  - Why it matters: Lets an agent produce videos from plain HTML/CSS, handy for demos or generated media.
-  - Link: https://github.com/heygen-com/hyperframes
-  - Safety note: Apache-2.0; ~63k stars; backed by a known company (HeyGen). Install commands fetch and run code (npx, plugin install) and the repo needs Git LFS (~240 MB of test videos), so review manifests first. Last-commit date not verified.
 
