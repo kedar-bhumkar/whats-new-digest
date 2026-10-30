@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-30 (AKD)
+
+- **anthropics/claude-code v2.1.314** (Top pick; dev_tooling; github) - Adds a permission to block Write/Edit outside working directories in every mode, plus fixes for `claude -p` exit codes and Bedrock image-limit failures, relevant to agent sandboxing and CI scripts.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.314
+
+- **Mistral Releases Weights for Its Trillion-Parameter Model** (Top pick; model_release; email) - Open-weight trillion-parameter model with claimed agentic coding strength gives you a self-hostable option to evaluate for your agent and sandboxing stack, though self-hosting at that scale is a heav…
+  - Link: https://mistral.ai/news/mistral-large-4-oss/?utm_source=tldrai
+
+- **Backdoor in Claude Code for VS Code extension on the Cursor Marketplace** (Top pick; agents_mcp_skills; web) - A backdoored build of the Claude Code VS Code extension was found on the Cursor Marketplace, so check which extension build you installed and reinstall from the official source if unsure.
+  - Link: https://phorion.io/blog/offical-claude-code-vsx-compromise/
+  - Also covered by: [Cursor just disclosed a security incident: a fake Claude Code VS Code extension slipped into its ma…](https://x.com/RoundtableSpace/status/2116164468304449590) (x)
+  - Also covered by: [Backdoors in official Claude Code extensions](https://cyberplace.social/@GossiTheDog/117528831681803563) (web)
+
+- **Pika just released the weights for H3 Flex, its video model that generates synced audio in the same…** (Top pick; model_release; x) - Open weights for a video model that generates synced audio in six sampling steps and runs locally at 480p or 768p, a direct fit for the ComfyUI and HyperFrames tooling you already use.
+  - Link: https://x.com/RoundtableSpace/status/2116081420762566757
+  - Also covered by: [Introducing Pika H3 Flex](https://pika.art/blog/pika-h3-flex?utm_source=tldrai) (email)
+
+- **Node.js 26 LTS Is Generally Available on Vercel** (Top pick; dev_tooling; email) - Node.js 26 becomes Vercel's default for new projects and auto-applies to existing ones whose engines.node range allows it, so check that field before your next deploy for compatibility breaks.
+  - Link: https://vercel.com/changelog/node-js-26-lts-is-now-generally-available-on-vercel?utm_source=tldrdev
+
+- **We've raised the max request size for Messages and Token Counting on the Claude API from 32 MB to 1…** (Notable; dev_tooling; x) - The Claude API's Messages and Token Counting endpoints now accept requests up to 128 MB, up from 32 MB, which removes a limit that was hitting image-heavy computer-use sessions and large PDFs.
+  - Link: https://x.com/ClaudeDevs/status/2115923971279614171
+
+- **Anthropic renames Max5 and Max20 and removes 5h limits for Max20** (Notable; model_release; reddit) - Anthropic renamed the Max5 and Max20 plans and dropped the 5-hour usage limit on Max20, which changes budgeting for anyone running heavy Claude Code or Agent SDK workloads.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjlvlc/anthropic_renames_max5_and_max20_and_removes_5h/
+
+- **Ship less JavaScript in Next.js with your AI agent** (Notable; dev_tooling; email) - Next.js 16.4 adds an agent skill that uses Turbopack's module graph to find and cut unneeded client JavaScript, relevant to your React/Vite and Vercel work.
+  - Link: https://nextjs.org/blog/ship-less-javascript-with-ai?utm_source=tldrdev
+
+- **Anthropic gave 50 analysts Claude Code with a hidden coin-flip bias. They followed the agent’s lean 86% of the time** (Notable; research; reddit) - Anthropic's alignment study shows analysts adopting a hidden-bias agent's conclusions 86% of the time, a concrete reason to build in counter-argument or disagreement prompts when using agents for ana…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xj3qdv/anthropic_gave_50_analysts_claude_code_with_a/
+
+- **jmanico/grim-prompter** (Notable; repo_library; github) - Directly relevant to your interest in agent security: it's an MIT-licensed prompt pack that has Claude Code or Codex produce an evidence-traced threat model of your repo, adoptable in an afternoon.
+  - Link: https://github.com/jmanico/grim-prompter
+
+- **Claude Code VS Code extension with backdoor released on Cursor marketplace** (Notable; agents_mcp_skills; web) - A fake Claude Code VS Code extension carrying a backdoor was listed on the Cursor marketplace, so check your installed extensions and only install from official sources.
+  - Link: https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2
+
+- **A backdoored Claude Code extension hit up to 5,000 Cursor users** (Notable; agents_mcp_skills; reddit) - A malicious extension impersonating Claude Code reportedly reached up to 5,000 Cursor users, so verify extension publishers before installing anything in your editor.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjepra/a_backdoored_claude_code_extension_hit_up_to_5000/
+
+- **Catch the Bugs Your Code Review Misses - Killian Carlsen-Phelan & Taylor Luttrell-Williams, Sonar** (Notable; agents_mcp_skills; youtube) - Shows a hands-on setup of Gitar, an agent that verifies agent-written PRs, catching out-of-diff bugs and enforcing project-config business rules, with a free trial and workshop repo.
+  - Link: https://www.youtube.com/watch?v=wP3P89YB9fA
+
+- **The fx adapter now runs the harness on the host** (Notable; agents_mcp_skills; email) - The fx adapter now runs the agent harness on the host with sandboxed operations separated out, which matters if you build agents on Vercel's sandbox and may need to revisit your execution and securit…
+  - Link: https://vercel.com/changelog/fx-harness-adapter-now-separates-host-and-sandbox?utm_source=tldrai
+
+- **Why Agents Love Supabase** (Notable; dev_tooling; web) - Relevant to a Supabase-and-agents builder: it covers Supabase's new Docker-free local runtime and schema-in-Git workflow, which could change how agent-generated backends get set up and versioned.
+  - Link: https://latent.space/p/supabase/
+
 ## 2026-10-30
 
 - **Claude Code v2.1.314** (AI/Claude tooling) - New `permissions.blockWritesOutsideWorkingDirectories` setting; idle conversations over 200K tokens get auto-summarized; `claude -p` now exits 1 on startup errors.
