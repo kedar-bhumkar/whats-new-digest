@@ -2,6 +2,39 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-31
+
+- **Claude Code v2.1.316** (AI/Claude tooling) - New `CLAUDE_CODE_SUBAGENT_EFFORT` and `CLAUDE_CODE_DISABLE_ULTRATHINK` settings; gateway adds `managed.policy_mode: layered` and pooled group budgets; v2.1.314 (Oct 30) added `permissions.blockWritesOutsideWorkingDirectories`.
+  - Why it matters: lets you pin cheaper effort for subagents in agent-heavy workflows, and hard-block writes outside the project in every permission mode, useful for unattended/CI runs.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Fast mode for Opus 4.8 deprecated; removal Nov 30, 2026** (AI/Claude tooling) - After that date `claude-opus-4-8` requests with `speed: "fast"` return an error; Anthropic points to Opus 5.5 (which has fast mode, available on the Google Cloud-managed platform since Oct 22).
+  - Why it matters: grep your code and configs for `speed: "fast"` on Opus 4.8 and migrate before the cutoff.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Anthropic SDK major versions + API version 2026-10-21** (AI/Claude tooling) - Python 2.0.0, TypeScript 1.0.0, Go 2.0.0, Java 3.0.0, C# 13.0.0, PHP 1.0.0, Ruby 2.0.0 and `ant` CLI 2.0.0 ship with breaking changes and move from MIT to Apache 2.0.
+  - Why it matters: pin SDK versions before upgrading generated or agent-written code; check license policy for the Apache 2.0 switch.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Usage and Cost Analytics API (beta) + 128 MB request limit** (AI/Claude tooling) - New `/v1/organizations/analytics/usage` and `/cost` endpoints (header `analytics-usage-cost-2026-08-24`), grouped by model, workspace, key or user; Messages/Token Counting max request size raised from 32 MB to 128 MB (Oct 28).
+  - Why it matters: per-agent cost tracking without scraping the console; larger limit helps PDF- and screenshot-heavy agent loops.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **whatsmyagentdoing** (GitHub repo) - Live dashboard (three.js "little office") showing what every Claude Code and Codex agent on your machine is doing.
+  - Why it matters: handy for monitoring several parallel agent sessions.
+  - Link: https://github.com/Charonyuu/whatsmyagentdoing
+  - Safety note: MIT, last push 2026-10-31, ~355 stars, created 2026-10-23 (very new, single maintainer); I did not audit the code, so review before running.
+
+- **audio-studio-mcp** (GitHub repo) - Local MCP server generating background music and sound effects with Stable Audio 3 (MLX on Apple Silicon, PyTorch on NVIDIA); no cloud or API key.
+  - Why it matters: a ready example of wrapping a local generative model as an MCP tool for Claude Code, e.g. for game or video projects.
+  - Link: https://github.com/kanaworksai-hue/audio-studio-mcp
+  - Safety note: MIT, last push 2026-10-24, ~548 stars, created 2026-10-18 (new, single maintainer); no code audit done.
+
+- **kensaku** (GitHub repo) - Rust/Tauri local file launcher with OCR, semantic search and MCP access so agents can search your documents and screenshots offline.
+  - Why it matters: pattern for exposing local semantic search to coding agents without sending data to a cloud index.
+  - Link: https://github.com/yjid/kensaku
+  - Safety note: MIT, last push 2026-10-30, ~337 stars, 10 open issues, created 2026-10-24 (new); review before granting file access.
+
 ## 2026-10-30 (AKD)
 
 - **anthropics/claude-code v2.1.314** (Top pick; dev_tooling; github) - Adds a permission to block Write/Edit outside working directories in every mode, plus fixes for `claude -p` exit codes and Bedrock image-limit failures, relevant to agent sandboxing and CI scripts.
@@ -693,6 +726,7 @@ Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry
   - Why it matters: concrete pattern for regression-testing agents from real traces rather than hand-written evals.
   - Link: https://github.com/jwuthri-cloud/Tracely-ai
   - Safety note: MIT; created 2026-10-11, last push 2026-10-19; ~1.2k stars; 22 open issues, young project. Metadata only.
+
 ## 2026-10-22
 
 - **Claude Code v2.1.307** (AI/Claude tooling) - Adds `/claude-api api-version` to move Claude API code to API version `2026-10-21`, plus a new `claude_code.safety_event` OpenTelemetry event.
@@ -1042,68 +1076,3 @@ _Quiet day: searches found no other primary-source items from the last 48 hours 
 
 - **Graphicle-AI/graphicle** (Notable; repo_library; github) - Adds a Rust-based MCP server that gives Claude Code and other agents a persistent code graph and memory, a drop-in candidate to test against your own repos this week.
   - Link: https://github.com/Graphicle-AI/graphicle
-
-## 2026-10-16
-
-- **Claude Code v2.1.299 - v2.1.301** (AI / Claude tooling) - Idle compaction, richer OpenTelemetry tool-decision events, and Read/Grep fixes.
-  - Why it matters: v2.1.299 compacts conversations of 200K+ tokens idle ~54 min before the 1-hour prompt cache expires (tune with `CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS` or `"idleCompaction": false`), cutting reprocessing cost on resumed sessions. v2.1.301 adds `classifier_verdict` and `permission_mode` to OTel `tool_decision` events, `CLAUDE_CODE_RETRY_WATCHDOG_MAX_USAGE_LIMIT_WAIT_MS` to stop unattended retries stuck on far-off usage limits, and fixes Read treating binary files (.parquet, .xlsm, .epub, .heic) as text and Grep/Glob reporting "no matches" on errors.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Code v2.1.296** (AI / Claude tooling) - Subagent and cost controls (released Oct 9, found while backfilling).
-  - Why it matters: `autoCompactWindow` in subagent frontmatter, `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL` to pin all workflow agents to one model, MCP tool description limit raised from 2,048 to 4,096 chars, and Sonnet 5.5 cache reads now priced at $0.10/M tokens in `/cost` and the SDK.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **deepseek-ai/deepseek-harness** (GitHub repo) - Open-source agent harness from DeepSeek AI with an "everything-is-a-plugin" architecture.
-  - Why it matters: a pluggable agent runtime you can study or extend as an alternative to other coding-agent harnesses. Developer preview; the README warns of breaking changes.
-  - Link: https://github.com/deepseek-ai/deepseek-harness
-  - Safety note: MIT license, ~251k stars, 22k+ commits. Last commit date, contributor list and releases were not visible on the page, so treat as unvetted; review before installing and pin versions.
-
-## 2026-10-15 (AKD)
-
-- **nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB · Hugging Face** (Top pick; model_release; reddit) - A 74B-total, 9B-active Mamba-Transformer VLM quantized to 2-bit to fit in 24GB, with 256K context, for local agentic use: a practical option if you run agents on a single consumer GPU.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x6o31q/nvidianvidianemotron35bolt74ba9b24gb_hugging_face/
-
-- **nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B model family released (base, NVFP4, BF16, and LiLiCorr speculative decoding)** (Top pick; model_release; reddit) - NVIDIA released a 120B-parameter vision-language model (12B active) in base, NVFP4, and BF16 variants, plus a speculative-decoding draft model, which matters for anyone self-hosting multimodal agents.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x6nl8m/nvidianvidianemotron35supervl120ba12b_model/
-  - Also covered by: [Add Nemotron Super 3.5 VL and Nemotron Bolt 74B A9B support by frozenblade1224 · Pull Request #30520 · ggml-org/llama.cpp](https://www.reddit.com/r/LocalLLaMA/comments/1x6mlby/add_nemotron_super_35_vl_and_nemotron_bolt_74b/) (reddit)
-
-- **HeyGen just open sourced HyperFrames, an Apache 2.0 framework that lets AI coding agents write HTML…** (Top pick; repo_library; x) - HyperFrames lets Claude Code or other agents write HTML and render it to MP4 via Headless Chrome and FFmpeg, installable as a plugin or skill, a direct fit for the reader's video tooling.
-  - Link: https://x.com/RoundtableSpace/status/2110524806714253739
-
-- **LFM2.5-24B-A2B** (Top pick; model_release; email) - A 24B-parameter model with only 2B active, aimed at fast on-device agents, is a local-inference option worth testing against your current agent workloads if you run models on your own hardware.
-  - Link: https://www.liquid.ai/blog/lfm2-5-24b-a2b?utm_source=tldrai
-
-- **anthropics/claude-code v2.1.300** (Top pick; dev_tooling; github) - Claude Code v2.1.300 adds OpenTelemetry GenAI span attributes and splits cache-write tokens by lifetime, which matters if you export traces or track cache costs, plus new mod hooks and an opt-in advi…
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.300
-
-- **Claude Code desktop just updated to support multiple parallel sessions, with nested sessions spawne…** (Notable; dev_tooling; x) - Claude Code desktop now runs parallel sessions with auto-nested subtasks, a status sidebar, and saved environments (folders, SSH, cloud, optional worktrees) you can try by updating the app.
-  - Link: https://x.com/RoundtableSpace/status/2110570105314976034
-
-- **137B A6.8B model from Microsoft?** (Notable; model_release; reddit) - A Microsoft coding-focused MoE model (137B total, 6.8B active) with a local, sandboxed-tools deployment path, relevant to local agentic coding setups and open-source agent sandboxing.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x6h51s/137b_a68b_model_from_microsoft/
-
-- **Claude Code was sending gateway API keys to Anthropic. Users routing Claude Code through a third-pa…** (Notable; dev_tooling; x) - Claude Code versions before 2.1.299 sent third-party gateway API keys to Anthropic in routine requests, so anyone routing through a gateway should upgrade and check for exposed keys.
-  - Link: https://x.com/RoundtableSpace/status/2110487057789587864
-
-- **Google Harness² for Recursive Self Improvement** (Notable; agents_mcp_skills; email) - Google Research's Harness² is an open-source framework for agents to improve their own prompts, tools, memory, and orchestration across tasks without retraining, directly relevant to agent infrastruc…
-  - Link: https://github.com/google-research/harness2?utm_source=tldrai
-
-- **Agent observability on the Claude Platform** (Notable; dev_tooling; email) - Claude Managed Agents, the Messages API, and the SDKs can now export OpenTelemetry traces to any OTel-compatible backend, so agent runs can be monitored with standard tooling.
-  - Link: https://claude.com/resources/articles/agent-observability-on-the-claude-platform?utm_source=tldrai
-
-- **[AINews] Meta Muse Wonder & Wonder Full: MSL’s Claude 5.5-tier Frontier Model** (Notable; model_release; web) - Meta's new Muse Wonder and Wonder Full models (1M context, $4/M input, $20/M output, Wonder Full gated to MuseCode plans) are a new frontier API option worth evaluating against Claude and OpenAI for…
-  - Link: https://www.latent.space/p/ainews-meta-muse-wonder-and-wonder
-  - Also covered by: [Meta's Watermelon ripens into a frontier model](https://www.therundown.ai/articles/meta-watermelon-ripens-into-a-frontier-model) (web)
-
-- **Jev 1.14.0: image support, new 'box' type, longer context** (Notable; model_release; email) - Jev 1.14.0 adds image input, a new single-bounding-box output type, and longer context, which matters for your Jev builds, though multimodal accuracy trails text-only performance.
-  - Link: https://typesafe.ai/blog/jev-1-14?utm_source=tldrai
-
-- **Rebuilding CI for AI-Scale Commit Volume — Gautam Korlam, SonarSource** (Notable; agents_mcp_skills; youtube) - Agents can generate PRs faster than CI and merge queues can handle, so the CI/review pipeline, not code generation, becomes the bottleneck to redesign.
-  - Link: https://www.youtube.com/watch?v=7b9tov5Uc5s
-
-- **How Anthropic’s Dynamic Workflows Coordinate Claude Agents** (Notable; agents_mcp_skills; web) - Anthropic's new "flows" feature adds multi-agent orchestration to Claude Managed Agents, relevant if you build agent workloads on the Claude Agent SDK or Managed Agents.
-  - Link: https://www.latent.space/p/claude-dynamic-workflows
-
-- **Working on a tool to help Claude make good pixel art** (Notable; agents_mcp_skills; reddit) - A Claude Code skill (pxl) that gives Claude a pixel-art DSL with a live viewer, installable by cloning a repo into ~/.claude/skills.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x6akki/working_on_a_tool_to_help_claude_make_good_pixel/
-
