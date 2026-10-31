@@ -2,6 +2,54 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-10-31 (AKD)
+
+- **anthropics/claude-code v2.1.316** (Top pick; dev_tooling; github) - Deprecates fast mode on Opus 4.8 (removed November 30, 2026, then errors without fallback), so migrate to Opus 5.5 to keep the speedup; also adds subagent effort and layered policy controls.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.316
+
+- **NVIDIA Nemotron 3.5 Transcribe and Granary v2** (Top pick; model_release; email) - Open-weight multilingual transcription with speaker attribution and audio Q&A, plus a Granary v2 pipeline for fine-tuning, is adoptable this week for voice-based agent or media workflows.
+  - Link: https://huggingface.co/blog/nvidia/nemotron-transcribe-granary?utm_source=tldrai
+
+- **Gemini 4 Carbon: 15 of 17 Wins, and You Can't Use It** (Top pick; model_release; youtube) - Gemini 4 Carbon is access-gated to cyber defenders, and it wins most benchmarks by slim margins while losing FrontierSWE 2 and OSWorld-2.1, so it's unlikely to be a practical option for this stack so…
+  - Link: https://www.youtube.com/watch?v=TIjxokl5Qkk
+  - Also covered by: [Google unveils Gemini 4 Carbon](https://venturebeat.com/technology/google-unveils-gemini-4-carbon-retaking-the-worlds-no-1-spot-on-updated-harder-benchmarks-but-access-is-limited?utm_source=tldrnewsletter) (email)
+
+- **datalab-to/surya-ocr-2.5 · Hugging Face** (Top pick; model_release; reddit) - A 689M-parameter open OCR model that scores 85.9 on OmniParseBench at 4.5 pages/s on one H100, with HTML table output, but its weights are under a restrictive Open Rail-M license and table geometry r…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xjmfxb/datalabtosuryaocr25_hugging_face/
+
+- **Denial of service in body-parser** (Top pick; dev_tooling; email) - A single crafted request can crash servers running affected body-parser versions, a security risk for any Express-based app, including Vercel-hosted React/Vite backends you run, so check and upgrade.
+  - Link: https://expressjs.com/en/blog/2026-10-28-cve-2026-111181/?utm_source=tldrdev
+
+- **AI can turn security fixes into working exploits before users receive an update** (Notable; research; email) - Relevant to agent security work: an open-weight model (GLM 5.3) reportedly turns published Firefox patches into working exploits before users update, so patch-gap risk for open-source projects is now…
+  - Link: https://epoch.ai/publications/open-weight-models-patch-gap?utm_source=tldrai
+
+- **Introducing Pika H3 Flex** (Notable; model_release; email) - A new video model that takes up to 12 references and exports separate audio stems, relevant to the reader's ComfyUI and HyperFrames video tooling work.
+  - Link: https://pika.art/blog/pika-h3-flex?utm_source=tldrai
+
+- **The most annoying thing about AI agents: they forget everything. claude-mem gives them persistent m…** (Notable; repo_library; x) - Adds persistent cross-session memory to Claude Code and other agents, but its default hosted service sends session data off-machine, so check data handling before installing.
+  - Link: https://x.com/RoundtableSpace/status/2116330562415923700
+
+- **When Running Your Own AI Models Beats Paying for APIs - Steven Latré, imec** (Notable; research; youtube) - Benchmarks show self-hosting coding agents on your own GPUs can beat API costs, with break-even utilization ranging from 15% to 89% depending on hardware and harness choice.
+  - Link: https://www.youtube.com/watch?v=9-Y_oS9OBLc
+
+- **Claude now watermarks everything it writes, and you're the one who can't check** (Notable; industry_business; reddit) - Anthropic is extending an invisible text watermark to Opus 4.6, Sonnet 4.6, Opus 4.7 and Mythos 5 from November 3, with no opt-out, so proofreading or translating with Claude can get your text flagge…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjqyv2/claude_now_watermarks_everything_it_writes_and/
+
+- **How Revolut Cut AI Coding Costs 90% With Self-Hosted Open Models - David Abitbol, Revolut** (Notable; industry_business; youtube) - Concrete data from a bank running self-hosted open GLM models for coding at about a tenth of frontier-lab cost, with tuning details that transfer to your own agent infrastructure.
+  - Link: https://www.youtube.com/watch?v=Ok6QdZHCcI8
+
+- **Backdoors in official Claude Code extensions** (Notable; agents_mcp_skills; web) - This item reports backdoors found in official Claude Code extensions, which matters for anyone installing skills, plugins, or MCP servers and should prompt a review of what those extensions can execu…
+  - Link: https://cyberplace.social/@GossiTheDog/117528831681803563
+
+- **New Anthropic research: Automating subtle emergent misalignment research. Red-teaming is a vital pa…** (Notable; research; x) - Anthropic automated red-teaming for subtle misalignment by having thousands of Claude agents craft training data that evades monitors, a method you could adapt for agent safety testing.
+  - Link: https://x.com/AnthropicAI/status/2116349211549843666
+
+- **Your Agent Just Paid for Nothing: 6 Attacks on x402 Payments - Ishween Kaur, SoFi** (Notable; agents_mcp_skills; youtube) - Relevant to agent security work: a concrete walkthrough of six attacks on x402 agent payments (price tampering, double-paying, prompt injection into payments) and the guards that stopped them.
+  - Link: https://www.youtube.com/watch?v=YU1uD_YkpjU
+
+- **Making it easier for websites to express AI training preferences** (Notable; industry_business; web) - Site owners who publish with the Vercel/Vite stack may need to review robots.txt rules, since OpenAI will now honor a shared signal for AI training opt-outs.
+  - Link: https://openai.com/index/helping-websites-express-ai-training-preferences
+
 ## 2026-10-31
 
 - **Claude Code v2.1.316** (AI/Claude tooling) - New `CLAUDE_CODE_SUBAGENT_EFFORT` and `CLAUDE_CODE_DISABLE_ULTRATHINK` settings; gateway adds `managed.policy_mode: layered` and pooled group budgets; v2.1.314 (Oct 30) added `permissions.blockWritesOutsideWorkingDirectories`.
