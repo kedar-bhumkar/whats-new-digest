@@ -2,6 +2,22 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-01
+
+- **Claude Code v2.1.314 / v2.1.312** (AI/Claude tooling) - Adds `permissions.blockWritesOutsideWorkingDirectories`, idle compaction for conversations over 200K tokens in VS Code/Desktop, and `claude -p` now exits 1 on startup failure.
+  - Why it matters: the write-boundary setting is a cheap guardrail for autonomous agent runs; the exit-code fix makes scripted/CI `claude -p` usage detect failures. v2.1.312 also caps prompt/agent hooks at 24 concurrent per session.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Agent Skills donated to the Agentic AI Foundation** (AI/Claude tooling) - Anthropic moved the Agent Skills open standard to the foundation (Oct 22); it reports 70+ agent platforms have integrated it.
+  - Why it matters: skills you write for Claude Code are increasingly portable across other agent tools, so investing in SKILL.md-style packaging is lower risk.
+  - Link: https://www.anthropic.com/news
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - Fast small model aimed at high-volume work such as summarization and subagents (announced Oct 7; a rehash if already adopted).
+  - Why it matters: a cost-efficient choice for subagents and batch pipelines alongside Opus 5.5 for hard tasks.
+  - Link: https://www.anthropic.com/news
+
+No GitHub repos reported today: search results surfaced nothing I could verify and vouch for as new and safe.
+
 ## 2026-10-31 (AKD)
 
 - **anthropics/claude-code v2.1.316** (Top pick; dev_tooling; github) - Deprecates fast mode on Opus 4.8 (removed November 30, 2026, then errors without fallback), so migrate to Opus 5.5 to keep the speedup; also adds subagent effort and layered policy controls.
