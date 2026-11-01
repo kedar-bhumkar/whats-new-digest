@@ -2,6 +2,53 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-01 (AKD)
+
+- **Most agents browse the web through headless Chrome, a full desktop browser. Lightpanda started over…** (Top pick; repo_library; x) - Lightpanda is a from-scratch headless browser that speaks CDP, so existing Puppeteer or Playwright agent scripts could swap in for headless Chrome at roughly 16x less memory and 9x faster on the post…
+  - Link: https://x.com/RoundtableSpace/status/2116730699738661024
+
+- **Heretic 2.0 released: Model modification for everyone** (Top pick; repo_library; reddit) - Heretic 2.0 replaces directional abliteration with Arbitrary-Rank Ablation as default and adds a plugin system, so it now targets general model behavior edits, not only refusal removal.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xl2tcm/heretic_20_released_model_modification_for/
+
+- **FineDNA: the largest dataset to teach any LLM DNA (midtraining, SFT, RL)** (Top pick; repo_library; reddit) - FineDNA is a 300B+ token midtraining, SFT, and RL dataset with open code, showing a reusable recipe for domain-specializing an open model like Qwen3-14B, though it's niche for this reader's stack.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xkwvwg/finedna_the_largest_dataset_to_teach_any_llm_dna/
+
+- **Anthropic has drawn a line on AI game clones. Per PC Gamer, Claude Code's rules on Opus 5.5 now inc…** (Top pick; industry_business; x) - Claude Code's Opus 5.5 usage rules now bar recreating specific existing games, even renamed, so clone-style prompts may be refused and false refusals are being collected.
+  - Link: https://x.com/RoundtableSpace/status/2116753348275679715
+
+- **How Meta Catches Bugs Before Code Ships** (Top pick; dev_tooling; email) - Meta's production use of LLM-generated just-in-time tests to catch bugs pre-merge is a concrete reference for adopting AI-driven testing in a real CI workflow.
+  - Link: https://engineering.fb.com/2026/10/29/security/catching-bugs-before-they-land-jittestings-human-on-the-loop-approach-at-full-scale/?utm_source=tldrai
+
+- **Your AI Agent Starts Every Session Like a New Hire - Killian Carlsen-Phelan, Sonar** (Notable; agents_mcp_skills; youtube) - Sonar's Vortex plugin pre-loads a codebase map and guidelines into coding agent sessions and deterministically checks edits, a directly adoptable pattern for Claude Code workflows, though its 36%/44%…
+  - Link: https://www.youtube.com/watch?v=8vDzncmzxyg
+
+- **wiva-hq/CodeRail** (Notable; repo_library; github) - Self-hosted web and phone remote for Claude Code and Codex sessions, covering approvals, terminals, git and dev-server previews, relevant to your agent-workflow and sandboxing interests.
+  - Link: https://github.com/wiva-hq/CodeRail
+
+- **Ask an agent for a page with no guidance and you get the same tells: Inter everywhere, purple-to-bl…** (Notable; dev_tooling; x) - Impeccable adds a design-vocabulary skill set and a 62-rule deterministic slop detector for Claude Code, runnable with no API key, which could cut generic UI output from agents this week.
+  - Link: https://x.com/RoundtableSpace/status/2116708049977000390
+
+- **PSA: ultracode isn't locked to max effort anymore** (Notable; dev_tooling; reddit) - Ultracode can now be combined with lower effort levels via /effort, cutting usage cost while keeping the multi-agent workflow, so it's worth testing for large audits.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xks0kb/psa_ultracode_isnt_locked_to_max_effort_anymore/
+
+- **Your agent's fake UI mockups just got a lot better. → Stageshow is a skill for faux UI stills, anim…** (Notable; agents_mcp_skills; x) - Stageshow is an installable Claude/agent skill (npx skills add) that generates React-based UI mockups and animations, with an agent that films and self-corrects its output, directly adoptable for a R…
+  - Link: https://x.com/RoundtableSpace/status/2116700500921852292
+
+- **Droid 1.0: Building a Frontier Harness** (Notable; agents_mcp_skills; email) - Droid is a multi-model agent harness built around running many tool calls per request, relevant if you're weighing agentic coding harnesses against Claude Code or the Agent SDK.
+  - Link: https://factory.com/news/frontier-harness?utm_source=tldrai
+
+- **MOSS-Image: New 5B Image Model with Layout Control, Tested Locally** (Notable; model_release; youtube) - A 5B open image model with layout control that runs locally, which is marginal for this reader's ComfyUI and image-tooling stack unless they need controllable composition.
+  - Link: https://www.youtube.com/watch?v=NMVuqUXx2to
+
+- **Your AI Agent Wants Your Data. Here's How to Lock It Down - Jeff Smith, Oracle** (Notable; agents_mcp_skills; youtube) - Relevant to an agent builder: it covers exposing vetted reports as MCP tools and enforcing row-level security so agents never see data the user shouldn't.
+  - Link: https://www.youtube.com/watch?v=LnQce-eHm8k
+
+- **How I Built the Most AI-Pilled Company in the World** (Notable; agents_mcp_skills; email) - Spawn's ten-person team reports 77,000 changes in 30 days using permanent agents with hard-coded gates on irreversible actions, a concrete pattern for agent-driven dev workflows.
+  - Link: https://x.com/jsnnsa/status/2115623382721126826?utm_source=tldrdev
+
+- **DeepSeek: Exploring Super-agent Design: Towards a More Autonomous Agent System** (Notable; agents_mcp_skills; reddit) - A DeepSeek article and prototype plugin on autonomous super-agent design, relevant to agent infrastructure, though explicitly a non-official proof of concept.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xl1zn3/deepseek_exploring_superagent_design_towards_a/
+
 ## 2026-11-01
 
 - **Claude Code v2.1.314 / v2.1.312** (AI/Claude tooling) - Adds `permissions.blockWritesOutsideWorkingDirectories`, idle compaction for conversations over 200K tokens in VS Code/Desktop, and `claude -p` now exits 1 on startup failure.
