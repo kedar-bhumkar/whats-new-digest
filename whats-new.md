@@ -2,6 +2,34 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-02
+
+- **Claude Code 2.1.312-2.1.316** (AI/Claude) - New settings for safer, cheaper agent runs.
+  - Why it matters: `permissions.blockWritesOutsideWorkingDirectories` stops Write/Edit/NotebookEdit writing outside the project in every permission mode. `CLAUDE_CODE_SUBAGENT_EFFORT` sets subagent effort level. Gateway additions include pooled monthly budgets, layered policies and Bedrock guardrail tagging.
+  - Link: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+
+- **Usage and Cost Analytics API (beta)** (AI/Claude) - Anthropic API endpoints `/v1/organizations/analytics/usage` and `/cost`, groupable by model, workspace, API key and user. Announced 2026-10-29.
+  - Why it matters: per-key and per-model spend tracking for apps built on the API. The older Usage and Cost API is now legacy but still supported.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Messages API request limit raised to 128 MB** (AI/Claude) - Up from 32 MB on the first-party API (2026-10-28).
+  - Why it matters: larger PDFs, images and long-context payloads can be sent without chunking.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Opus 4.8 fast mode deprecation** (AI/Claude) - Removal on 2026-11-30; requests to `claude-opus-4-8` with `speed: "fast"` will error. Migration target is Claude Opus 5.5, which has fast mode.
+  - Why it matters: check any code that sets `speed: "fast"` on Opus 4.8.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **cloudflare/security-audit-skill** (GitHub) - A coding-agent skill that runs a six-phase security audit (recon, hunting, validation, structured output, independent verification, report).
+  - Why it matters: a drop-in skill for auditing a codebase with machine-readable findings; target code is not executed without an OS sandbox.
+  - Link: https://github.com/cloudflare/security-audit-skill
+  - Safety note: MIT license, ~57k stars, from Cloudflare. I couldn't see the last commit date. Installs via `npx skills add`. Read the skill before installing.
+
+- **JetBrains/thinkrail** (GitHub) - A desktop/browser IDE built around the `pi` coding agent, with git-worktree workspaces, parallel agent chats and a graph of `SPEC.md` files as ground truth.
+  - Why it matters: spec-driven, multi-agent workflow that supports skills, MCP servers and your own model providers.
+  - Link: https://github.com/JetBrains/thinkrail
+  - Safety note: Apache-2.0, ~7.1k stars, 653 commits, JetBrains-owned. I couldn't see the last commit date. The CLI is installed with a `curl | bash` script, so inspect install.sh first or use the release binaries.
+
 ## 2026-11-01 (AKD)
 
 - **Most agents browse the web through headless Chrome, a full desktop browser. Lightpanda started over…** (Top pick; repo_library; x) - Lightpanda is a from-scratch headless browser that speaks CDP, so existing Puppeteer or Playwright agent scripts could swap in for headless Chrome at roughly 16x less memory and 9x faster on the post…
@@ -1021,88 +1049,3 @@ _Quiet day: searches found no other primary-source items from the last 48 hours 
 
 - **3 small Claude Code habits from other people's setups that I liked** (Notable; agents_mcp_skills; reddit) - Three practical Claude Code habits (subagent selection with tool-access trimming, a Notification hook for waiting-on-input, and a separate reviewer model) are directly adoptable this week, though the…
   - Link: https://www.reddit.com/r/ClaudeAI/comments/1x8lae3/3_small_claude_code_habits_from_other_peoples/
-
-## 2026-10-18
-
-- **Claude Haiku 5.5 (`claude-haiku-5-5`)** (AI/Claude) - New small Claude model with a 1M context window (launched Oct 7).
-  - Why it matters: cheap, fast model for sub-agents and classification steps; some Haiku 4.5 request patterns now return 400s, so check the migration guide before swapping.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Fast mode GA for Claude Opus 5.5** (AI/Claude) - Fast mode left research preview on Oct 15; the beta header is no longer required, and it is available on Microsoft Foundry.
-  - Why it matters: lower-latency Opus for interactive agent loops without special opt-in code.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **OpenTelemetry export for Messages API and Managed Agents (beta)** (AI/Claude) - Trace API requests and Managed Agents sessions with OTel (Oct 14).
-  - Why it matters: plugs agent runs into existing observability stacks for debugging and cost tracking.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Managed Agents dynamic workflows (beta) and scheduled deployments** (AI/Claude) - Dynamic workflows landed Oct 9; scheduled deployments reached Claude Platform on AWS Oct 14.
-  - Why it matters: server-hosted agents that run on a schedule or build their own workflow, without your own orchestration code.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Python/TypeScript SDK computer-use and browser-use tool classes** (AI/Claude) - SDKs added tool classes for browser use and computer use (Oct 7), alongside Sonnet 5.5 prompt-cache reads dropping to $0.10/MTok.
-  - Why it matters: less hand-written tool schema glue for UI-automation agents; cheaper repeated-context workloads.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Tracely-ai** (GitHub) - Trace-native CI/CD for AI agents: grades production traces, clusters failures, freezes them into replayable regression tests and blocks PRs that regress. Self-hostable.
-  - Why it matters: a ready-made way to turn agent failures into regression tests in CI.
-  - Link: https://github.com/jwuthri-cloud/Tracely-ai
-  - Safety note: MIT; created 2026-10-11, repo updated 2026-10-18; only 19 commits and a single visible owner, so it is young. Setup uses docker compose/pip; no curl-to-shell, though `npx skills add` fetches a package. Stars (977) grew fast, so review before relying on it.
-
-- **reason-network** (GitHub) - Peer-to-peer daemon (Rust, iroh) that lets a team's coding agents (Claude Code, Codex, Cursor, etc.) see each other's sessions and message each other through MCP tools.
-  - Why it matters: an approach to multi-agent coordination across machines without a central server.
-  - Link: https://github.com/reason-machines/reason-network
-  - Safety note: MIT OR Apache-2.0; created 2026-10-16, 93 commits. Primary install is `curl | sh` and it adds hooks/MCP servers to every detected agent and runs a background service, so read install.sh first. Default relay is run by n0 (sees encrypted bytes only). Vouch only after code review.
-
-## 2026-10-17 (AKD)
-
-- **Black Forest Labs has released FLUX 3 Image Klein, a 5.6-billion-parameter image model with downloa…** (Top pick; model_release; x) - Downloadable 5.6B-parameter image model that runs on 8 GB consumer GPUs (INT8), with editing and commercial use free under $5M revenue, relevant to your ComfyUI and image tooling work.
-  - Link: https://x.com/RoundtableSpace/status/2111302430931718586
-  - Also covered by: [FLUX 3 Image Klein](https://bfl.ai/blog/flux-3-image-klein?utm_source=tldrai) (email)
-
-- **Why One AI Agent Isn’t Enough (And How to Run 1,000) - CJ Avilla & Harrison Stall, Anthropic** (Top pick; agents_mcp_skills; youtube) - Flows in Claude Managed Agents lets Claude plan and run up to 1,000 coordinated agents via API, with a hands-on demo of budgets, interrupts, and credential-vault safety.
-  - Link: https://www.youtube.com/watch?v=kiClTcJUnhc
-
-- **Meta unveils Muse Spark Open** (Top pick; model_release; email) - Meta's Muse Spark Open is a new open-weight model with 1M-token context and multimodal input, runnable locally on two paired Macs, relevant for self-hosted agent experiments.
-  - Link: https://venturebeat.com/technology/meta-unveils-muse-spark-open-the-new-top-u-s-open-weights-model-and-it-runs-on-two-paired-mac-desktops?utm_source=tldrnewsletter
-  - Also covered by: [[AINews] Agents disprove Polysemanticity; greatly improve Interpretability & Alignment](https://www.latent.space/p/ainews-agents-disprove-polysemanticity) (web)
-
-- **Developers: Claude Code now silently syncs your claude.ai (web) skills and plugins to your local machine, enabled by default** (Top pick; dev_tooling; reddit) - Claude Code now silently syncs claude.ai web skills and plugins into local ~/.claude directories by default, adding about 10k tokens per session, so check your config and token usage.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x839jo/developers_claude_code_now_silently_syncs_your/
-
-- **anthropics/claude-code v2.1.302** (Top pick; dev_tooling; github) - Claude Code v2.1.302 adds a separate model setting for the client-side auto mode classifier and fixes several Vertex/Bedrock, prompt-cache, and Read-tool bugs; the standalone Claude Design site close…
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.302
-
-- **Ling-3.1-flash** (Notable; model_release; email) - A 560B-total, 25B-active hybrid reasoning model with a 1M-token context could be a cheap long-context option for agentic coding, but it needs real benchmarks and API access before it's worth testing.
-  - Link: https://huggingface.co/inclusionAI/Ling-3.1-flash?utm_source=tldrai
-
-- **[AINews] High Taste Testers Ep. 1** (Notable; model_release; web) - This is the best-scoring US open-weights model yet (39 on Artificial Analysis), with an 816B MoE checkpoint that Meta says runs on 4 Blackwell Ultra GPUs, 8 H200s, or two M5 Ultra Macs.
-  - Link: https://www.latent.space/p/ainews-high-taste-testers-ep-1
-
-- **deepseek-ai/DeepSeek-V4.1-Flash-1017 · Hugging Face** (Notable; model_release; reddit) - A new DeepSeek V4.1 Flash open-weights model on Hugging Face, relevant as a potential cheaper, locally runnable backend for agent and coding workflows.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x84po4/deepseekaideepseekv41flash1017_hugging_face/
-  - Also covered by: [DeepSeek 4.1 Flash 1017 Incoming? --> DeepSeek users report a possible V4.1-Flash-1017 refresh across its API](https://www.reddit.com/r/LocalLLaMA/comments/1x825su/deepseek_41_flash_1017_incoming_deepseek_users/) (reddit)
-  - Also covered by: [DeepSeek V4.1 Flash (1017) Now Leads Open-Weight Models](https://www.reddit.com/r/LocalLLaMA/comments/1x8bb6b/deepseek_v41_flash_1017_now_leads_openweight/) (reddit)
-
-- **nvidia/NVIDIA-Nemotron-Labs-Dory1.0-4B-BF16 · Hugging Face** (Notable; model_release; reddit) - A new 4B open-weight NVIDIA model on Hugging Face, relevant as a candidate for running locally or in agent sandboxes, though the Reddit post offers no benchmark or usage details.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x7w7dp/nvidianvidianemotronlabsdory104bbf16_hugging_face/
-
-- **Claude Code can now run a Lighthouse audit on your website, fix what's slow, then prove it with a n…** (Notable; agents_mcp_skills; x) - Gives you a concrete week-scale win: an official Chrome DevTools MCP install plus a copy-paste prompt to run Lighthouse, fix site performance issues, and verify before/after scores in Claude Code.
-  - Link: https://x.com/RoundtableSpace/status/2111430777233674477
-
-- **The AI Bill Is Too Damn High: Tokenomics 101 — Eugene Cheah, Featherless AI** (Notable; other; youtube) - A talk on cutting LLM inference costs (per-team API keys, right-sizing models, classifiers, fine-tuning) that's directly useful if you're running agent workloads and watching token spend.
-  - Link: https://www.youtube.com/watch?v=Ti-BmGU1_mQ
-
-- **We’ve Been Securing AI Agents Wrong** (Notable; agents_mcp_skills; youtube) - Shows why AI agents need their own scoped identities instead of shared admin credentials, with a concrete demo of an agent deleting audit logs; directly relevant to agent security work.
-  - Link: https://www.youtube.com/watch?v=rv-X-Qvd7nk
-
-- **That didn't take long - Claude Haiku 4.5 is leaving the model selector October 29th** (Notable; model_release; reddit) - Claude Haiku 4.5 is being removed from the model selector on October 29, so any workflow pinned to it needs migrating to another model before then.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1x7rzpe/that_didnt_take_long_claude_haiku_45_is_leaving/
-
-- **Claude writes about 90% of Claude Code's code. From June to September, merged PRs more than doubled…** (Notable; dev_tooling; x) - Claude now writes about 90% of Claude Code's own code, and Anthropic published how they changed code review to support that, which is a concrete workflow model to adopt.
-  - Link: https://x.com/ClaudeDevs/status/2111168901723906176
-  - Also covered by: [How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/) (web)
-
-- **Paving the Road to Production: Governed Enterprise AI Agents — Harish Gaggar, Credit Karma** (Notable; agents_mcp_skills; youtube) - A practical blueprint for production enterprise agents: a central MCP gateway, reviewed tool servers, OpenTelemetry tracing, LangGraph checkpoints, and PII filtering, though the quality and token-red…
-  - Link: https://www.youtube.com/watch?v=tZycGA_Fbfo
-
