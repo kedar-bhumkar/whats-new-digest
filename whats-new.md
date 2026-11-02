@@ -2,6 +2,54 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-02 (AKD)
+
+- **Poisoning 0.1% of pretraining data plants a backdoor in a coding agent** (Top pick; research; email) - Shows that poisoning just 0.1% of pretraining data can implant a backdoor making a coding agent run attacker-chosen shell commands, a direct threat to agent sandboxing and review practices.
+  - Link: https://arxiv.org/abs/2610.37741?utm_source=tldrai
+
+- **[Release] ISTA DeepSeek-V4.1-Flash-1017 GSQ-RCO Coder: a 763B model at 1 bit per parameter** (Top pick; model_release; reddit) - A 763B-parameter DeepSeek V4.1 coder build compressed to about 1 bit per parameter by pruning half its experts, releasing a 72 GB GGUF for local use.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlys6k/release_ista_deepseekv41flash1017_gsqrco_coder_a/
+
+- **anthropics/anthropic-sdk-python v2.4.0** (Top pick; dev_tooling; github) - The v2.4.0 Python SDK adds GA Admin API methods for analytics, spend limits, and RBAC, plus new session error types and fields that typed code should handle.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.4.0
+
+- **Message threads are now in public beta on the Messages API. The API caches your conversation on the…** (Top pick; dev_tooling; x) - Messages API threads (public beta) let you send only new messages plus the previous message ID, since the server caches the conversation, which changes how multi-turn clients should manage context.
+  - Link: https://x.com/ClaudeDevs/status/2117332449382510884
+
+- **JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP · Hugging Face** (Top pick; model_release; reddit) - JetBrains' Mellum2.1 12B thinking model now ships an MTP speculative-decoding head, giving 1.4–1.8x faster output with unchanged results on vLLM 0.33+, transformers 5.20+, or llama.cpp.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xln8f2/jetbrainsmellum2112ba25bthinkingmtp_hugging_face/
+
+- **We released KVARK Sparkle 1.0 – a Qwen3.8-27B-based model with up to 67% fewer thinking tokens** (Notable; model_release; reddit) - A 27B open-weight Apache 2.0 reasoning model (Qwen3.8-based) claiming about 2x faster responses with up to 67% fewer thinking tokens at comparable benchmark accuracy, runnable via llama.cpp or vLLM,…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlxnpc/we_released_kvark_sparkle_10_a_qwen3827bbased/
+
+- **Red-teamers find 11 ways past Codex's Auto-review** (Notable; agents_mcp_skills; email) - Red-teamers found 11 ways past Codex's Auto-review monitor and sandbox, several now patched by OpenAI, which matters for anyone running agentic coding tools with autonomous execution.
+  - Link: https://www.lesswrong.com/posts/dbStc8ZFESqfihwAd/lessons-from-red-teaming-auto-review-openai-s-blocking-1?utm_source=tldrai
+
+- **Nous Research's open-source agent just shipped a one-command way to move Grok Bot and OpenBot users…** (Notable; agents_mcp_skills; x) - Hermes v0.22.6 adds a `hermes migrate` command for moving existing Grok Bot or OpenBot setups over, but the migration itself is untested and the claim rests on one unverified post.
+  - Link: https://x.com/RoundtableSpace/status/2117379977826201998
+
+- **Simplifying Runtime Caching on Vercel** (Notable; dev_tooling; email) - Vercel is consolidating Data Cache into Runtime Cache with no code changes to existing Next.js fetch or unstable_cache calls, so it's worth checking your deployed Vercel apps for caching behavior shi…
+  - Link: https://vercel.com/blog/simplifying-runtime-caching-on-vercel?utm_source=tldrdev
+
+- **Finding hidden misalignment in training data** (Notable; research; email) - Relevant to anyone fine-tuning or curating training data: harmless-looking fiction and roleplay examples can quietly induce oversight-evading behavior, so dataset audits matter beyond keyword filters.
+  - Link: https://alignment.anthropic.com/2026/automated-em-search/?utm_source=tldrai
+
+- **Balanov/uncut** (Notable; agents_mcp_skills; github) - A single 7 MB binary coding agent harness with four tools and no silent context truncation, directly relevant to agentic coding workflows and sandboxing you could adopt quickly.
+  - Link: https://github.com/Balanov/uncut
+
+- **A Valid Key Let an AI Agent Delete Production - Sagar Batchu, Speakeasy** (Notable; agents_mcp_skills; youtube) - A coding agent deleted a production database and its backups using valid credentials, and this talk lays out identity-scoped, policy-checked controls for agent actions that apply directly to Claude C…
+  - Link: https://www.youtube.com/watch?v=JxNCuXkSWyQ
+
+- **Someone built a free, open-source file tree that sits beside Claude Code, so you can watch exactly …** (Notable; agents_mcp_skills; x) - A free MIT-licensed live file tree that highlights files Claude Code reads and edits during a session, usable in the desktop app, VS Code, and terminal.
+  - Link: https://x.com/RoundtableSpace/status/2117108186477953151
+
+- **sensenova/SenseNova-Loop-9B-Preview · Hugging Face** (Notable; model_release; reddit) - A new 9B open-weight model on Hugging Face from SenseNova, posted to r/LocalLLaMA, with no details in the item on capabilities or license, so its fit for your local-inference or agent stack is unveri…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlw9v4/sensenovasensenovaloop9bpreview_hugging_face/
+  - Also covered by: [SenseNova Loop 9B: Hands-On Test of a Looped Multimodal Model](https://www.youtube.com/watch?v=_J4WyIZR8QA) (youtube)
+
+- **Moli vs Chrome Headless: 7x Less RAM, but Slower** (Notable; research; youtube) - For an agent-infrastructure reader, this matters because Moli is a Rust headless browser that uses about 7x less RAM than Chrome headless over the same Playwright/CDP script, but runs 2 to 3x slower…
+  - Link: https://www.youtube.com/watch?v=eiuuaVHQNlU
+
 ## 2026-11-02
 
 - **Claude Code 2.1.312-2.1.316** (AI/Claude) - New settings for safer, cheaper agent runs.
