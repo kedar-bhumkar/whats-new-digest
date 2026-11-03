@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-03 (AKD)
+
+- **Anthropic added “message threads” to the Messages API (public beta): send the conversation once, then only new messages. Already on by default in Claude Code** (Top pick; dev_tooling; reddit) - Anthropic's Messages API now offers message threads (public beta) so you send the full history once and then only new messages, cutting time-to-first-token about 35% on 500k+ token contexts, but thre…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmh012/anthropic_added_message_threads_to_the_messages/
+  - Also covered by: [Claude Introduces Message Threads](https://claude.com/resources/articles/message-threads?utm_source=tldrai) (email)
+  - Also covered by: [Claude Message Threads Tested: 34 of 50 Turns Faster](https://www.youtube.com/watch?v=nawZ1OvhpE0) (youtube)
+
+- **anthropics/claude-code v2.1.317** (Top pick; agents_mcp_skills; github) - Adds a per-call prompt before tools send your account email over the network, plus `onFailure: "block"` for Agent SDK hooks, which changes how failing callbacks behave in agent builds.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.317
+
+- **New Anthropic research: progress on provable inference for large language models. Here, we introduc…** (Top pick; research; x) - Anthropic open-sourced FlashProve, a cryptographic tool that verifies a response came from a specific model, relevant to agent trust and serving-integrity checks.
+  - Link: https://x.com/AnthropicAI/status/2117710942826123294
+  - Also covered by: [Anthropic just open-sourced a way to prove which AI model actually answered you. Ever wonder if an …](https://x.com/RoundtableSpace/status/2117598919886864764) (x)
+
+- **[Paper] RidgeFill: Training-Free Late-Layer Cache Fill for Faster Prefill** (Top pick; research; reddit) - RidgeFill is a training-free prefill speedup (1.25–1.6x TTFT) that skips most upper layers via a closed-form ridge map, with small accuracy losses; worth testing for long-context serving in vLLM or l…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xmarrf/paper_ridgefill_trainingfree_latelayer_cache_fill/
+
+- **Leaflet 2.0 beta** (Top pick; repo_library; email) - Leaflet 2.0 beta brings tree-shaking, bundled TypeScript types, and breaking API changes, so check any existing map code before upgrading.
+  - Link: https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-beta.1?utm_source=tldrdev
+
+- **Hugging Face just released a safety guard for AI coding agents. Your agent can run any command it d…** (Notable; agents_mcp_skills; x) - A local proxy that inspects and blocks risky agent commands before execution, working with Claude Code via ANTHROPIC_BASE_URL; directly relevant to agent sandboxing and security, and adoptable in a f…
+  - Link: https://x.com/RoundtableSpace/status/2117606470229397657
+
+- **Users can now auto-connect plugins when they log in to Claude, with MCP servers that accept Claude …** (Notable; agents_mcp_skills; x) - Claude can now auto-connect MCP plugins at login, so MCP servers that trust Claude as an issuer can skip re-authorization; worth adding if you build plugins.
+  - Link: https://x.com/ClaudeDevs/status/2117680635561312732
+
+- **Maple ports 287,000 lines of React to Foldkit in 3 days** (Notable; agents_mcp_skills; email) - Shows a concrete large-scale agent migration (about 40 Claude agents, 287k lines in 3 days) with a visual-diff harness, but also that screenshot checks missed around 180 defects and the bundle roughl…
+  - Link: https://maple.dev/blog/react-to-foldkit/?utm_source=tldrdev
+
+- **Automating agentic AI Well-Architected reviews with the AWS Agentic AI Lens** (Notable; agents_mcp_skills; email) - Smarsh packaged the AWS Agentic AI Lens as a Claude skill that audits a GitHub repo against 150 best practices, a directly reusable pattern for agent-project reviews.
+  - Link: https://aws.amazon.com/blogs/architecture/automating-agentic-ai-well-architected-reviews-with-the-aws-agentic-ai-lens/?utm_source=tldrdev
+
+- **Your AI Agents Shouldn't Care Where They Run - Nikhil Harithas, Factory** (Notable; agents_mcp_skills; youtube) - Factory's Droid coding agent now runs on any compute inside a customer's own cloud with bring-your-own-key, a design the reader can study for agent sandboxing and VPC deployment, with the compute lay…
+  - Link: https://www.youtube.com/watch?v=XIHZpZtYCzo
+
+- **How Claude Code reacts when a repo has a no-AI contribution policy** (Notable; agents_mcp_skills; reddit) - Claude Code honors repo-level no-AI policy files (AGENTS.md or CLAUDE.md refuse instantly, AI_POLICY.md stops it before committing), so maintainers can enforce the rule as a soft agreement, not a har…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmgzia/how_claude_code_reacts_when_a_repo_has_a_noai/
+
+- **SenseNova Loop 9B: Hands-On Test of a Looped Multimodal Model** (Notable; model_release; youtube) - A hands-on local test of SenseNova-Loop-9B-Preview, an open 9B multimodal model for agentic and long-context work, useful if you want a small local vision-plus-reasoning option.
+  - Link: https://www.youtube.com/watch?v=_J4WyIZR8QA
+
+- **OpenMausBot** (Notable; agents_mcp_skills; email) - Relevant to agent infrastructure and approval-gating: it wraps locally installed Claude Code, Codex, or Grok CLIs in a chat UI, with permission requests surfaced as approval cards.
+  - Link: https://github.com/milind-soni/OpenMausBot?utm_source=tldrdev
+
+- **wendersoon/radar-cnpj-mcp** (Notable; agents_mcp_skills; github) - An MCP server and CLI for querying Brazilian company (CNPJ) data by CNAE code and region, a niche tool that is only relevant if you build agents for Brazilian business data.
+  - Link: https://github.com/wendersoon/radar-cnpj-mcp
+
+- **Official Claude Code Extension Compromise: Security Advisory** (Notable; dev_tooling; reddit) - Security advisory says Claude Code VS Code extension versions 2.1.312 and 2.1.313 were compromised, so check your installed version and update or downgrade if affected.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmdwop/official_claude_code_extension_compromise/
+
 ## 2026-11-03
 
 - **Claude Code v2.1.317 (and v2.1.314/316)** (AI/Claude) - Latest Claude Code releases: `/schedule` warns about unintended connectors, a prompt before tool calls send your account email to the network, Agent SDK hook callbacks accept `onFailure: "block"`, and `claude -p` now exits 1 on lost transcript writes.
