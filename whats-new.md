@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-04 (AKD)
+
+- **Anthropic shipped message threads (beta): Claude Code now sends only new messages per turn, about 35% lower time to first token on 500k to 1M token requests** (Top pick; dev_tooling; reddit) - Anthropic's new Messages API "thread" beta (on by default in Claude Code) cuts time to first token about 35% on 500k–1M token requests, but threads expire after 5 idle minutes, forcing a full resend.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xnc4ew/anthropic_shipped_message_threads_beta_claude/
+  - Also covered by: [Claude Introduces Message Threads](https://claude.com/resources/articles/message-threads?utm_source=tldrai) (email)
+  - Also covered by: [Claude Message Threads Tested: 34 of 50 Turns Faster](https://www.youtube.com/watch?v=nawZ1OvhpE0) (youtube)
+
+- **Axion1-0/Axion-1.0-35B · Hugging Face** (Top pick; model_release; reddit) - An open-weight 35B agent model with a fully reproducible training recipe (data, prompts, and code), useful as a local or self-hosted agent backend to evaluate against your current stack.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnjiu4/axion10axion1035b_hugging_face/
+
+- **Vercel Labs open sourced a free tool that lets any AI agent operate desktop apps, so you can add co…** (Top pick; agents_mcp_skills; x) - Vercel Labs' agent-desktop lets coding agents drive desktop apps via the accessibility tree rather than screenshots, installable via npm on macOS, Windows, and Linux.
+  - Link: https://x.com/RoundtableSpace/status/2117825412462240136
+
+- **anthropics/claude-code v2.1.318** (Top pick; dev_tooling; github) - Claude Code v2.1.318 fixes a `--continue` regression from 2.1.314 that could drop earlier conversation, and adds login-expiry warnings for `claude -p` and CI jobs.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.318
+
+- **anthropics/anthropic-sdk-python v2.5.0** (Top pick; dev_tooling; github) - Breaking-risk check: OverloadedError and ServiceUnavailableError now subclass InternalServerError, so any `except InternalServerError` handlers will start catching them, and APIStatusError gains new…
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.5.0
+
+- **Kimi-K3.1-Pro is now open-weights** (Notable; model_release; reddit) - Moonshot's Kimi-K3.1-Pro is now open-weights, so it can be self-hosted or run through providers, which matters if you want a strong alternative model behind your agent stack.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnrhvb/kimik31pro_is_now_openweights/
+
+- **Baseten launches Grid, Sandboxes, and Serverless Loops** (Notable; agents_mcp_skills; email) - Baseten's new VM-isolated, resumable Sandboxes for agent execution are directly relevant to your agent sandboxing and infrastructure interests, and Grid's model routing could matter if you build on m…
+  - Link: https://www.baseten.co/blog/the-building-blocks-of-the-open-frontier?utm_source=tldrai
+
+- **ricursiveAI/Ripple-65B-Preview · Hugging Face** (Notable; model_release; reddit) - A 65B open-weight model preview from ricursiveAI on Hugging Face, relevant if you're evaluating local models for agent or coding workloads on your own hardware.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnx3cs/ricursiveairipple65bpreview_hugging_face/
+
+- **Hackers stole $6.34B from Binance with a fake coding assignment. The same trick hits developers eve…** (Notable; agents_mcp_skills; x) - This is a practical, adoptable security habit: before running an unknown repo, ask Claude Code to audit install hooks, obfuscated code, network calls, and credential access without executing anything…
+  - Link: https://x.com/RoundtableSpace/status/2117953758730588392
+  - Also covered by: [Binance has revealed how the $6.3B theft happened, and it started months earlier than the heist. Bi…](https://x.com/RoundtableSpace/status/2117795213682855971) (x)
+
+- **ComfyUI v0.44.0 released** (Notable; dev_tooling; reddit) - ComfyUI v0.44.0 ships a new release for your AI image and video tooling, so check whether it changes node APIs or workflow compatibility before upgrading your pipelines.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xngb2i/comfyui_v0440_released/
+
+- **TinyWebUI - Lightweight Open WebUI alternative, just npx and go** (Notable; repo_library; reddit) - A lightweight, npx-installable local chat UI with built-in local web search, memory, and MCP support, directly adoptable for local-model workflows this week.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnmre2/tinywebui_lightweight_open_webui_alternative_just/
+
+- **Limit what agents learn about private repos with enclaves** (Notable; agents_mcp_skills; email) - GitHub Next's enclaves limit what agents share across private repos, relevant to agent security and any multi-repo agentic workflow setup.
+  - Link: https://githubnext.com/posts/enclaves/?utm_source=tldrai
+
+- **djs** (Notable; agents_mcp_skills; email) - A Rust-built JS/TS engine that runs agent-generated code in a WebAssembly sandbox and can snapshot and resume mid-execution, relevant to agent security and tool-calling workflows.
+  - Link: https://github.com/earendil-works/djs?utm_source=tldrdev
+
+- **Building the AI Agent Is Easy. Proving It's Safe Isn't - Jonathan Osborne, NatWest** (Notable; agents_mcp_skills; youtube) - A practical look at how a regulated bank evaluates and safely rolls out production AI agents, including why LLM-as-judge scoring and single accuracy numbers can mislead, which is directly useful for…
+  - Link: https://www.youtube.com/watch?v=5UgnatzpZ9E
+
+- **Why Agents Are Soon Only Going to Have 1 Tool** (Notable; agents_mcp_skills; email) - This matters for how you design MCP servers and agent tool catalogs: collapsing many tools into one sandboxed exec tool could reduce tool-call round trips and context overhead.
+  - Link: https://www.philschmid.de/code-mode?utm_source=tldrnewsletter
+
 ## 2026-11-04
 
 - **Claude Code v2.1.318** (AI/Claude tooling) - Reliability release: fixes `--continue` losing history after malformed tool-call retries, and `claude mcp remove`/`/logout` falsely reporting success; adds a `claude -p` warning 10 days before sign-in expiry.
