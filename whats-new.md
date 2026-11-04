@@ -2,6 +2,30 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-04
+
+- **Claude Code v2.1.318** (AI/Claude tooling) - Reliability release: fixes `--continue` losing history after malformed tool-call retries, and `claude mcp remove`/`/logout` falsely reporting success; adds a `claude -p` warning 10 days before sign-in expiry.
+  - Why it matters: Useful for headless/CI use of `claude -p`; also adds an `effort` option for a mod's `$.model.fork`.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Code v2.1.314-2.1.316 (Oct 30-31)** (AI/Claude tooling) - New `permissions.blockWritesOutsideWorkingDirectories` setting, `CLAUDE_CODE_SUBAGENT_EFFORT` env var, idle-conversation compaction in VS Code/Desktop, and `CLAUDE_CODE_DISABLE_ULTRATHINK`.
+  - Why it matters: Lets you sandbox agent writes to the project and tune subagent cost. Note: Opus 4.8 fast mode is deprecated and removed Nov 30, 2026 - migrate to Opus 5.5.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's cheapest/fastest small model (`claude-haiku-5-5`, announced Oct 7, so older than the 7-day window but worth knowing); $0.10/$0.50 per M input/output tokens (prompts up to 100k), first Haiku-class model with an effort setting, computer/browser use (beta) in the Python/TS SDKs.
+  - Why it matters: Good fit for subagents, classification, summarization and compaction steps; Sonnet 5.5 cache reads also cut 50%.
+  - Link: https://www.anthropic.com/news/claude-haiku-5-5
+
+- **worktrunk** (GitHub repo) - Rust CLI for Git worktree management aimed at running AI agents in parallel (`wt switch/list/merge/remove`, hooks, LLM commit messages).
+  - Why it matters: Makes it easy to run several coding agents on isolated branches without collisions.
+  - Link: https://github.com/max-sixty/worktrunk
+  - Safety note: MIT OR Apache-2.0; ~10.8k stars; installs via package managers (no curl|sh), but the suggested `wt config shell install` edits shell config - review first. Last-commit date not visible from the page.
+
+- **obra/superpowers** (GitHub repo) - Composable agent-skills framework/methodology (brainstorm, plan, TDD, subagent-driven implementation, review) for Claude Code, Codex, Cursor, Gemini CLI; trending on GitHub this week.
+  - Why it matters: Drop-in workflow skills that structure how agents implement features.
+  - Link: https://github.com/obra/superpowers
+  - Safety note: MIT; ~312k stars; skills are prompts/markdown plus shell - read before enabling. Last-commit date not visible from the page.
+
 ## 2026-11-03 (AKD)
 
 - **Anthropic added “message threads” to the Messages API (public beta): send the conversation once, then only new messages. Already on by default in Claude Code** (Top pick; dev_tooling; reddit) - Anthropic's Messages API now offers message threads (public beta) so you send the full history once and then only new messages, cutting time-to-first-token about 35% on 500k+ token contexts, but thre…
@@ -1052,69 +1076,3 @@ _Quiet day: searches found no other primary-source items from the last 48 hours 
 
 - **Rakazo** (Notable; agents_mcp_skills; email) - Rakazo is a self-hosted, open-source agent with persistent memory and tool access, relevant to agent infrastructure and sandboxing, though still in beta.
   - Link: https://github.com/elie222/rakazo?utm_source=tldrdev
-
-## 2026-10-20
-
-- **Claude Code v2.1.300–v2.1.304** (AI/Claude tooling) - A week of releases adds `/auto-mode-setup`, `CLAUDE_CODE_AUTO_MODE_MODEL` for the auto-mode classifier, fork subagents on by default in `claude -p` and the Agent SDK, and worktree-safety fixes.
-  - Why it matters: fork subagents now default on in headless/SDK runs, so check any scripted pipelines; the worktree fixes stop `--worktree` exits from silently deleting unpushed commits. `/claude-api managed-agents-secure` audits Managed Agents settings against Anthropic's security guide.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **HyperFrames (heygen-com/hyperframes)** (GitHub repo) - Open-source framework that renders HTML/CSS/animations into deterministic MP4 video via headless Chrome and FFmpeg, with a CLI and agent skills so coding agents can produce video.
-  - Why it matters: lets an agent generate demo videos, explainers or release clips from plain HTML, reproducibly and testable in CI.
-  - Link: https://github.com/heygen-com/hyperframes
-  - Safety note: Apache-2.0, ~68k stars, 5.7k commits, backed by a known company. Last-commit date not confirmed. Its Claude Code marketplace suggests auto-update and `skills update` pulls from `main`, so review before enabling auto-update.
-
-- Skipped: mksglu/context-mode (trending MCP context-saver) because its license is ELv2, not OSI-approved; morluto/rea because its star count looked anomalous and I could not vouch for it. No new Anthropic model announcements since Haiku 5.5 (Oct 7), per anthropic.com/news.
-
-## 2026-10-19 (AKD)
-
-- **modelcontextprotocol/servers v2.0.0** (Top pick; agents_mcp_skills; github) - This is a major-version release of the official MCP reference servers (filesystem, memory, fetch, git, time) that moves them to the modern MCP spec while still answering legacy clients, so check your…
-  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.0.0
-
-- **DeepSeek-V4.1-Flash-1017 released** (Top pick; model_release; email) - A new open DeepSeek model with roughly 1/8 the KV cache footprint of V4-Flash and better coding and agentic benchmarks, relevant if you self-host or price long-context agent runs.
-  - Link: https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017?utm_source=tldrai
-  - Also covered by: [DeepSeek Just Made Reasoning WAY More Efficient!](https://www.youtube.com/watch?v=YGEz40RSpTE) (youtube)
-
-- **Google open-sourced ARTEMIS. It lets AI use a real Android phone the way a person does. You tell it…** (Top pick; repo_library; x) - Open-source ARTEMIS drives a real Android phone via Claude Code, Cursor, or Codex over USB debugging, a directly testable agent-testing setup worth trying on a spare device.
-  - Link: https://x.com/RoundtableSpace/status/2112170651813597425
-
-- **inclusionAI releases Ming-3.0-audio-flash: 126B MoE / 6.5B active, audio understanding + speech output, MIT** (Top pick; model_release; reddit) - MIT-licensed 126B MoE (6.5B active) audio-in, speech-out model, but its validated setups need four to eight high-memory GPUs, so it's a serious local-deployment test rather than a quick adopt.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9yrfi/inclusionai_releases_ming30audioflash_126b_moe/
-  - Also covered by: [inclusionAI/Ming-3.0-audio-flash · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1x9yd01/inclusionaiming30audioflash_hugging_face/) (reddit)
-
-- **72 hours, four big open weights drops. The only one that fits in 24GB came from NVIDIA, of all companies.** (Top pick; model_release; reddit) - Of the four open-weights drops this week, only NVIDIA's Nemotron 3.5 Bolt (22GB quantized) fits a 24GB GPU, so it's the one practically runnable locally.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9d23j/72_hours_four_big_open_weights_drops_the_only_one/
-
-- **Cloudflare open-sourced the security audit skill that seeded its own vulnerability hunting harness.…** (Notable; agents_mcp_skills; x) - Cloudflare's MIT-licensed security audit skill runs a multi-phase bug hunt in your coding agent, installable now via `npx skills add ... --skill security-audit`.
-  - Link: https://x.com/RoundtableSpace/status/2112125353594401162
-
-- **Hybrid Reasoning Agents: LLM agents that think in latent space, act through text** (Notable; research; web) - Relevant to agent infrastructure: a research paper and open-source repo (togethercomputer/HybridAgent) proposing agents that reason in latent space and act via text, which could affect how you design…
-  - Link: https://arxiv.org/abs/2610.18861
-  - Also covered by: [HybridAgent Thinks in Latent Space and Acts in Text](https://www.stacksweep.dev/hybridagent-latent-reasoning-text-tool-use/?utm_source=tldrdev) (email)
-
-- **Google Open Sources Harness2 for Self Improving AI Agents** (Notable; agents_mcp_skills; reddit) - Google's open-source Harness2 lets an agent iteratively rewrite its own system prompt, tools, memory, and subagents per task, a direct fit for agent-infrastructure work, though the source is a Reddit…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9gfnb/google_open_sources_harness2_for_self_improving/
-
-- **MiniMax M3.1 Flash released, Model weights Oct 23** (Notable; model_release; reddit) - MiniMax M3.1 Flash is announced with open weights due October 23, a possible self-hostable option to evaluate for agent workloads, though the post itself gives no benchmarks or API details.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1x9uzv9/minimax_m31_flash_released_model_weights_oct_23/
-  - Also covered by: [MiniMax M3.1 Flash just dropped and the pricing is almost free. >⁠$0.15 input, $0.60 output, $0.015…](https://x.com/RoundtableSpace/status/2112178201577590796) (x)
-  - Also covered by: [Minimax M3.1 Flash is 428B 23a](https://www.reddit.com/r/LocalLLaMA/comments/1x9xc0c/minimax_m31_flash_is_428b_23a/) (reddit)
-
-- **Circle, the company behind USDC, released official skills that teach Claude Code to build with stab…** (Notable; agents_mcp_skills; x) - Official Circle skills and MCP server let Claude Code build USDC payments, x402 per-call charging, and CCTP bridging, installable now via a plugin marketplace.
-  - Link: https://x.com/RoundtableSpace/status/2112042306387824875
-
-- **The Model Swap Workshop: GPT-5.5 vs Kimi vs DeepSeek vs Mistral — Pamela Fox, Microsoft** (Notable; research; youtube) - Shows how GPT-5.5, Kimi K2.6, DeepSeek V4 Flash, and Mistral Large 3 differ on tool calling, RAG groundedness, and vision, plus a practical eval workflow (string checks, LLM-as-judge, ASSERT, DSPy) f…
-  - Link: https://www.youtube.com/watch?v=UGjk3Uk0MxM
-
-- **Replit switches default AI provider to OpenAI** (Notable; industry_business; email) - Replit has made OpenAI its default provider for Replit Agent, though Claude remains selectable, so Claude-based workflows built on Replit may see different defaults and behavior.
-  - Link: https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/?utm_source=tldrai
-
-- **SAVE THIS: 4 GitHub repos trending this week. 1. Ponytail (~165K stars) Makes your coding agent thi…** (Notable; repo_library; x) - Four trending repos, two directly usable for Claude Code: Matt Pocock's skills (one-line install) and ECC's harness, plus Ponytail's "check if code is needed" approach, which fits your agentic-workfl…
-  - Link: https://x.com/RoundtableSpace/status/2112012107428384799
-
-- **Sphinx** (Notable; agents_mcp_skills; email) - Sphinx adds a human comprehension gate before agent-written code reaches protected branches, with a separate reviewer and logged bypasses, relevant to agent security and workflow.
-  - Link: https://sphinx-six-theta.vercel.app/?utm_source=tldrdev
-
-- **Stop Telling Agents How — Dan Barrett, Raymond Weitekamp & Jose Montes de Oca, OpenProse** (Notable; agents_mcp_skills; youtube) - OpenProse proposes writing multi-agent workflows as plain-markdown declarative contracts that Claude Code and Codex can compile and run, a concrete alternative to hand-orchestrated prompt chains wort…
-  - Link: https://www.youtube.com/watch?v=7T-gldvgfpo
-
