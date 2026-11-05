@@ -2,6 +2,57 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-05 (AKD)
+
+- **AlphaEvolve (GitHub Repo)** (Top pick; repo_library; email) - Open-sourced minimal AlphaEvolve implementation: a Gemini-driven coding agent that evolves algorithms against automated evaluators, useful as a reference pattern for evaluator-driven agent loops.
+  - Link: https://github.com/google-deepmind/alphaevolve?utm_source=tldrai
+
+- **Ripple-65B Preview** (Top pick; model_release; email) - Open-weight Ripple-65B reports state-of-the-art TerminalBench 2.1 results, relevant if you want a self-hostable or cheap coding-agent backend via OpenRouter or Together AI.
+  - Link: https://www.ricursive.com/ripple?utm_source=tldrai
+  - Also covered by: [Ripple-65B: Thin and Deep Dense Model, Tested Locally](https://www.youtube.com/watch?v=Gd5tnklXxLY) (youtube)
+
+- **OpenAI launches Images 2.6 with GIFs and image reference** (Top pick; model_release; email) - Relevant because GPT-Image-2.6 is now available through the API, so it's a possible drop-in for your image tooling, though the piece doesn't mention pricing or breaking changes.
+  - Link: https://www.testingcatalog.com/openai-launches-images-2-6-with-gifs-and-image-reference/?utm_source=tldrai
+  - Also covered by: [Introducing ChatGPT Images 2.6](https://www.youtube.com/watch?v=bJldMYfRvMQ) (youtube)
+  - Also covered by: [GPT-Image-2.6: Faster image generation with Flare and Sunburst](https://www.youtube.com/watch?v=9ZxCOHkfn_8) (youtube)
+  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6) (web)
+
+- **[Paper] FireFlash : An Open Recipe for Long-Horizon Agentic RL Achieving the Performance-Cost Pareto Frontier** (Top pick; research; reddit) - An open 300B agentic coding model claiming Terminal-Bench parity with frontier models at about 30× lower per-task cost, with the full RL recipe released, is relevant for cost-conscious agent builders…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xomst7/paper_fireflash_an_open_recipe_for_longhorizon/
+
+- **Vibe coding has a spec problem, and GitHub's Spec Kit is the most popular answer so far: 100K+ star…** (Top pick; repo_library; x) - GitHub's Spec Kit adds a spec-first workflow (/constitution through /implement) that supports Claude Code, so it's directly testable on a real project this week.
+  - Link: https://x.com/RoundtableSpace/status/2118187800356966553
+
+- **Kimi-K3.1-Pro** (Notable; model_release; email) - A new open-weight Kimi model with a million-token context window and gains in coding and multimodal work, worth testing against your Claude Code and agent workflows.
+  - Link: https://huggingface.co/moonshotai/Kimi-K3.1-Pro?utm_source=tldrai
+
+- **anthropics/anthropic-sdk-python v2.6.0** (Notable; dev_tooling; github) - The Python SDK v2.6.0 changes Bedrock and Vertex error classes to raise error-code and status exceptions, so any `except` blocks on those clients may need updating.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.6.0
+
+- **Make long-running agents faster with message threads** (Notable; dev_tooling; email) - Anthropic's message threads beta cuts time-to-first-token about 35% for long-running agents by sending only new messages each turn, relevant to Claude Agent SDK and API users.
+  - Link: https://claude.com/resources/articles/message-threads?utm_source=tldrdev
+
+- **A thousand fewer paths to root** (Notable; research; web) - An autonomous AI pipeline found and patched 948 Linux kernel privilege-escalation bugs, relevant to agent-driven security tooling and the risks of autonomous code changes.
+  - Link: https://openai.com/index/a-thousand-fewer-paths-to-root
+
+- **modelcontextprotocol/servers v2.3.0** (Notable; agents_mcp_skills; github) - The v2.3.0 release bumps the official MCP reference servers (filesystem, git, fetch, memory, and others) to new major-line versions, so pin-checking or testing these in existing MCP configs is worth…
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.3.0
+
+- **Claude Code can now make AI videos with Runway. Runway's plugin lets your coding agent generate vid…** (Notable; agents_mcp_skills; x) - Runway's plugin lets Claude Code generate video, image, and voiceover assets from the terminal, and it installs via /plugin install runway-api, so it's a quick test for the video tooling you already…
+  - Link: https://x.com/RoundtableSpace/status/2118285947003371982
+
+- **Introducing Pangram Image 1.0** (Notable; model_release; email) - Adds a heatmap-based AI image/video detector with an API, useful if you ever need to verify media in a pipeline you're building, though it's peripheral to your agentic coding focus.
+  - Link: https://www.pangram.com/blog/introducing-pangram-image-1-0?utm_source=tldrai
+
+- **AuroraIMG2-100M Releases!** (Notable; model_release; reddit) - A new Apache 2.0 open-weight image model (AuroraIMG2-100M, diffusers-compatible) that could slot into a local ComfyUI or diffusers image pipeline.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnzynf/auroraimg2100m_releases/
+
+- **GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents** (Notable; model_release; web) - A new OpenAI cybersecurity model aimed at finding exploitable vulnerabilities and drafting fixes, relevant to agent security and sandboxing work.
+  - Link: https://openai.com/index/introducing-gpt-6-cyber
+
+- **An open-source project just ranked #1 on EnterpriseRAG-Bench, ahead of the listed systems from OpenAI, Google, Microsoft and Amazon** (Notable; agents_mcp_skills; reddit) - An open-source, self-hostable agentic RAG system (PipesHub, MCP-connectable) reports #1 on EnterpriseRAG-Bench, but the author is a founder, so treat the claim cautiously.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xoiaye/an_opensource_project_just_ranked_1_on/
+
 ## 2026-11-05
 
 - **Claude Code v2.1.316-v2.1.317** (AI/Claude tooling) - Releases from 31 Oct and 3 Nov: Agent SDK hook callbacks accept `onFailure: "block"`, a prompt before tools send your account email over the network, `CLAUDE_CODE_SUBAGENT_EFFORT`, and a cost report endpoint (`GET /v1/organizations/analytics/cost`) on the Claude apps gateway admin API.
