@@ -2,6 +2,60 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-06 (AKD)
+
+- **Thinking Machines, Mira Murati's lab, just released Inkling 2 Small, and the full weights go open n…** (Top pick; model_release; x) - Open-weight 594B MoE coding model (17B active) from Thinking Machines, with Apache 2.0 weights promised next week and a free Tinker Playground to try now.
+  - Link: https://x.com/RoundtableSpace/status/2118670985335578977
+  - Also covered by: [Introducing Inkling 2 Small](https://www.reddit.com/r/LocalLLaMA/comments/1xp32od/introducing_inkling_2_small/) (reddit)
+  - Also covered by: [Introducing Inkling 2 Small](https://thinkingmachines.ai/news/inkling-2-small/?utm_source=tldrai) (email)
+  - Also covered by: [[AINews] Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark](https://latent.space/p/ainews-inkling-2-small-17a-594b-trained-in-68-hours-on-12t-tokens-beating-muse-spark/) (web)
+
+- **anthropics/claude-code v2.1.319** (Top pick; dev_tooling; github) - This release changes auto mode to deny or prompt instead of falling back to the built-in classifier when feature flags are off, so gateway setups need `CLAUDE_CODE_AUTO_MODE_SERVER` set to avoid brea…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.319
+
+- **Claude Code was quietly sending users' email addresses to the websites it visited. When it searched…** (Top pick; agents_mcp_skills; x) - Claude Code was leaking users' email addresses in web requests, so update to 2.1.317 or later and confirm the privacy setting via /plugins.
+  - Link: https://x.com/RoundtableSpace/status/2118664104894144724
+  - Also covered by: [Claude Code sends your email address to websites](https://github.com/anthropics/claude-code/issues/107757) (web)
+
+- **Introducing ChatGPT Images 2.6** (Top pick; model_release; youtube) - Two new image models are coming to the OpenAI API with 50% faster generation, which may be worth benchmarking if you build AI image pipelines.
+  - Link: https://www.youtube.com/watch?v=bJldMYfRvMQ
+  - Also covered by: [GPT-Image-2.6: Faster image generation with Flare and Sunburst](https://www.youtube.com/watch?v=9ZxCOHkfn_8) (youtube)
+  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6) (web)
+
+- **NVIDIA Cosmos 3 Open Models** (Top pick; model_release; email) - Open-weight world-simulation models for robotics and driving data generation; relevant to you only as a peripheral open-model release, with no direct link to your coding or agent stack.
+  - Link: https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation?utm_source=tldrai
+
+- **Your AI coding agent can write an entire website, but can it actually test if it works? Vercel’s Ag…** (Notable; dev_tooling; x) - Vercel's agent-browser gives Claude Code-style agents a real browser to click and test UIs, installable in three commands, directly useful for your Vite/React/Vercel workflow.
+  - Link: https://x.com/RoundtableSpace/status/2118572837774455289
+
+- **Stop Giving Your AI Agents API Keys - Kim Maida, Keycard & Mason Egger, Temporal** (Notable; agents_mcp_skills; youtube) - It shows a concrete pattern for replacing shared agent API keys with per-tool-call OAuth token exchange and durable, resumable agent execution, both adoptable in a week.
+  - Link: https://www.youtube.com/watch?v=YqJ4asgj1R8
+
+- **Personal Finance in Claude (beta, Nov 5): what Claude can actually see, what it can’t do, and who gets it** (Notable; model_release; reddit) - Anthropic's read-only Personal Finance beta (US, Pro/Max/Ultra) links bank accounts through Plaid and gives Claude two years of transaction data, which is mostly off-topic for this developer-focused…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xp28a6/personal_finance_in_claude_beta_nov_5_what_claude/
+  - Also covered by: [Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude?utm_source=tldrai) (email)
+
+- **How Salesforce uses Claude Code** (Notable; agents_mcp_skills; youtube) - Salesforce reports scaling Claude Code to thousands of engineers, with concrete ROI measurement, an agent maturity model, and a shared skills marketplace, all directly relevant to agentic coding work…
+  - Link: https://www.youtube.com/watch?v=4ZsVR-6YOzs
+
+- **Linum-AI/pjit-21k · Hugging Face - A Text-to-Image Model Trained for $21K** (Notable; model_release; reddit) - A low-cost, open text-to-image model (P-JiT, trained for about $21K) with public code, relevant to a builder tracking ComfyUI-style image tooling and open model options.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpcpws/linumaipjit21k_hugging_face_a_texttoimage_model/
+
+- **Matt Pocock released a free collection of skills that help Claude Code and Codex plan, debug, test …** (Notable; agents_mcp_skills; x) - A free set of planning, debugging, testing, and review skills for Claude Code and Codex, installable in one command via npx skills, directly applicable to your agent workflow.
+  - Link: https://x.com/RoundtableSpace/status/2118580387052241012
+
+- **Stop Making Your Customers Click Approve - Emil Chetty, Wise** (Notable; agents_mcp_skills; youtube) - Wise's pattern of a locked, once-agreed agreement enforced by existing payment software, rather than per-step approvals, is a concrete design for safely letting agents act, relevant to agent security…
+  - Link: https://www.youtube.com/watch?v=V2UqEUA8NjM
+
+- **HerdBuilderEstimate/roblox-studio-mcp** (Notable; agents_mcp_skills; github) - An open-source MCP server that lets Claude or Cursor read Roblox Studio object trees, edit scripts, and run playtests, adoptable quickly if you want agent access to a game engine.
+  - Link: https://github.com/HerdBuilderEstimate/roblox-studio-mcp
+
+- **[AINews] Behind Latent Space: Kill My SaaS, Jev & AI in 2026 | AIEi Shanghai** (Notable; research; web) - Frontier LLMs can reportedly generate or edit neural network weights directly without gradient training, with multiple replications; relevant to model-internals and tooling, though claims are contest…
+  - Link: https://latent.space/p/ainews-behind-latent-space-kill-my-saas-jev-ai-in-2026-aiei-shanghai/
+
+- **Cognition Introduces SWE-2 Flash** (Notable; model_release; email) - Cognition's SWE-2 Flash is a new coding model with an added mid-training stage before RL, worth evaluating if you use agentic coding tools like Claude Code for development work.
+  - Link: https://cognition.com/blog/swe-2-flash?utm_source=tldrai
+
 ## 2026-11-06
 
 - **Claude Code v2.1.316–2.1.318** (AI/Claude tooling) - Three patch releases (latest v2.1.318, published Nov 4).
