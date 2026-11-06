@@ -2,6 +2,27 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-06
+
+- **Claude Code v2.1.316–2.1.318** (AI/Claude tooling) - Three patch releases (latest v2.1.318, published Nov 4).
+  - Why it matters: v2.1.317 adds `onFailure: "block"` for Agent SDK hook callbacks and a check before web/shell tool calls send your account email to the network; v2.1.316 adds `CLAUDE_CODE_SUBAGENT_EFFORT` and deprecates fast mode for Opus 4.8 (removal scheduled Nov 30, 2026); v2.1.317 removes the Read tool's "unchanged since last read" stub.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **anthropic-sdk-python v2.5.0 / v2.6.0** (AI/Claude tooling) - SDK adds typed error classes and error codes (`APIStatusError` gains `error_code`, `details`, `api_message`).
+  - Why it matters: Bedrock/Vertex clients now raise error-code/status exception classes, so review `except` blocks; also path-parameter hardening, a memory-tool fix so `/memories` is no longer renamed/deleted, and sampling params no longer recorded on OpenTelemetry spans.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec revision (released Jul 28; not new this week but the current stable release).
+  - Why it matters: baseline to target when building or updating MCP servers/clients; see the linked changelog for changes.
+  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
+
+- **addyosmani/agent-skills** (GitHub repo) - 25 production-grade engineering workflow skills, 9 slash commands and agent personas for AI coding agents (Claude Code, Cursor, Codex, Gemini CLI, Copilot).
+  - Why it matters: drop-in spec/review/test workflows you can adopt in agent-driven projects.
+  - Link: https://github.com/addyosmani/agent-skills
+  - Safety note: MIT license; ~113.6k stars, 807 commits, named maintainers. Last commit date not verified. Includes a `hooks/` directory that runs automatically, and its docs suggest a global git `insteadOf` config change; read hooks and scripts before installing.
+
+_Quiet feed: no new Claude model or notable new repo could be verified from primary sources today._
+
 ## 2026-11-05 (AKD)
 
 - **AlphaEvolve (GitHub Repo)** (Top pick; repo_library; email) - Open-sourced minimal AlphaEvolve implementation: a Gemini-driven coding agent that evolves algorithms against automated evaluators, useful as a reference pattern for evaluator-driven agent loops.
@@ -1027,110 +1048,4 @@ No GitHub repos reported today: search results surfaced nothing I could verify a
   - Why it matters: run it on third-party Claude Code/agent skills before installing them. Not a new release (older than 7 days), included as a useful safety tool.
   - Link: https://github.com/NVIDIA/SkillSpector (docs: https://docs.nvidia.com/skills/scanning-agent-skills)
   - Safety note: Apache-2.0, about 21.1k stars, 1,698 commits, from NVIDIA; last-commit date and contributor count not confirmed.
-
-
-## 2026-10-22 (AKD)
-
-- **Claude API version 2026-10-21 is now available** (Top pick; dev_tooling; email) - A new Claude API version (2026-10-21), the first since 2023, with SDKs and CLI defaulting to it and a migration guide, so check your integrations for breaking changes.
-  - Link: https://threadreaderapp.com/thread/2113013247209021918.html?utm_source=tldrai
-
-- **Alibaba open-sourced the AI code reviewer its own engineers have used for two years. Open Code Revi…** (Top pick; dev_tooling; x) - Alibaba's open-source AI code reviewer (Apache-2.0, installable via npm) reportedly beat Claude Code on precision with the same model at about one-ninth the tokens, a claim worth verifying against yo…
-  - Link: https://x.com/RoundtableSpace/status/2113197417805877329
-
-- **Before you install that AI skill someone shared on X, scan it. In an analysis of 31,132 AI agent sk…** (Top pick; agents_mcp_skills; x) - NVIDIA's open-source SkillSpector scans Claude Code, Codex, and Gemini CLI skills for 71 attack patterns (prompt injection, poisoned MCP tools, data theft) before you install them, with a no-LLM fast…
-  - Link: https://x.com/RoundtableSpace/status/2113114370406293672
-
-- **anthropics/claude-code v2.1.307** (Top pick; dev_tooling; github) - Claude Code v2.1.307 adds `/claude-api api-version` for migrating Claude API code to version 2026-10-21 and fixes several MCP retry and auth bugs, so MCP-heavy workflows should upgrade.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.307
-
-- **If your website runs on PHP (WordPress, Laravel, most shared hosting), check it today. Two critical…** (Top pick; other; x) - Two critical unauthenticated PHP flaws (PHP2Shell) are under active attack and affect most PHP hosting, so check your PHP version and patch to 8.5.12/8.4.27/8.3.36/8.2.35 now; OpenAI's checker helps.
-  - Link: https://x.com/RoundtableSpace/status/2113099271582937596
-  - Also covered by: [The internet is having a very bad cybersecurity day](https://techcrunch.com/2026/10/21/the-internet-is-having-a-very-bad-cybersecurity-day/?utm_source=tldrnewsletter) (email)
-  - Also covered by: [PHP warns of two critical flaws, emergency patches coming](https://www.bleepingcomputer.com/news/security/php-warns-admins-of-two-critical-flaws-emergency-patches-coming-tomorrow/?utm_source=tldrnewsletter) (email)
-  - Also covered by: [Today's PHP Security Release, and How We're Strengthening PHP Security](https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/?utm_source=tldrnewsletter) (email)
-
-- **Ant Ling just announced a second model today: Ling-3.0-flash-Sante (124B, 5.1B active)** (Notable; model_release; reddit) - Open-weights healthcare model (124B total, 5.1B active, 256K context) from InclusionAI, built on Ling-3.0-flash; a niche domain model rather than a general-purpose upgrade for your stack.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xcljvi/ant_ling_just_announced_a_second_model_today/
-  - Also covered by: [inclusionAI/Ling-3.0-flash-Sante · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1xclfkp/inclusionailing30flashsante_hugging_face/) (reddit)
-
-- **Kitten-TTS 2: New Open-source SOTA 1.58 bit TTS (CPU-only with voice cloning, multilingual, emotion control)** (Notable; model_release; reddit) - Open-weight 1.58-bit (ternary) TTS with zero-shot voice cloning from under 5 seconds of audio that runs real-time on CPU, a self-hostable alternative to hosted TTS APIs like ElevenLabs.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xc48or/kittentts_2_new_opensource_sota_158_bit_tts/
-
-- **[AINews] DeepSeek DeepInfer: Open Source SOTA Inference running 155T toks/day/cluster making $22m/day at ~80% margin for a 81 day payback** (Notable; dev_tooling; web) - DeepSeek open-sourced DeepInfer, a vLLM-based production inference stack with long-lived prompt caching, though its KV cache, disaggregation, and load balancing stay closed.
-  - Link: https://www.latent.space/p/ainews-deepseek-deepinfer-open-source
-  - Also covered by: [DeepInfer](https://github.com/deepseek-ai/DeepInfer?utm_source=tldrai) (email)
-
-- **Introducing Flint** (Notable; model_release; email) - Flint is a 40B-total, 2.5B-active MoE model claiming 125+ tokens/sec on an M4 Pro for fully local agentic coding, which could replace API calls in Claude Code-style workflows, though speed claims nee…
-  - Link: https://recursive.com/updates/introducing-recursive-flint?utm_source=tldrai
-  - Also covered by: [Recursive Flint - the "Qwen3.8 35B" we've all been waiting for?](https://www.reddit.com/r/LocalLLaMA/comments/1xc23iq/recursive_flint_the_qwen38_35b_weve_all_been/) (reddit)
-  - Also covered by: [Flint 40B by Recursive: Fast Local Coding AI Tested](https://www.youtube.com/watch?v=WsQxIOM9io0) (youtube)
-
-- **You read a great book once. Three months later you can't remember chapter 7 even existed. book-to-s…** (Notable; agents_mcp_skills; x) - A Claude Code-compatible tool that turns a book or doc folder into per-chapter skills an agent can query, claiming 24–51x fewer tokens than pasting the full text.
-  - Link: https://x.com/RoundtableSpace/status/2113227616299942097
-
-- **anthropics/anthropic-sdk-python v2.1.0** (Notable; dev_tooling; github) - The Anthropic Python SDK v2.1.0 adds user-profile enforcement status, actions, and filter fields, which matters if you call user-profile endpoints and want to read or filter enforcement state program…
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.1.0
-
-- **OpenAI models are coming to Google Cloud** (Notable; industry_business; web) - OpenAI's frontier models and Codex are coming to Google Cloud's Model Garden and Marketplace, giving you a second cloud path for OpenAI APIs alongside existing Azure and direct access.
-  - Link: https://openai.com/index/openai-models-google-cloud
-
-- **Omnara** (Notable; agents_mcp_skills; email) - Omnara is an open-source managed agent platform with a TypeScript SDK and sandboxed tool execution, relevant to agent infrastructure and security you track.
-  - Link: https://github.com/omnara-ai/omnara?utm_source=tldrdev
-
-- **ECC (Everything Claude Code) is a free, MIT-licensed pack: 70+ subagents, 300+ skills and about 95 …** (Notable; agents_mcp_skills; x) - A free MIT-licensed Claude Code pack of 70+ subagents, 300+ skills and about 95 commands, with a plan-first, test-first workflow and a config security scanner; install only from the official repo, si…
-  - Link: https://x.com/RoundtableSpace/status/2113174768207671577
-
-- **stalemap is an open-source tool that tells coding agents which dependencies changed after their tra…** (Notable; agents_mcp_skills; x) - Relevant to a Claude Code and TypeScript workflow: stalemap writes version-drift notes into CLAUDE.md and adds an MCP tool, so agents stop using stale APIs, though the 89% vs 68% result is a single a…
-  - Link: https://x.com/RoundtableSpace/status/2113084171115704776
-
-## 2026-10-21 (AKD)
-
-- **anthropics/anthropic-sdk-python v2.0.0** (Top pick; dev_tooling; github) - The Anthropic Python SDK v2.0.0 is a major-version release marked with breaking changes tied to the new 2026-10-21 API version, so upgrading without reviewing the changelog risks migration breakage.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.0.0
-
-- **anthropics/claude-code v2.1.305** (Top pick; dev_tooling; github) - Adds a sandbox setting that lets sandboxed Linux commands create user namespaces, which weakens the sandbox's file protections, so review it before enabling.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.305
-
-- **KRAFTON/Raon-1-mini-preview · Hugging Face** (Top pick; model_release; reddit) - A 30B-A4B open-weight (Apache 2.0) MoE model with tool calling and NVFP4 quantization that fits on a single RTX 5090, a practical local option for agent workflows.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xbh0ev/kraftonraon1minipreview_hugging_face/
-
-- **DeepSeek Just Open-Sourced How It Serves 155T Tokens a Day** (Top pick; repo_library; youtube) - DeepSeek open-sourced DeepInfer, its production inference engine, plus deepseek-recipe and a detailed serving write-up, useful for anyone self-hosting large MoE models or tuning KV-cache and speculat…
-  - Link: https://www.youtube.com/watch?v=esdRFXgXaaQ
-  - Also covered by: [[AINews] DeepSeek DeepInfer: Open Source SOTA Inference running 155T toks/day/cluster making $22m/day at ~80% margin for a 81 day payback](https://www.latent.space/p/ainews-deepseek-deepinfer-open-source) (web)
-  - Also covered by: [DeepInfer](https://github.com/deepseek-ai/DeepInfer?utm_source=tldrai) (email)
-  - Also covered by: [DeepSeek has released DeepInfer, an open-source inference framework for its models. → DeepSeek says…](https://x.com/RoundtableSpace/status/2112653836070404546) (x)
-
-- **Mistral just dropped Voxtral 3, a full stack for voice AI. → Transcription in 50+ languages, with s…** (Top pick; model_release; x) - Mistral's Voxtral 3 bundles real-time transcription, TTS with voice cloning, and a voice agent SDK, which is a new option for voice agents though its 4% WER claim is vendor-reported and unverified.
-  - Link: https://x.com/RoundtableSpace/status/2112663898570592376
-  - Also covered by: [Voxtral 3: Voice Agent SDK & Speech Models in 50+ Languages](https://mistral.ai/news/voxtral-3/?utm_source=tldrai) (email)
-
-- **Introducing tsrs: A Port of TypeScript to Rust** (Notable; dev_tooling; email) - A Rust port of the TypeScript compiler (tsrs) reports up to 8x faster checking and an experimental npm release, relevant to your TypeScript and Vite build stack.
-  - Link: https://blog.cloudflare.com/typescript-rust-port/?utm_source=tldrdev
-
-- **Announcing TypeScript 7.1 Beta** (Notable; dev_tooling; email) - TypeScript 7.1 Beta adds an ES2026 target and a new developer-tools API, so test it early against your TS toolchain before it hits Vite and Vercel builds.
-  - Link: https://devblogs.microsoft.com/typescript/announcing-typescript-7-1-beta/?utm_source=tldrdev
-
-- **InternScience/Sage-A1.5 [Finetune of Qwen 3.6 35b-a3b]** (Notable; model_release; reddit) - A 35B open-weight agentic model fine-tuned from Qwen3.6-35B-A3B with subagent orchestration and GGUF quants, runnable locally for agent experiments.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xbi1hj/internsciencesagea15_finetune_of_qwen_36_35ba3b/
-
-- **anthropics/anthropic-sdk-python v1.17.0** (Notable; dev_tooling; github) - This Python SDK release adds Admin API webhook and RBAC endpoints plus Bedrock and Google Cloud header fixes, so no breaking change but worth a check if you use workspace IDs on those clients.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v1.17.0
-
-- **[AINews] not much happened today** (Notable; model_release; web) - DeepSeek V4.1 Flash 1017 is a 1M-context MIT-licensed open-weight model at unchanged pricing, scoring 45 on the AA index, so it's a cheap option to benchmark against your current API calls.
-  - Link: https://www.latent.space/p/ainews-not-much-happened-today-f09
-
-- **We launched OSS Scanner, which gives critical open source projects free, periodic vulnerability sca…** (Notable; dev_tooling; x) - Anthropic's OSS Scanner offers free periodic vulnerability scans with proof-of-concepts and patches for critical open source projects, relevant to agent security and maintainers.
-  - Link: https://x.com/ClaudeDevs/status/2112299602510749992
-
-- **XHToken/Spark-X2.6-4B · Hugging Face** (Notable; model_release; reddit) - A 4B on-device model with strong coding and agent scores and a configurable thinking budget, which is adoptable locally for agentic coding experiments without API costs.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xb0nr9/xhtokensparkx264b_hugging_face/
-
-- **173K+ GitHub stars for a free prompt library you can plug into your workflow. https://t.co/AypTSb4k…** (Notable; repo_library; x) - A widely starred open-source prompt library with a Claude Code plugin and MCP server, adoptable in minutes, though the post is promotional and its claims are unverified.
-  - Link: https://x.com/RoundtableSpace/status/2112857679546736649
-
-- **Making every harness durable** (Notable; agents_mcp_skills; email) - Vercel's durable harness lets Claude Code and Codex run in the cloud and resume after crashes or disconnects, relevant to your agent infrastructure and Vercel stack.
-  - Link: https://vercel.com/blog/making-every-harness-durable?utm_source=tldrai
-
-- **anthropics/claude-code v2.1.306** (Notable; dev_tooling; github) - Fixes two bugs that affect Claude Code users: headless `claude -p` failing auth in cloud sessions, and misleading "prompt is too long" errors in sessions with many MCP tools, so upgrade if you run ei…
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.306
 
