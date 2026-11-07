@@ -2,6 +2,37 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-07
+
+- **Claude Code v2.1.319** (AI/Claude tooling) - Auto mode now asks or denies instead of silently falling back to the built-in classifier when feature flags or telemetry are off. MCP tool calls that run as tasks now go to the background, and there is a new `permissions.denyInsteadOfPrompting` setting.
+  - Why it matters: Setups behind LLM gateways need `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep the old behavior. `denyInsteadOfPrompting` suits unattended or scheduled agent runs, since a blocked tool call no longer stalls the turn. Background MCP tasks suit long-running tools.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Code v2.1.317-2.1.318** (AI/Claude tooling) - The Nov 3-4 releases ask before a web or shell tool call sends your account email to the network. They also add `onFailure: "block"` for Agent SDK hook callbacks, and background subagents move shell commands to the background after 3 minutes so the prompt cache doesn't expire.
+  - Why it matters: Update to 2.1.317 or later for the email-privacy check. Hook callbacks that fail closed give you safer guardrails when you build agents on the SDK. Non-interactive launches now refuse to overwrite an invalid `~/.claude.json`.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude API: message threads (beta)** (AI/Claude tooling) - With the `message-threads-2026-08-12` beta header, the API keeps the conversation on the server. Later requests send only the new messages.
+  - Why it matters: It cuts request size and time to first token in long chats and agent loops. Threads expire 5 minutes after their last request and are deleted within 1 hour of last use, so keep your own transcript if you need one.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude API: 128 MB requests, new SDK majors, fast-mode deprecation** (AI/Claude tooling) - The Messages and Token Counting request limit rose from 32 MB to 128 MB (Oct 28). API version `2026-10-21` shipped with new SDK majors (Python 2.0.0, TypeScript 1.0.0, Go 2.0.0 and others). The SDKs are now Apache 2.0 licensed.
+  - Why it matters: The bigger limit helps with large PDFs and images, and the SDK majors include breaking changes, so pin versions before upgrading. Fast mode for `claude-opus-4-8` is removed on Nov 30, so migrate to Opus 5.5.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude API: usage/cost analytics and IP allowlist (beta)** (AI/Claude tooling) - New `/v1/organizations/analytics/usage` and `/cost` endpoints (Oct 29) filter by model, workspace, API key and user. An IP allowlist (Nov 5) limits API access to up to 1,000 addresses or CIDR ranges per organization.
+  - Why it matters: Use the analytics endpoints for per-agent cost tracking. The allowlist stops a leaked key from being used from arbitrary locations.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **claude-agent-sdk-python v0.2.179** (AI/Claude tooling) - The Nov 6 release follows v0.2.178, which bundled Claude CLI 2.1.318. The release page lists no changelog for 0.2.179.
+  - Why it matters: Upgrade to pick up the CLI fixes if you build agents on the Python SDK.
+  - Link: https://github.com/anthropics/claude-agent-sdk-python/releases
+
+- **worktrunk** (GitHub repo) - A Rust CLI for Git worktree management, built for running several AI agents in parallel.
+  - Why it matters: Giving each agent its own worktree avoids branch collisions when you run multiple Claude Code sessions on one repo. It was in this week's GitHub Trending list.
+  - Link: https://github.com/max-sixty/worktrunk
+  - Safety note: MIT OR Apache-2.0, about 11.9k stars, 5,511 commits. The README says the project was released at the start of this year, so it isn't brand new. I couldn't see the last commit date or the contributor count on the page, so skim the code before adding it to your workflow.
+
 ## 2026-11-06 (AKD)
 
 - **Thinking Machines, Mira Murati's lab, just released Inkling 2 Small, and the full weights go open n…** (Top pick; model_release; x) - Open-weight 594B MoE coding model (17B active) from Thinking Machines, with Apache 2.0 weights promised next week and a free Tinker Playground to try now.
@@ -1034,72 +1065,4 @@ No GitHub repos reported today: search results surfaced nothing I could verify a
   - Why it matters: lets an agent do AWS work (CDK/CloudFormation, deploys, incident investigation) with guardrails.
   - Link: https://github.com/aws/agent-toolkit-for-aws
   - Safety note: Apache-2.0; ~3k stars, official AWS org, 357 commits; last-commit date not visible.
-
-## 2026-10-23 (AKD)
-
-- **[AINews] Black October** (Top pick; other; web) - Several critical disclosures landed within 48 hours, including unauthenticated RCEs in PHP, GitLab (CVSS 10, releases since 2014), and Node.js, plus a LiteLLM supply-chain compromise, so check your d…
-  - Link: https://latent.space/p/ainews-black-october/
-
-- **If someone on X offers your crypto project funding, grants or free Claude and Gemini credits, and a…** (Top pick; agents_mcp_skills; x) - A fake "Apex Accelerator" npm package set shipped a stealer and redirected OpenRouter traffic and injected an MCP server, so check `claude mcp list` and your npm globals for @apexacc, @apexfdn, or @c…
-  - Link: https://x.com/RoundtableSpace/status/2113552255664505258
-
-- **anthropics/claude-code v2.1.309** (Top pick; agents_mcp_skills; github) - Claude Code v2.1.309 is a security-focused patch fixing sandbox escapes, MCP config tampering, and Bash permission bypasses, so update promptly if you run agents with sandboxing or MCP.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.309
-
-- **Google's GPT-3 Moment for Time Series & Forecasting (TimesFM 3.0)** (Top pick; model_release; youtube) - A zero-shot time-series forecasting model that needs no training on your data, with a 2.5-to-3.0 comparison; relevant if you ever forecast metrics or capacity, though the weights carry a non-commerci…
-  - Link: https://www.youtube.com/watch?v=ByKEkRohzt8
-
-- **The internet is having a very bad cybersecurity day** (Top pick; other; email) - Three of these hit your stack directly: NSA urges PHP updates, Node.js shipped four high-severity fixes, and the compromised LiteLLM package means checking any agent or proxy dependency for injected…
-  - Link: https://techcrunch.com/2026/10/21/the-internet-is-having-a-very-bad-cybersecurity-day/?utm_source=tldrnewsletter
-
-- **anthropics/anthropic-sdk-python v2.2.0** (Notable; dev_tooling; github) - Adds tool-runner fixes for `set_messages_params()` and `append_messages()` behavior changes, so check any code that relies on runner history or callback tool handling before upgrading.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.2.0
-
-- **API version 2026-10-21 is now available. The Claude API has evolved a lot, but this is our first of…** (Notable; dev_tooling; x) - A new dated Claude API version (2026-10-21) is out, the first formal version release since 2023, and it signals future breaking changes will be versioned in advance, though 2023-06-01 remains support…
-  - Link: https://x.com/ClaudeDevs/status/2113013247209021918
-
-- **We’ve added a new way to access Claude on Google Cloud. You can now use the full Claude API from yo…** (Notable; dev_tooling; x) - Anthropic's full Claude API, including Managed Agents and code execution, is now accessible through Google Cloud accounts, which may suit teams already billing on GCP.
-  - Link: https://x.com/ClaudeDevs/status/2113381868364271743
-  - Also covered by: [Claude Platform available on Google Cloud](https://claude.com/resources/articles/claude-models-on-google-cloud-anthropic-managed?utm_source=tldrai) (email)
-
-- **AWS released an official Claude Code plugin that connects your coding agent to AWS Security Agent a…** (Notable; agents_mcp_skills; x) - Adoptable this week: AWS's official Claude Code plugin adds codebase and pre-commit security scans, STRIDE threat models, and incident checks, free in preview, installed via `/plugin install`.
-  - Link: https://x.com/RoundtableSpace/status/2113529606238294157
-
-- **MiniMax-M3.1-Flash** (Notable; model_release; reddit) - A new open-weight MiniMax model release on Hugging Face, relevant as a local or self-hosted alternative for agentic coding if it benchmarks well and runs on your hardware.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xd0fgs/minimaxm31flash/
-
-- **nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB · Hugging Face** (Notable; model_release; reddit) - NVIDIA's Nemotron-3.5-Bolt-E4B is a small Gemma-4-based model tuned for multi-turn tool use at 4GB, a practical option for local agent experiments with GGUF builds available.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xdiecx/nvidianvidianemotron35bolte4b4gb_hugging_face/
-
-- **Anthropic donates Agent Skills to Linux Foundation** (Notable; agents_mcp_skills; email) - Anthropic's Agent Skills format is now an open standard under Linux Foundation governance, so skills you build for Claude Code and the Agent SDK are less likely to be tied to one vendor.
-  - Link: https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation?utm_source=tldrai
-  - Also covered by: [We're donating Agent Skills to the Agentic AI Foundation (@AgenticAIFdn), the same foundation we do…](https://x.com/ClaudeDevs/status/2113328526413996100) (x)
-
-- **NVIDIA OpenShell** (Notable; agents_mcp_skills; email) - NVIDIA's OpenShell gives agents policy-enforced sandboxes with kernel-level file and network limits, directly relevant to securing Claude Code and Agent SDK workloads.
-  - Link: https://github.com/NVIDIA/OpenShell?utm_source=tldrdev
-
-- **Flint 40B by Recursive: Fast Local Coding AI Tested** (Notable; model_release; youtube) - A 40B mixture-of-experts coding model from Recursive that runs locally, with a hands-on install and speed test that shows whether it's practical for local coding agents.
-  - Link: https://www.youtube.com/watch?v=WsQxIOM9io0
-
-- **SAVE THIS: you scan AI skills before you install them. Now scan the ones you've already installed. …** (Notable; agents_mcp_skills; x) - A practical security sweep for the reader's existing Claude Code and MCP setup: scanners for leaked API keys in chat history and for malicious or injection-prone MCP servers and skills already instal…
-  - Link: https://x.com/RoundtableSpace/status/2113484307624821117
-
-## 2026-10-23
-
-- **Claude Code v2.1.307-v2.1.309** (AI/Claude tooling) - Three releases in 48h: `/claude-api api-version` migrates code to API version 2026-10-21, new `claude_code.safety_event` OpenTelemetry event, HTTP MCP calls no longer double-sent on mid-call disconnects, and v2.1.309 closes several sandbox/permission gaps (shell startup files, `--mcp-config` edits, Bash redirect trust).
-  - Why it matters: upgrade if you run MCP-heavy or sandboxed agents; the safety event lets you audit blocked tool calls in your own telemetry.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's small model (`claude-haiku-5-5`), first Haiku with an adjustable effort setting; $0.10/$0.50 input and $0.50/$2.50 output per MTok, about 75% cheaper to run than Haiku 4.5. Anthropic says Sonnet/Opus 5.5 remain better for complex agentic coding.
-  - Why it matters: a cheap choice for subagents, summarization, compaction, classification and browser-use steps in agent pipelines.
-  - Link: https://www.anthropic.com/news/claude-haiku-5-5
-
-- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec revision, marked Latest on the spec repo (published earlier than this window; the repo's release page doesn't itemize changes).
-  - Why it matters: target this revision when building or updating MCP servers/clients; check the linked changelog for breaking changes.
-  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
-
-- **NVIDIA SkillSpector** (GitHub repo) - Open-source scanner for AI agent skills; runs a static pass (AST, taint tracking, YARA, regex rules for prompt injection and exfiltration), checks dependencies against OSV.dev, and has an optional LLM pass. Outputs a 0-100 risk score.
-  - Why it matters: run it on third-party Claude Code/agent skills before installing them. Not a new release (older than 7 days), included as a useful safety tool.
-  - Link: https://github.com/NVIDIA/SkillSpector (docs: https://docs.nvidia.com/skills/scanning-agent-skills)
-  - Safety note: Apache-2.0, about 21.1k stars, 1,698 commits, from NVIDIA; last-commit date and contributor count not confirmed.
 
