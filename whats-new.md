@@ -2,6 +2,57 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-07 (AKD)
+
+- **Your Claude memory file is probably making it dumber. Anthropic just published how Claude's memory …** (Top pick; research; x) - Claude Code only loads the first 200 lines or 25 KB of MEMORY.md, so a bloated CLAUDE.md or MEMORY.md silently drops instructions and should be trimmed.
+  - Link: https://x.com/RoundtableSpace/status/2118980523880050885
+
+- **GPT-Image-2.6: Faster image generation with Flare and Sunburst** (Top pick; model_release; youtube) - GPT-Image-2.6 (Flare and Sunburst) is now in the API and Codex, with 50% faster generation, a relevant option if you build image features on the OpenAI API.
+  - Link: https://www.youtube.com/watch?v=9ZxCOHkfn_8
+  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6/?utm_source=tldrdev) (email)
+
+- **Higgs Realtime Duplex: a 45B MoE full-duplex model that listens, watches and talks at once, and thinks, calls tools and delegates in the background [N]** (Top pick; model_release; reddit) - Higgs Realtime Duplex is a closed-weights, waitlisted voice API where the model listens, speaks, and runs tool calls concurrently, so it's relevant to agent architecture but not adoptable this week.
+  - Link: https://www.reddit.com/r/MachineLearning/comments/1xpn5pv/higgs_realtime_duplex_a_45b_moe_fullduplex_model/
+
+- **Introducing Inkling 2 Small** (Top pick; model_release; email) - Inkling 2 Small is a 594B-parameter MoE (17B active) with image input and variable effort, but weights are closed initially and API access runs only through Tinker.
+  - Link: https://thinkingmachines.ai/news/inkling-2-small/?utm_source=tldrai
+  - Also covered by: [Thinking Machine's Inkling 2 Small is Here](https://www.youtube.com/watch?v=3fmkbkkhxQ8) (youtube)
+
+- **How to Get Frontier Coding Results at 70% Lower Cost - Nouha Dziri, Cohere** (Top pick; research; youtube) - Relevant to agentic coding workflow: it gives measured guidance on when multi-agent teams beat a single agent and how to cut cost by mixing a strong lead with cheaper workers.
+  - Link: https://www.youtube.com/watch?v=maitMe9HCvw
+
+- **Your Old Prompts Are Making Claude Worse - Lance Martin, Anthropic** (Notable; agents_mcp_skills; youtube) - Practical prompt-audit and prompt-caching tactics from Anthropic's Lance Martin, including a claimed 72% cost cut and a 90% cost cut from switching to a stronger model at lower effort, directly appli…
+  - Link: https://www.youtube.com/watch?v=ys6YQ2yfBpM
+
+- **Stanford researchers develop a new AI memory system that recalls information from entire conversation histories using just 16 memory tokens. It reduces document-token usage by up to 4,212×, runs 27× faster in a 512-document test, and outperforms existing approaches on 5 of 8 benchmarks.** (Notable; research; reddit) - Stanford's 16-token memory compression claims 4,212x fewer document tokens and 27x speedups on 512-doc tests, but this is a Reddit post with no paper linked, so verify the source before building on i…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xpvvg3/stanford_researchers_develop_a_new_ai_memory/
+
+- **Tencent Launches Hy4** (Notable; model_release; email) - Tencent's open-weight Hy4 adds vision and CLI/GUI operation, with weights promised soon, so it's worth tracking as a self-hostable agent-capable model option.
+  - Link: https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/?utm_source=tldrai
+
+- **Your AI Agent Is Hiding Its Mistakes From You - Ben Holmes, Warp** (Notable; agents_mcp_skills; youtube) - Shows how to log Claude Code and Codex sessions and run LLM-as-judge scoring plus a daily agent that opens PRs to fix skills, with Skill Doctor runnable on your own history.
+  - Link: https://www.youtube.com/watch?v=pz74r-4dGfQ
+
+- **faster-chrome-devtools-skill** (Notable; agents_mcp_skills; email) - A dependency-free Node CLI and agent skill driving Chrome over the DevTools Protocol directly, with accessibility snapshots, screenshots, and no separate browser MCP server needed.
+  - Link: https://github.com/zeke/faster-chrome-devtools-skill?utm_source=tldrdev
+
+- **Claude Code cloud sessions now set up your repo for you on Pro, Max, and Ultra. Claude works out th…** (Notable; dev_tooling; x) - Claude Code cloud sessions can now auto-configure repo dependencies, network access, and API keys on Pro, Max, and Ultra, saving the environment for reuse.
+  - Link: https://x.com/RoundtableSpace/status/2118897476749209878
+  - Also covered by: [We've made it easier to get your repo running in Claude Code cloud sessions on Pro, Max, and Ultra.…](https://x.com/ClaudeDevs/status/2118795192090386454) (x)
+
+- **Someone built a VM for every project folder, so your coding agents run in a sandbox instead of on y…** (Notable; agents_mcp_skills; x) - An open-source MIT tool that runs coding agents like Claude Code in per-project Lima VMs with allowlisted networking and secrets kept on the host, directly relevant to agent sandboxing.
+  - Link: https://x.com/RoundtableSpace/status/2118874827683774478
+
+- **Mirage: A 22 MB visual-language model that runs scene descriptions + object detection + OCR + segmentation + spatial relations analysis + extractions + decisions, in a single pass.** (Notable; model_release; reddit) - A 22 MB on-device vision model covering detection, OCR, segmentation and spatial reasoning at 74 ms on a phone NPU, relevant for local agent perception without cloud calls.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpm8mw/mirage_a_22_mb_visuallanguage_model_that_runs/
+
+- **shanselman/sandbox-mcp** (Notable; agents_mcp_skills; github) - An MCP server that drives Windows Sandbox so agents can run and test apps in disposable Windows environments, directly relevant to agent sandboxing and MCP tooling.
+  - Link: https://github.com/shanselman/sandbox-mcp
+
+- **NousResearch/Arete-27B · Hugging Face (Qwen finetune)** (Notable; model_release; reddit) - A 27B open-weight Qwen3.8 SFT finetune from Nous Research that reports fewer propaganda-framed answers, with its own eval numbers and a GGUF build for local use.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpmj33/nousresearcharete27b_hugging_face_qwen_finetune/
+  - Also covered by: [Most open models were trained to repeat one government's talking points. Nous Research just showed …](https://x.com/RoundtableSpace/status/2118957874487718323) (x)
+
 ## 2026-11-07
 
 - **Claude Code v2.1.319** (AI/Claude tooling) - Auto mode now asks or denies instead of silently falling back to the built-in classifier when feature flags or telemetry are off. MCP tool calls that run as tasks now go to the background, and there is a new `permissions.denyInsteadOfPrompting` setting.
