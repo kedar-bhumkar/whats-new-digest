@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-08 (AKD)
+
+- **If you ever clicked “Yes, and don’t ask again” in Claude Code, check one file before your next push** (Top pick; agents_mcp_skills; reddit) - Claude Code saves "always allow" commands verbatim to .claude/settings.local.json, so any secret in an approved command can leak via git; check the file and rotate anything exposed.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xqxx5b/if_you_ever_clicked_yes_and_dont_ask_again_in/
+  - Also covered by: [Claude Code's "Don't Ask Again" exposes passwords in 1,122 public GitHub files](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again) (web)
+
+- **Meta open-sourced Astryx, a design system built for people and the AI agents working with them. → F…** (Top pick; repo_library; x) - Meta's MIT-licensed Astryx is a React 19 and StyleX design system (in beta) that gives coding agents a fixed component set to build from, which fits the React and Tailwind stack.
+  - Link: https://x.com/RoundtableSpace/status/2119395759745384863
+
+- **The web scraper your AI agent has been missing. 99K stars. Scrapling covers the whole job: → Fast r…** (Top pick; repo_library; x) - Scrapling is an open-source scraper with an MCP server and agent skill that Claude Code can drive directly, adoptable in an afternoon for web-data tasks.
+  - Link: https://x.com/RoundtableSpace/status/2119403309656310231
+
+- **Claude can now read your bank accounts. Not move money, just read. Personal Finance is rolling out …** (Top pick; model_release; x) - Read-only Plaid connection to bank accounts with up to two years of transactions, rolling out in US beta on paid tiers; a personal-finance data-access surface, not a developer API, so it's of limited…
+  - Link: https://x.com/RoundtableSpace/status/2119312712740278669
+  - Also covered by: [Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude?utm_source=tldrai) (email)
+
+- **Gemini Omni 1.2 Flash** (Top pick; model_release; email) - Gemini Omni 1.2 Flash offers faster, cheaper, longer video generation via API, relevant to your AI video tooling alongside HyperFrames and Remotion.
+  - Link: https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/?utm_source=tldrai
+
+- **HeyGen's HyperFrames can now rebuild any video as an editable project, so Claude can recreate a cli…** (Notable; dev_tooling; x) - HyperFrames' new reverse-engineering feature lets Claude rebuild a video as an editable HTML project, directly relevant to your HyperFrames and Claude Code workflow, though it's a Pro-only feature.
+  - Link: https://x.com/RoundtableSpace/status/2119433508670132372
+
+- **Your Coding Agent Can't Undo Its Own Mistakes - Tanmay Sah & Dolly Sah** (Notable; research; youtube) - Relevant to agent sandboxing and safety: it shows Git rollback misses external API calls, runtime config, and notifications, and that about 42% of capability-improving changes also broke recovery.
+  - Link: https://www.youtube.com/watch?v=BT1Mo-fD-g0
+
+- **GG Coder desktop coding agent** (Notable; agents_mcp_skills; email) - GG Coder is a desktop coding agent that runs on existing subscriptions, API keys, or local models, and its reusable agent packages are AGPL-3.0 licensed, which matters for embedding it in your own pr…
+  - Link: https://github.com/KenKaiii/gg-framework?utm_source=tldrdev
+
+- **Build live apps in Cursor and share them** (Notable; dev_tooling; email) - Cursor can now go from a description to a deployed, shareable app with database and security checks, a quick way to test agentic full-stack builds.
+  - Link: https://x.com/cursor_ai/status/2118458629091426304?utm_source=tldrai
+
+- **[AINews] Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark** (Notable; model_release; web) - Inkling 2 Small is a new open-weight model trained natively in NVFP4 on under 12T tokens, competitive with same-size Chinese models and highlighting customizability for fine-tuning.
+  - Link: https://latent.space/p/ainews-inkling-2-small-17a-594b-trained-in-68-hours-on-12t-tokens-beating-muse-spark/
+  - Also covered by: [Thinking Machine's Inkling 2 Small is Here](https://www.youtube.com/watch?v=3fmkbkkhxQ8) (youtube)
+
+- **We've made it easier to get your repo running in Claude Code cloud sessions on Pro, Max, and Ultra.…** (Notable; dev_tooling; x) - Claude Code cloud sessions on Pro, Max, and Ultra now auto-detect a repo's dependencies, network needs, and API keys, then cache the environment, which lowers setup friction for agentic coding.
+  - Link: https://x.com/ClaudeDevs/status/2118795192090386454
+
+- **React.lazy, Suspense and the hidden 300 ms delay** (Notable; research; email) - Relevant to React/Vite work: a 300 ms Suspense reveal throttle can dominate perceived startup even when lazy-loaded chunks arrive quickly, so measure before shrinking bundles.
+  - Link: https://tabwidgets.com/blog/react-lazy-suspense-delay?utm_source=tldrdev
+
+- **Artificial Analysis: multimodal decision model Drex Max ranks #1. Both achieving SOTA and Pareto frontier.** (Notable; model_release; reddit) - Drex Max v1.1 claims state-of-the-art results on a decision-model benchmark with open weights (v1 on Hugging Face under Open RAIL-M) and a local-inference engine, though the claims are vendor-reporte…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xr2rqk/artificial_analysis_multimodal_decision_model/
+
+- **Claude Code sends your email address to websites** (Notable; agents_mcp_skills; web) - A reported Claude Code issue where it sends the user's email address to websites, which bears directly on privacy and security for anyone running it with agent workflows on their machine.
+  - Link: https://github.com/anthropics/claude-code/issues/107757
+
+- **Claude Code Looked Right but Missed $800K - Natalia Connolly & Kevin Madura, AlixPartners** (Notable; agents_mcp_skills; youtube) - A real-world case where Claude Code gave confident but wrong numbers on 40,000 contracts, with concrete fixes (staged data pipeline, custom tools with business rules) that are directly reusable for a…
+  - Link: https://www.youtube.com/watch?v=u7fsyrXsPBE
+
 ## 2026-11-08
 
 - **Claude Code 2.1.319** (AI / Claude tooling) - Latest changelog entry adds `permissions.denyInsteadOfPrompting`, background MCP tasks in the terminal, `/claude-api latency-optimize`, and several Bash permission fixes.
