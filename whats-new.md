@@ -2,6 +2,12 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-09
+
+- **Claude Code v2.1.317-2.1.319** (AI/Claude tooling) - Three releases in Nov 3-6 adding safer unattended runs and background MCP handling.
+  - Why it matters: `permissions.denyInsteadOfPrompting` lets headless/scheduled runs deny a blocked tool call and continue instead of stalling; long-running MCP tool calls now go to the background with the result reported on completion; `claude -p` exits 1 when auto mode refuses actions or a full disk loses transcript writes (easier CI/automation checks); a new check asks before a tool call sends your account email to the network; `/claude-api latency-optimize` reviews Claude API code for slow spots; Agent SDK hook callbacks support `onFailure: "block"`.
+  - Link: https://github.com/anthropics/claude-code/releases
+
 ## 2026-11-08 (AKD)
 
 - **If you ever clicked “Yes, and don’t ask again” in Claude Code, check one file before your next push** (Top pick; agents_mcp_skills; reddit) - Claude Code saves "always allow" commands verbatim to .claude/settings.local.json, so any secret in an approved command can leak via git; check the file and rotate anything exposed.
@@ -1018,75 +1024,3 @@ No GitHub repos reported today: search results surfaced nothing I could verify a
   - Link: https://github.com/Nutlope/hallmark
   - Safety note: MIT, ~35.2k stars, 297 commits; trending #1 today. Last-commit date and contributor count not verified; it installs via `npx skills add`, so inspect the skill files first.
 
-## 2026-10-25 (AKD)
-
-- **modelcontextprotocol/servers v2.1.0** (Top pick; agents_mcp_skills; github) - Security fixes for MCP filesystem and fetch servers, including a symlink write-escape that is only partly fixed on Windows, so upgrade to 2.0.1 and the 2026.10.24 fetch release now.
-  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.1.0
-
-- **LLMs make formal software verification feasible at scale** (Top pick; research; email) - Claude generated machine-checked proofs for 239 fuzz-test entry points across 123 open-source libraries, which suggests tests can be turned into formal specs without hand-writing proofs.
-  - Link: https://www.anthropic.com/research/formal-verification?utm_source=tldrdev
-  - Also covered by: [New on our Frontier Red Team blog: using Claude to formally verify software at large scale. Formal …](https://x.com/AnthropicAI/status/2113390212911083894) (x)
-
-- **model: DSV4.1 flash by am17an · Pull Request #31086 · ggml-org/llama.cpp** (Top pick; model_release; reddit) - DeepSeek V4.1 Flash support is landing in llama.cpp, so a 763B-parameter open-weight model may soon run locally, though the item itself gives no adoption details or hardware requirements.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xeqf7k/model_dsv41_flash_by_am17an_pull_request_31086/
-
-- **TanStack AI 1.0** (Top pick; agents_mcp_skills; email) - TanStack AI 1.0 gives stable APIs for chat, tools, MCP, and sandboxes across providers and frameworks, relevant to your React/TypeScript stack, though its agent harness is still experimental.
-  - Link: https://tanstack.com/blog/tanstack-ai-1-0?utm_source=tldrdev
-
-- **Kimi K3.1 Pro is live. A 3T-class open-weight model with 1M context. 2.8T total, 104B active parame…** (Top pick; model_release; x) - Open-weight Kimi K3.1 Pro claims frontier-level agentic coding and 1M context, with weights due Nov 4; treat the benchmark claims as unverified until independent evals appear.
-  - Link: https://x.com/RoundtableSpace/status/2114360078480392531
-  - Also covered by: [Kimi K3.1 Pro: Most Capable Open-Weight Model Now](https://www.youtube.com/watch?v=XwTNOdTcWHA) (youtube)
-
-- **Kimi K3.1 Pro and Opus 5.5 Made the Same 13 Apps (Raw Results)** (Notable; research; youtube) - Head-to-head test of Kimi K3.1 Pro against Opus 5.5 in Claude Code, showing Kimi at about 55% of the cost on the same harness, though Opus led on most accuracy results.
-  - Link: https://www.youtube.com/watch?v=_XXX5K-EMoc
-
-- **Tested FLUX 3 Klein Locally: Has AI Image Generation Plateaued?** (Notable; model_release; youtube) - A local FLUX image model via ComfyUI with a weights link on Hugging Face, which is adoptable this week for the ComfyUI pipeline but is off-core for an agentic coding focus.
-  - Link: https://www.youtube.com/watch?v=nr1FVpOOviQ
-
-- **How researchers tested OpenAI's internal agent monitoring** (Notable; agents_mcp_skills; email) - Third-party red team found ways AI agents could evade OpenAI's internal monitoring and sandboxes, a useful reference for auditing your own agent setups.
-  - Link: https://metr.org/blog/2026-10-22-red-teaming-openai-agent-monitoring/?utm_source=tldrai
-
-- **Claude's text output now carries an invisible watermark** (Notable; model_release; email) - Claude's newest models embed a SynthID-Text watermark in output by subtly biasing word choice, so any text pipeline or detector you build may need to account for it.
-  - Link: https://www.oreilly.com/radar/the-latest-anthropic-claude-models-contain-ai-text-watermarks-what-does-this-mean-for-you/?utm_source=tldrai
-
-- **SAVE THIS: 4 GitHub repos blowing up this week. 1. OpenShell by NVIDIA (19.7K stars) a safe sandbox…** (Notable; repo_library; x) - This item is a roundup of four repos, and the most relevant one for this reader is NVIDIA's OpenShell, a kernel-level sandbox that keeps agents away from real credentials, which fits their agent secu…
-  - Link: https://x.com/RoundtableSpace/status/2114337429322969546
-
-- **Letting an AI agent SSH into your server is scary. This skill adds a safety net. vps-forge is a new…** (Notable; agents_mcp_skills; x) - An open-source (MIT) agent skill that hardens a Debian/Ubuntu VPS with auto-rollback on risky changes, relevant if you let Claude Code or agents SSH into servers; the lockout-free results are self-re…
-  - Link: https://x.com/RoundtableSpace/status/2114155983593505211
-  - Also covered by: [SAVE THIS LIST 5 new open-source repos for AI agents, all made this week: → whatsmyagentdoing: see …](https://x.com/RoundtableSpace/status/2114141135706923142) (x)
-
-- **Your Agent Fix Just Broke Something Else - Sofia Jakovcevic, Arize AI** (Notable; agents_mcp_skills; youtube) - A one-line prompt change flipped a support agent from +17 to -17 on safety and task completion, and the video lays out a five-step regression loop with CI merge gating for catching that before deploy.
-  - Link: https://www.youtube.com/watch?v=v5tm5EAzsAs
-
-- **Securing our frontier model training environment** (Notable; agents_mcp_skills; web) - OpenAI describes its containment controls for frontier training and evaluation environments, relevant to anyone building sandboxing or security patterns for autonomous agents.
-  - Link: https://openai.com/index/securing-our-frontier-model-training-environment
-
-- **When to fold subagents into the main agent loop** (Notable; agents_mcp_skills; email) - Anthropic's guidance on merging router, planner, and specialist subagents into one agent loop directly informs architecture choices for Agent SDK builds and reduces handoff cost and latency.
-  - Link: https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop?utm_source=tldrdev
-  - Also covered by: [Anthropic just told developers to delete most of their subagents. their testing: one agent with ski…](https://x.com/RoundtableSpace/status/2114322329689882684) (x)
-  - Also covered by: [Single Loop vs. Subagents: Which Agent Architecture Wins?](https://www.youtube.com/watch?v=Nh5lHcaIwzw) (youtube)
-
-- **What is Herdr and Why Do You Need It for Coding Agents!** (Notable; agents_mcp_skills; youtube) - Herdr is an open-source background runtime that keeps Claude Code, Codex, and opencode sessions alive across window closes and flags which agent is blocked, a practical alternative to tmux for multi-…
-  - Link: https://www.youtube.com/watch?v=_sDu97GA_E8
-
-## 2026-10-25
-
-- **Claude Code v2.1.309** (AI/Claude tooling) - Security-hardening release: shell startup files no longer run outside the sandbox, sandboxed commands can't modify the `--mcp-config` file, and Bash permission checks no longer trust variables set by commands with failing redirects.
-  - Why it matters: if you run Claude Code unattended or in bypass-permissions mode, this closes several permission-bypass paths. Note `claude ultrareview` now requires workspace trust (`--trust-workspace` in scripts) and dangerous `rm`/`rmdir` are denied outright in bypass mode.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **reason-machines/reason-network** (GitHub repo) - Rust engine for letting a team's coding agents talk to each other peer-to-peer (built on iroh, exposed via MCP).
-  - Why it matters: a concrete take on multi-agent coordination across developers' machines without a central server; worth trying if you run several Claude Code/Codex sessions that need to share context.
-  - Link: https://github.com/reason-machines/reason-network
-  - Safety note: Apache-2.0; created 2026-10-16, last push 2026-10-25; ~1.2k stars, 103 forks, 8 open issues. Young repo, so review before installing; I did not audit the code.
-
-- **kanaworksai-hue/audio-studio-mcp** (GitHub repo) - MCP server that generates background music and sound effects locally with Stable Audio 3 (MLX on Apple Silicon, PyTorch on NVIDIA/Windows), no cloud or API key.
-  - Why it matters: a ready-made way to let Claude Code add audio to games/apps, and a good example of a local-model MCP tool.
-  - Link: https://github.com/kanaworksai-hue/audio-studio-mcp
-  - Safety note: MIT; created 2026-10-18, last push 2026-10-24; ~490 stars, 34 forks, 0 open issues. Single-maintainer personal account; downloads model weights, so check sources before running.
-
-- **eliasbiondo/antirion** (GitHub repo) - Single-binary Rust AI gateway with a built-in console to route, budget, rate-limit, guardrail and observe LLM calls across OpenAI, Anthropic, Gemini and Bedrock; also an MCP gateway.
-  - Why it matters: a lightweight self-hosted alternative to LiteLLM-style proxies for cost control and observability when agents make many API calls.
-  - Link: https://github.com/eliasbiondo/antirion
-  - Safety note: Apache-2.0; created 2026-10-17, last push 2026-10-25; ~270 stars, 7 forks, 1 open issue. Very new and small community; it would hold your provider API keys, so audit before use.
