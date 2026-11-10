@@ -2,6 +2,59 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-10 (AKD)
+
+- **anthropics/claude-code v2.1.321** (Top pick; dev_tooling; github) - Claude Code v2.1.321 adds the Fable 5.2 default model and fixes several sandbox, MCP OAuth token-leak, and permission-check bugs, so review the upgrade and update any pinned model IDs.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.321
+  - Also covered by: [[AINews] Fable 5.2 retakes World #1 LLM spot as $ANT IPO roadshow begins](https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins/) (web)
+  - Also covered by: [Claude Fable 5.2 is cheaper than the last Fable: $8 per million input tokens and $40 per million ou…](https://x.com/RoundtableSpace/status/2119999739777491426) (x)
+  - Also covered by: [Fable 5.2 is now available in the Claude Platform and Claude Code. It’s up to 30% faster than Fable…](https://x.com/ClaudeDevs/status/2119868698613956992) (x)
+  - Also covered by: [Introducing Claude Fable 5.2](https://www.youtube.com/watch?v=6a1QSJlsYpU) (youtube)
+
+- **Claude Code's "Don't Ask Again" exposes passwords in 1,122 public GitHub files** (Top pick; agents_mcp_skills; web) - Claude Code's "Don't Ask Again" permission option is linked to credentials committed in 1,122 public GitHub files, so review those approvals and rotate any exposed secrets.
+  - Link: https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again
+
+- **Gemini 4 Carbon: The Most Capable Model from Google** (Top pick; model_release; youtube) - Google's Gemini 4 Carbon is aimed at long unattended engineering tasks, and this video shows real outputs (including a 100+ pass 3D engine build) plus four prompting rules, though the creator has ear…
+  - Link: https://www.youtube.com/watch?v=lQ6wwLHqDAg
+
+- **By default, Claude Code can read files anywhere on your computer. Your SSH keys, your .env files, y…** (Top pick; agents_mcp_skills; x) - Claude Code's new settings block file reads and writes outside the working directory (even in bypass mode) and deny SSH, AWS, and .env access, which matters for agent security; the write block needs…
+  - Link: https://x.com/RoundtableSpace/status/2120045855109509406
+
+- **Amazon just replaced Claude in one of the world's biggest internal ticketing systems. With a 2B mod…** (Top pick; repo_library; x) - A small 2B open model replaced Claude Sonnet for ticket labeling at Amazon, with reported cost and latency drops and a pip-installable CLI to try the same pattern, which is a concrete option for rout…
+  - Link: https://x.com/RoundtableSpace/status/2120112986274881756
+
+- **anthropics/anthropic-sdk-python v2.8.0** (Notable; dev_tooling; github) - Bedrock and Vertex model-ID and path-handling fixes change how `;` and empty IDs are treated, so check any custom Bedrock/Vertex model strings or base URLs before upgrading.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0
+
+- **Safely scaling multi-agent teams with Claude Fable 5.2** (Notable; agents_mcp_skills; email) - A 1,000-agent team reproducing a Fermat's Last Theorem formal proof with sandboxed agents, shared Git, and SQL coordination is a concrete multi-agent architecture pattern worth studying.
+  - Link: https://claude.dev/blog/safely-scaling-multi-agent-teams-with-fable-5-2/?utm_source=tldrdev
+  - Also covered by: [Claude Fable 5.2 and Mythos 5.2](https://www.anthropic.com/claude-fable-and-mythos-5-2) (web)
+
+- **MiniMax H3-Image Released, an Open-Weight Image Model built on H3** (Notable; model_release; reddit) - An open-weight image model from MiniMax, relevant as a locally runnable option for the ComfyUI and image tooling workflow you already use.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xso1ie/minimax_h3image_released_an_openweight_image/
+  - Also covered by: [MiniMaxAI/MiniMax-H3-Image · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1xsp3xt/minimaxaiminimaxh3image_hugging_face/) (reddit)
+
+- **NaiveAI Promises 2,100 Tokens per Second. How Well Does It Code?** (Notable; model_release; web) - Naive-N0.5-Flash is an open-weights coding model claiming about 2,100 tokens/sec, built by fine-tuning Xiaomi's MiMo-V2.5 with DeepSeek Sparse Attention and a 1M context, so the throughput and real c…
+  - Link: https://latent.space/p/naiveai/
+
+- **Claude Fable 5.2 Release vs Opus 5.5: Don't Pay for Max Effort** (Notable; model_release; youtube) - It's a model-choice guide for Claude Code users: Fable 5.2 at High effort matches Opus 5.5 on FrontierCode at about half the cost, so it changes which model and effort level to default to.
+  - Link: https://www.youtube.com/watch?v=7cx2unMXBYY
+
+- **anthropics/claude-code v2.1.322** (Notable; dev_tooling; github) - Claude Code v2.1.322 adds fast mode on Vertex (global, US, EU regions) with automatic fallback to standard speed, relevant if you run Claude Code through Vertex.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.322
+
+- **Your Agent Hates Your CLI - Ayush Bhardwaj, Allos AI** (Notable; agents_mcp_skills; youtube) - Analysis of about 20,000 agent tool calls shows where CLI output hides failures or forces repeated queries, with concrete fixes and a replay-test method for agent-facing tools.
+  - Link: https://www.youtube.com/watch?v=rS36lYuvXQ8
+
+- **You Can't Tell What an Agent Skill Will Do by Reading It - Roey Ben Chaim, Zenity** (Notable; agents_mcp_skills; youtube) - Reading a skill's SKILL.md can't reveal what it does at runtime, since it can chain-install packages and fetch remote prompts, so treat skills as dependencies and sandbox them.
+  - Link: https://www.youtube.com/watch?v=_7P580m4kPY
+
+- **speakleash/Bielik-11B-v3.1-Instruct · Hugging Face** (Notable; model_release; reddit) - Bielik-11B-v3.1-Instruct is a new open-weight 11B model with GGUF builds, useful if you want a local option for Polish or other European-language work with tool use.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xsrg0l/speakleashbielik11bv31instruct_hugging_face/
+
+- **How Anthropic Builds Agent Memory** (Notable; research; email) - Anthropic's research on agent memory, including a "dreaming" consolidation step during idle time, bears directly on how you'd design persistent memory for Claude Agent SDK agents and MCP-based workfl…
+  - Link: https://www.anthropic.com/research/components-of-agent-memory?utm_source=tldrai
+
 ## 2026-11-10
 
 - **Claude Code v2.1.322 / v2.1.321 / v2.1.319** (AI/Claude tooling) - Fast mode on Vertex (global/US/EU) in v2.1.322; Fable 5.2 (`claude-fable-5-2`, 1M context, $8/$40 per Mtok) becomes the default Fable model in v2.1.321.
