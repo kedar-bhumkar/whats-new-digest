@@ -2,6 +2,25 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-11
+
+- **Claude Code v2.1.319 / v2.1.322** (AI/Claude tooling) - Recent releases add MCP task support (background tasks that report back), `permissions.denyInsteadOfPrompting`, `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`, and fast mode on Vertex (v2.1.322, Nov 10).
+  - Why it matters: `denyInsteadOfPrompting` makes unattended/CI agent runs deterministic (denied calls don't stall), and MCP background tasks suit long-running tool servers. Note v2.1.319 changed auto mode behind LLM gateways or with telemetry off (set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep the classifier).
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Agent SDK (Python) v0.2.177-0.2.180** (AI/Claude tooling) - Nov 3-9 releases; v0.2.177 added an `on_failure` option to `HookMatcher`, v0.2.178 bundles Claude CLI 2.1.318.
+  - Why it matters: hooks that can react to failures help build safer, self-correcting agent pipelines. Release notes for 0.2.179/0.2.180 were not shown, so check before upgrading.
+  - Link: https://github.com/anthropics/claude-agent-sdk-python/releases
+
+- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec; SDKs adopt it at their own pace.
+  - Why it matters: check that your MCP servers/clients target the current revision. I did not read the changelog itself.
+  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
+
+- **Prime Agent (PrimeIntellect-ai)** (GitHub repo) - Self-improving RLM coding/long-running agent harness, open-sourced Aug 2026 (older than 7 days, included as the one repo I could verify).
+  - Why it matters: reference design for long-horizon autonomous coding agents.
+  - Link: https://github.com/PrimeIntellect-ai/prime-agent
+  - Safety note: MIT license; ~22.7k stars, 5,269 commits; last commit date not verified. Unix installer is `curl | sh`, so read it first; README warns it is not a sandbox and runs model-generated code with your permissions.
+
 ## 2026-11-10 (AKD)
 
 - **anthropics/claude-code v2.1.321** (Top pick; dev_tooling; github) - Claude Code v2.1.321 adds the Fable 5.2 default model and fixes several sandbox, MCP OAuth token-leak, and permission-check bugs, so review the upgrade and update any pinned model IDs.
