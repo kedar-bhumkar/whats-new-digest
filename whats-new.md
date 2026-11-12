@@ -2,6 +2,29 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-12
+
+- **Claude Fable 5.2 / Mythos 5.2** (AI/Claude tooling) - Launched Nov 9 (`claude-fable-5-2`): 1M context, 128k output, always-on adaptive thinking, $8/$40 per MTok (down from $10/$50 for Fable 5.1); fast mode via `speed: "fast"` at $16/$80. Mythos 5.2 is limited to verified orgs.
+  - Why it matters: cheaper top-tier model for long-horizon agent work. Migration gotchas: thinking blocks must be returned unmodified (editing system/tools/earlier messages then sending a thinking block gives a 400), `computer_20251124` now 400s outside Bedrock (use `computer_toolset_20260801`), and 30-day data retention is required (no ZDR by default).
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Messages API message threads (beta)** (AI/Claude tooling) - Nov 2 beta (header `message-threads-2026-08-12`): the server keeps conversation state so follow-up requests send only new messages.
+  - Why it matters: smaller payloads and lower time-to-first-token for chat/agent loops. Threads expire 5 min after last request and are deleted within 1 hour, so not for long-idle sessions.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Console IP allowlist (beta)** (AI/Claude tooling) - Nov 5: restrict API requests to up to 1,000 IPs/CIDRs per organization.
+  - Why it matters: limits the blast radius of a leaked API key; useful for production services with fixed egress IPs.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.321** (AI/Claude tooling) - Nov 9: adds Fable 5.2 as default Fable model, `--settings <file>` for `claude remote-control`, and several security fixes (MCP OAuth no longer leaks refresh tokens on cross-host redirects; deny rules now apply to `cp`/`mv` targets; read-only Bash can't escape the sandbox). v2.1.322 (Nov 10) adds Vertex fast mode.
+  - Why it matters: worth upgrading for the permission/sandbox fixes alone. v2.1.319 also added `/claude-api latency-optimize`, which profiles and tunes slow API code.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **vercel-labs/agent-desktop** (GitHub repo) - CLI + C library giving agents desktop computer use on macOS/Windows/Linux by reading the accessibility tree (JSON element refs, no screenshots, no model inside).
+  - Why it matters: a cheaper, deterministic alternative to screenshot-based computer use for automating GUI apps from any agent.
+  - Link: https://github.com/vercel-labs/agent-desktop
+  - Safety note: Apache-2.0, ~22.5k stars, 1.7k forks, 341 commits. I could not confirm last-commit date or contributor list from the page; npm package ships native binaries, so review `package.json` scripts/source before installing, and note snapshots can capture private desktop content.
+
 ## 2026-11-11
 
 - **Claude Code v2.1.319 / v2.1.322** (AI/Claude tooling) - Recent releases add MCP task support (background tasks that report back), `permissions.denyInsteadOfPrompting`, `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`, and fast mode on Vertex (v2.1.322, Nov 10).
@@ -1012,15 +1035,4 @@ No GitHub repos reported today: search results surfaced nothing I could verify a
 
 - **omux is a native macOS terminal for running multiple Claude Code sessions side by side, grouped by …** (Notable; dev_tooling; x) - A native macOS terminal for running several Claude Code sessions per project with live status, but its usage meter relies on an undocumented, unofficial endpoint.
   - Link: https://x.com/RoundtableSpace/status/2115220750496084460
-
-## 2026-10-28
-
-- **Claude Code v2.1.310-v2.1.312** (AI/Claude tooling) - Three releases in five days, covering the Monitor tool, subagent MCP access and compaction fixes.
-  - Why it matters: v2.1.310 makes the Monitor tool available on Bedrock, Vertex and Foundry and fixes compaction after "Prompt is too long" errors. v2.1.311 lets subagents use MCP tools from servers that connect later, and lets sessions over 200K tokens compact and continue instead of erroring. v2.1.312 adds `oidc.user_id_claim` for gateway auth and caps prompt/agent hooks at 24 concurrent per session. Worth upgrading if you run long agent loops or cloud/gateway setups.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **CopilotKit/OpenDuet** (GitHub repo) - MIT-licensed template for a proactive AI agent (morning brief, mail/calendar triage, per-agent computers) with approval prompts before sending, paying or deleting.
-  - Why it matters: a working reference for human-in-the-loop approval flows in agent apps. It is early-stage and needs a CopilotKit Intelligence project key to run.
-  - Link: https://github.com/CopilotKit/OpenDuet
-  - Safety note: MIT, from the established CopilotKit org, about 976 stars, created 2026-10-21. Telemetry is on by default (disable with `DO_NOT_TRACK=1`). The quick start runs unpinned `npx copilotkit@latest`, writes keys to `.env`, and starts Docker containers. Review before running. I could not confirm the last commit date or the contributor count.
 
