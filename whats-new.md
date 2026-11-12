@@ -2,6 +2,55 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-12 (AKD)
+
+- **Heads up: Claude Code's "don't ask again" has been leaking secrets into public repos** (Top pick; agents_mcp_skills; reddit) - Claude Code's "don't ask again" approvals save exact commands, including any inline secrets, as plaintext in `.claude/settings.local.json`, which often gets committed to public repos because it isn't…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xtx4ik/heads_up_claude_codes_dont_ask_again_has_been/
+
+- **[AINews] Fable 5.2 retakes World #1 LLM spot as $ANT IPO roadshow begins** (Top pick; model_release; web) - Fable 5.2 cuts per-token prices 20% but uses more tokens, so per-task cost rose from $67 to $88 on SemiAnalysis's professional-task benchmark, which matters for production effort-setting choices.
+  - Link: https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins/
+  - Also covered by: [Fable 5.2 or Opus? When to use each model in Claude Code](https://www.youtube.com/watch?v=C33hJGt-ySg) (youtube)
+
+- **modelcontextprotocol/servers v2.4.0** (Top pick; agents_mcp_skills; github) - Six security fixes in the MCP filesystem, git, and fetch servers; upgrade to server-filesystem 2.3.0 and the 2026.11.11 git/fetch releases now, since older versions allow symlink-race reads outside a…
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.4.0
+
+- **Gemini 4 Carbon is now available** (Top pick; model_release; email) - Gemini 4 Carbon is now on the API with claimed top scores on coding and automation benchmarks at about half the cost per task, which matters if you evaluate models for agent workloads.
+  - Link: https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/?utm_source=tldrai
+
+- **[AINews] D-Day (Decision Models Day)** (Top pick; model_release; web) - Google's Gemini Decision 1 is a new production decision-model API ($0.10 per million input tokens, ~200ms latency) that scores closed-set choices in one pass, a new option for classification-style ca…
+  - Link: https://latent.space/p/ainews-d-day-decision-models-day/
+  - Also covered by: [Google launched the Gemini Decisions API, powered by its new Gemini Decision 1 model. → it doesn't …](https://x.com/RoundtableSpace/status/2120694316297498819) (x)
+
+- **Self-hosted Claude Managed Agents is now in private beta. You can host the agent harness, sandboxes…** (Notable; agents_mcp_skills; x) - Lets you run the Claude agent harness, sandboxes, and session history in your own cloud or on-prem, a relevant option for agent security and data-residency work, though it's private beta.
+  - Link: https://x.com/ClaudeDevs/status/2120938988165091693
+
+- **OpenAI open-sources MCP Extensions** (Notable; agents_mcp_skills; email) - OpenAI's open-source MCP Extensions adds ChatGPT-only features like sidebar entry points and custom file viewers, so MCP servers built for Claude may need separate handling to work well in ChatGPT.
+  - Link: https://github.com/openai/mcp-extensions?utm_source=tldrai
+
+- **Your Sub-Agents Are a Distributed System. Treat Them Like One. - Girish Konda, Microsoft** (Notable; agents_mcp_skills; youtube) - Sub-agent orchestration failures (partial success reported as done, duplicate side effects, unseen rate limits) are mapped to distributed-systems fixes, with an MCP-based pattern directly relevant to…
+  - Link: https://www.youtube.com/watch?v=DxP5aW4VknQ
+
+- **Rethinking Claude Code Best Practices — Lydia Hallie, Anthropic** (Notable; agents_mcp_skills; youtube) - A talk from Anthropic's Claude Code developer relations lead on which Claude Code setup practices to drop or keep for the Claude 5.5 models, directly relevant to your workflow.
+  - Link: https://www.youtube.com/watch?v=vlfCjWuv4es
+
+- **Building the Claude API for the Frontier** (Notable; dev_tooling; youtube) - The video covers practical Claude API migration guidance, including changing effort mid-conversation without breaking prompt caching, which matters if you build on the Messages API.
+  - Link: https://www.youtube.com/watch?v=p2xvJAbF-i4
+
+- **qvac/BotPsy-0.8B · Hugging Face - On-Device Personal Assistant with a Sub-Billion-Parameter Agentic Language Model** (Notable; model_release; reddit) - A 0.8B open-weight function-calling model built on Qwen3.5-0.8B that claims SOTA agentic scores for its size, making on-device tool-use agents practical to test.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xu8685/qvacbotpsy08b_hugging_face_ondevice_personal/
+
+- **improve (agent skill)** (Notable; agents_mcp_skills; email) - An agent skill that audits a codebase and writes prioritized plans for another agent to execute, directly usable in Claude Code workflows.
+  - Link: https://github.com/shadcn/improve?utm_source=tldrdev
+
+- **huawei-csl/MACaQ** (Notable; repo_library; github) - Offers a model-agnostic quantizer that outputs GGUF and runs across llama.cpp, vLLM, and Diffusers, so it could let you shrink and run your own image or video models locally with one tool.
+  - Link: https://github.com/huawei-csl/MACaQ
+
+- **huawei-csl/Qwen3.6-35B-A3B-MACaQ-R-GGUF · Hugging Face** (Notable; model_release; reddit) - Huawei released a GGUF quantization of Qwen3.6-35B-A3B using their MACaQ method, a local-inference option worth testing against your current quantized models.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xu7cyr/huaweicslqwen3635ba3bmacaqrgguf_hugging_face/
+
+- **Your SKILL.md Is 70% Stuff the Model Already Knows - Nikolay Petrov, Intel** (Notable; agents_mcp_skills; youtube) - Shows how to audit a SKILL.md by testing each claim with and without it, so you can trim the ~70% the model already knows and keep the details that actually change output.
+  - Link: https://www.youtube.com/watch?v=yzx4IuEh_tU
+
 ## 2026-11-12
 
 - **Claude Fable 5.2 / Mythos 5.2** (AI/Claude tooling) - Launched Nov 9 (`claude-fable-5-2`): 1M context, 128k output, always-on adaptive thinking, $8/$40 per MTok (down from $10/$50 for Fable 5.1); fast mode via `speed: "fast"` at $16/$80. Mythos 5.2 is limited to verified orgs.
