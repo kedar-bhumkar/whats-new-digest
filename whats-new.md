@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-13 (AKD)
+
+- **anthropics/claude-code v2.1.323** (Top pick; dev_tooling; github) - Claude Code v2.1.323 adds opt-in Code Mode and plugin engine-version gating, and a plugin-validate warning for Bash allow rules with wildcards in variable values, so check your plugins and allow rule…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.323
+
+- **Announcing the GraphQL over HTTP Specification** (Top pick; dev_tooling; email) - The GraphQL over HTTP spec standardizes request and response handling, so existing GraphQL clients and servers may need to conform to its status-code and media-type rules.
+  - Link: https://graphql.org/blog/2026-11-12-announcing-the-graphql-over-http-spec/?utm_source=tldrdev
+
+- **Claude Managed Agents can now run self-hosted, inside your own perimeter (private beta)** (Top pick; agents_mcp_skills; reddit) - Self-hosted Managed Agents keep the harness, sandboxes, credentials, and session history in your own perimeter, but model requests still go to whichever provider you choose, and zero retention applie…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xuw68g/claude_managed_agents_can_now_run_selfhosted/
+  - Also covered by: [Self-hosted Claude Managed Agents](https://claude.com/resources/articles/self-hosted-claude-managed-agents?utm_source=tldrai) (email)
+
+- **Modern Web Guidance 1.0** (Top pick; agents_mcp_skills; email) - Gives coding agents expert-reviewed web platform guidance and Baseline compatibility data, plus a codebase scan for safe modern-feature upgrades, directly usable with Claude Code and skills.
+  - Link: https://developer.chrome.com/blog/modern-web-guidance-v1?utm_source=tldrdev
+
+- **Gemini 4 Hydrogen** (Top pick; model_release; email) - New Gemini 4 Hydrogen targets coding and agentic workflows at $1.50/$7.50 per million tokens, a cheaper option to benchmark against Claude for agent tasks.
+  - Link: https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/?utm_source=tldrai
+  - Also covered by: [Gemini 4 Hydrogen: Everyday Model for Everyone from Google](https://www.youtube.com/watch?v=6GA_zSxtSHE) (youtube)
+
+- **Qwen Code** (Notable; agents_mcp_skills; email) - Qwen Code is an open-source terminal, editor, and headless coding agent with MCP and local-model support, a direct alternative to Claude Code worth evaluating for agent workflows.
+  - Link: https://github.com/QwenLM/qwen-code?utm_source=tldrdev
+
+- **Perplexity releases Decider v1.3 (26B) and Decider Flash v1.3 (5B): open-weight (Apache 2.0) classification/decision models** (Notable; model_release; reddit) - Open-weight Apache 2.0 classifier models (26B and 5B) that return probability distributions plus verbatim span extraction, but they require Perplexity's custom pplx_decider package because bidirectio…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xv7fku/perplexity_releases_decider_v13_26b_and_decider/
+
+- **A 145-billion-parameter AI model now runs on a laptop. Offline. Free. Edge0 just open-sourced Edge0…** (Notable; model_release; x) - A 145B open-weight MoE model claiming ~10B active params, 256K context, and local offline runs on consumer hardware, though the GPQA and Opus comparisons are self-reported and unverified.
+  - Link: https://x.com/RoundtableSpace/status/2121162400586244358
+
+- **Fable 5.2 or Opus? When to use each model in Claude Code** (Notable; model_release; youtube) - A practical guide to choosing among Claude Fable 5.2, Opus 5.5, Sonnet 5.5, and Haiku 5.5 inside Claude Code, which directly affects how you route coding tasks and manage cost.
+  - Link: https://www.youtube.com/watch?v=C33hJGt-ySg
+
+- **Discussion Hub for new Claude incident: Elevated errors on claude.ai, the Claude API, and Claude Code on Nov 13, 2026** (Notable; dev_tooling; reddit) - Anthropic reports a multi-surface outage on Nov 13 affecting the Claude API, Claude Code, and connectors, with scheduled tasks delayed and some runs skipped; check any automation you rely on.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xv7hxz/discussion_hub_for_new_claude_incident_elevated/
+  - Also covered by: [Elevated errors on claude.ai, Claude Code, and platform.claude.com](https://status.claude.com/incidents/nn11wk485zfn) (web)
+
+- **225,000 Lines of Tests, Written and Merged by Agents - Kush Agrawal, Duolingo** (Notable; agents_mcp_skills; youtube) - Duolingo's real-world case of agents autonomously opening, fixing, and merging 700+ test PRs (coverage 11% to 24%) shows a concrete pipeline pattern worth copying for Claude Code-driven workflows.
+  - Link: https://www.youtube.com/watch?v=D_4Rn6uLdQM
+
+- **DeepSeek flash max is the first model to reach >1% on challenging SWE-sweep bug finding benchmark** (Notable; research; reddit) - First open-weight model to clear 1% on SWE-sweep, a hard blind bug-finding benchmark, though proprietary leaders still sit around 9–13%.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xvcgxq/deepseek_flash_max_is_the_first_model_to_reach_1/
+
+- **thinkingmachines/Inkling-2-Small is released!** (Notable; model_release; reddit) - A new open-weight small model from Thinking Machines (Inkling-2-Small) that could be a local or cheap option for agent and coding workloads, worth checking benchmarks and license before adopting.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xuqplg/thinkingmachinesinkling2small_is_released/
+
+- **Agents Made Code Free. Maintaining It Didn't Get Cheaper. - Dmitry Buykin, Maersk** (Notable; agents_mcp_skills; youtube) - Agents make writing code nearly free but not maintenance, and this talk offers patterns and an 18-question audit checklist for AI-written repos months in.
+  - Link: https://www.youtube.com/watch?v=oeknLUsN_GE
+
+- **How two engineer side projects became the agent taking action inside Dropbox** (Notable; agents_mcp_skills; email) - Dropbox's production agent design shows concrete sandboxing patterns: per-conversation VMs, credentials kept out of agent reach, approval gates, and undoable changes, all directly relevant to agent s…
+  - Link: https://dropbox.tech/machine-learning/how-two-engineer-side-projects-became-the-agent-taking-action-inside-dropbox?utm_source=tldrdev
+
 ## 2026-11-13
 
 - **Self-hosted Claude Managed Agents** (AI/Claude) - Run the full Managed Agents service on your own infrastructure (announced Nov 12).
