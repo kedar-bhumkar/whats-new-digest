@@ -2,6 +2,28 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-14
+
+- **Claude Fable 5.2 / Mythos 5.2** (AI/Claude) - New API models: 1M context, 128k max output, $8/$40 per MTok; Mythos 5.2 limited to verified orgs. Fast mode (`speed: "fast"`) at $16/$80.
+  - Why it matters: computer use now needs the `computer_toolset_20260801` toolset (old `computer_20251124` returns 400), and replaying edited history with thinking blocks returns 400, so check agent code before migrating.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude API message threads (beta)** (AI/Claude) - Server keeps conversation state (`message-threads-2026-08-12` header); later requests send only new messages; threads expire 5 minutes after last request.
+  - Why it matters: cuts payload and resend logic in chat/agent loops; mind the short expiry.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code v2.1.325** (AI/Claude) - Sandboxed Bash now follows normal permission flow unless `sandbox.autoAllowBashIfSandboxed` is true; `/loop` and scheduled tasks ask before running skills that declare `allowed-tools` or hooks (add `Skill(name)` to `permissions.allow`); zstd decoding security fix.
+  - Why it matters: unattended routines may start prompting after upgrade; update permissions config.
+  - Link: https://code.claude.com/docs/en/changelog
+
+- **Opus 4.8 fast mode removal, Nov 30** (AI/Claude) - `speed: "fast"` on claude-opus-4-8 will error after Nov 30, 2026; migrate to Claude Opus 5.5.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **vercel-labs/agent-desktop** (GitHub) - Computer-use CLI that exposes a desktop app's accessibility tree as JSON with element refs; no model inside, your agent supplies the loop; macOS/Windows/Linux.
+  - Why it matters: lets coding agents drive native apps without screenshots.
+  - Link: https://github.com/vercel-labs/agent-desktop
+  - Safety note: Apache-2.0, ~23.6k stars, 347 commits on main; I could not confirm last-commit date or contributor count, and did not inspect npm install scripts, so review `package.json` before installing. Requires OS accessibility permission.
+
 ## 2026-11-13 (AKD)
 
 - **anthropics/claude-code v2.1.323** (Top pick; dev_tooling; github) - Claude Code v2.1.323 adds opt-in Code Mode and plugin engine-version gating, and a plugin-validate warning for Bash allow rules with wildcards in variable values, so check your plugins and allow rule…
