@@ -2,6 +2,53 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-14 (AKD)
+
+- **[Paper] Read Less, Solve More: Token-Efficient Sparse Reading of External Content for AI Agents** (Top pick; research; reddit) - A research paper proposing a sparse-reading control layer for agents that cuts tokens by up to 92.9% by withholding unneeded content, with a GitHub repo and integrations for three agent frameworks.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xvuit5/paper_read_less_solve_more_tokenefficient_sparse/
+
+- **anthropics/claude-code v2.1.325** (Top pick; dev_tooling; github) - Claude Code v2.1.325 patches a zstd response-decoding security issue and fixes sandboxed git and subagent-model bugs, so upgrading is worth it for anyone running agents.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.325
+
+- **salesforce-sovereign-intelligence/SOV-Transcribe-1 · Hugging Face** (Top pick; model_release; reddit) - Salesforce released SOV-Transcribe-1, an open-weight ASR model (26.6B total, 4.6B active MoE) that can run on your own infrastructure with natural-language control over transcript style and context b…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xvst4u/salesforcesovereignintelligencesovtranscribe1/
+
+- **Runway Praxis-1 open-weight robotics model** (Top pick; model_release; email) - Open-weight 27B robotics model under Apache 2.0 with LoRA fine-tuning, but it sits outside this reader's agentic coding and agent-infra focus, so relevance is low.
+  - Link: https://runway.com/news/company-news/praxis-1-is-now-available?utm_source=tldrai
+
+- **A2UI 1.0 generative UI protocol** (Top pick; agents_mcp_skills; email) - A2UI 1.0 is an open protocol for agents to return native interactive UI, with web, Android, and iOS renderers you could try in a React/Vite app within a week.
+  - Link: https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/?utm_source=tldrai
+
+- **Cyber at the Frontier: Introducing Daybreak Red Team & Daybreak Defense Factory** (Notable; agents_mcp_skills; youtube) - OpenAI's Daybreak adds a Codex plugin for automated vulnerability finding, patching, and agent-driven red-teaming, all run in isolated cloud environments, relevant to agent security work.
+  - Link: https://www.youtube.com/watch?v=YmxpxJZvm4M
+
+- **Self-hosted Claude Managed Agents** (Notable; agents_mcp_skills; email) - Self-hosted Claude Managed Agents (private beta) run sandboxes, credentials, and session history inside your own infrastructure, relevant to agent security and Agent SDK deployment.
+  - Link: https://claude.com/resources/articles/self-hosted-claude-managed-agents?utm_source=tldrai
+
+- **Spotify reportedly cut its Claude Code token costs by 90%, then open-sourced how it did it Their pl…** (Notable; agents_mcp_skills; x) - Spotify's open-sourced Claude Code plugin routes simple tasks like file reads and boilerplate to cheaper Gemini models, a concrete cost-reduction pattern you could adopt with a model-routing skill or…
+  - Link: https://x.com/RoundtableSpace/status/2121615385766330843
+
+- **All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI** (Notable; agents_mcp_skills; youtube) - This talk shows how a team merged about 11,000 AI-written PRs with a 0.5% revert rate by enforcing architecture with lint rules, runtime checks, and TLA+/Lean verification, and it points to Cursor's…
+  - Link: https://www.youtube.com/watch?v=O_zcc6Xl12g
+
+- **MCP vs CLI vs Skills: context costs** (Notable; agents_mcp_skills; email) - MCP servers load their full tool definitions into every request, costing roughly 59k tokens here versus about 1.4k for CLI and 3.3k for skills, so tool selection directly affects your context budget.
+  - Link: https://openrouter.ai/blog/insights/mcp-vs-cli-vs-skills/?utm_source=tldrai
+
+- **Agent Anomaly Detection on external benchmarks** (Notable; research; email) - Tests a runtime detector for agent misuse (goal hijack, tool misuse) on third-party benchmarks: 87% of harmful instructions caught, but up to 16% false alarms on high-impact tools.
+  - Link: https://developers.googleblog.com/how-agent-anomaly-detection-scores-on-benchmarks-we-didnt-write/?utm_source=tldrai
+
+- **Your AI coding agent writes the code, then leaves you to babysit the PR. Theo just shared the agent…** (Notable; agents_mcp_skills; x) - Ready-made Claude Code and Codex skills (council, full send, babysit) that automate review-to-merge for agent-written PRs, installable by copying into ~/.claude/skills.
+  - Link: https://x.com/RoundtableSpace/status/2121577636778717385
+
+- **I turned Karpathy's "80% of the way to ASD-STE100" tip into a Claude skill that makes AI text readable** (Notable; agents_mcp_skills; reddit) - A free MIT-licensed Claude Code skill that rewrites AI-generated prose into short, active-voice ASD-STE100 style, adoptable in minutes.
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xw2fu8/i_turned_karpathys_80_of_the_way_to_asdste100_tip/
+
+- **Elevated errors on claude.ai, Claude Code, and platform.claude.com** (Notable; other; web) - Claude Code, the Claude API, and platform.claude.com are reporting elevated errors, so builds and agent runs depending on them may fail or stall right now.
+  - Link: https://status.claude.com/incidents/nn11wk485zfn
+
+- **Escaping SPACE: Part II** (Notable; agents_mcp_skills; email) - Perplexity's test of 12 models against its agent sandbox found network-control bypasses (DNS spoofing, shared-IP exploits) that were since patched, which is directly relevant to anyone running agents…
+  - Link: https://www.perplexity.ai/hub/blog/escaping-space-part-ii?utm_source=tldrai
+
 ## 2026-11-14
 
 - **Claude Fable 5.2 / Mythos 5.2** (AI/Claude) - New API models: 1M context, 128k max output, $8/$40 per MTok; Mythos 5.2 limited to verified orgs. Fast mode (`speed: "fast"`) at $16/$80.
