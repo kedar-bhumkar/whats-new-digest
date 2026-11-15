@@ -2,6 +2,55 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-15 (AKD)
+
+- **Gemini Decision 1: You Don’t Need an LLM to Make a Decision** (Top pick; model_release; youtube) - Google's Gemini Decisions API returns yes/no, choice, and score answers with probability and confidence instead of generated text, offering a cheaper, non-LLM option for classification-style calls.
+  - Link: https://www.youtube.com/watch?v=-On9ZKGiMfA
+  - Also covered by: [Gemini Decisions API Wins 7 of 9, But Is It Worth It?](https://www.youtube.com/watch?v=iTMBIRRdfQw) (youtube)
+
+- **Microsoft just put a tool on GitHub that makes your coding agent cheaper. It doesn't touch the agen…** (Top pick; repo_library; x) - It matters because Microsoft's open-source TokenEconomizer claims 18–31% lower coding-agent cost by caching repo facts and pruning unused tools, with no agent changes needed.
+  - Link: https://x.com/RoundtableSpace/status/2121887176514482404
+
+- **Jack Dorsey's company Block put its own team workspace on GitHub. With a twist. Buzz is a workspace…** (Top pick; agents_mcp_skills; x) - Block's open-source Buzz (Apache 2.0, self-hosted) lets humans and AI agents share team rooms, relevant to anyone building or sandboxing agent infrastructure.
+  - Link: https://x.com/RoundtableSpace/status/2121902276306468961
+
+- **DeepSeek put the agent system its team built for itself on GitHub. 23K stars. The dsh-superagent re…** (Top pick; repo_library; x) - Open-sourced DeepSeek research agent prototype (dsh-superagent, 23K stars) built largely by coding agents; the author warns it is research code, so review before running.
+  - Link: https://x.com/RoundtableSpace/status/2121955124658725139
+
+- **[Paper] No Second Run: Does RSI Stop at Frontier Pre-training? - 801-30B-A3B-Base Coming Soon** (Top pick; research; reddit) - A research paper claims recursive self-improvement applied to a full frontier-scale pre-training run, releasing 801-30B-A3B-Base, a 30B MoE model with open weights and a benchmark-comparable result t…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xwt3ri/paper_no_second_run_does_rsi_stop_at_frontier/
+
+- **Introducing Claude Meetings** (Notable; dev_tooling; youtube) - Claude Meetings joins Google Meet calls as a visible participant that builds docs and takes notes, beta on Team and Enterprise plans, so it's worth testing against a real team workflow.
+  - Link: https://www.youtube.com/watch?v=YUYeHMsqbmY
+  - Also covered by: [Use Claude Meetings](https://support.claude.com/en/articles/18325154-use-claude-meetings?utm_source=tldrai) (email)
+
+- **Claude went from 37% to 61% of AI-builder job postings this year, and four in five companies hiring for AI coding ask for Claude Code** (Notable; industry_business; reddit) - For a Claude Code and Agent SDK builder working in Salesforce and FDE roles, this is a useful signal that Claude Code is now the dominant named tool in AI-coding job postings, though the data comes f…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xwe6q9/claude_went_from_37_to_61_of_aibuilder_job/
+
+- **I measured how much each "save tokens" trick actually costs on a Pro plan. Coming back to an old chat after 1h costs ~20x more.** (Notable; research; reddit) - Measured data shows resuming a Claude Code chat after a 1h+ break costs about 20x more than a continuous message, since the 1-hour prompt cache expires and the full context reloads, so long-running s…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xwla4y/i_measured_how_much_each_save_tokens_trick/
+
+- **vaibhav-space/my-ai-coding-workflow** (Notable; repo_library; github) - A ready-made three-stage planning, critical-review, and diff-audit workflow with reusable skills that can be adopted directly into Claude Code or any other agent this week.
+  - Link: https://github.com/vaibhav-space/my-ai-coding-workflow
+
+- **Atlas omni model from World Labs** (Notable; model_release; email) - Atlas is a multimodal model covering text, image, video, and 3D in one spatial context, which may matter if you build with 3D/video tooling, though it has no clear adoption path for coding workflows…
+  - Link: https://worldlabs.ai/atlas?utm_source=tldrai
+
+- **New video: @dejno and @luccasiau discuss how we launch new models on our API and the features that …** (Notable; model_release; x) - Anthropic's API team walks through how new model launches ship and how to rethink your harness and measure cost per task when upgrading, which matters for keeping Claude-based agents and tooling in s…
+  - Link: https://x.com/ClaudeDevs/status/2120962481225146636
+
+- **X3Guard: A 150M parameter prompt guard** (Notable; model_release; reddit) - A 150M-parameter open prompt-guard model that flags harmful and adversarial prompts in one pass and runs in-browser, relevant for agent input filtering.
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xwyp7w/x3guard_a_150m_parameter_prompt_guard/
+
+- **We've made some big updates to Projects in Claude Code! In a project, Claude coordinates your tasks…** (Notable; dev_tooling; x) - Claude Code Projects now has a proactive coordinator that splits tasks across parallel threads and reports their status, a workflow change worth testing against your current agent setup.
+  - Link: https://x.com/ClaudeDevs/status/2121375309287301360
+
+- **Anthropic has opened up Claude Mythos access to the public.** (Notable; model_release; reddit) - Reddit claims Anthropic's Cyber Verification Program now lets individuals with an ID get Claude Mythos access, which is unconfirmed and worth checking against Anthropic's official announcement before…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xwguid/anthropic_has_opened_up_claude_mythos_access_to/
+
+- **UI SDK** (Notable; dev_tooling; email) - UI SDK offers over 50 prebuilt interaction behaviors (focus, selection, popups, keyboard navigation) that coding agents can compose across frameworks, relevant to agent-driven frontend work in React…
+  - Link: https://ui-sdk.dev?utm_source=tldrdev
+
 ## 2026-11-15
 
 - **Claude Fable 5.2** (AI/Claude) - New Fable model (`claude-fable-5-2`), announced Nov 9 alongside Mythos 5.2 (restricted to vetted orgs); now the default Fable model in Claude Code.
