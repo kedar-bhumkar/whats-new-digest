@@ -2,6 +2,26 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-15
+
+- **Claude Fable 5.2** (AI/Claude) - New Fable model (`claude-fable-5-2`), announced Nov 9 alongside Mythos 5.2 (restricted to vetted orgs); now the default Fable model in Claude Code.
+  - Why it matters: 1M context at $8/$40 per Mtok ($0.20/Mtok cache reads) per the Claude Code changelog; saved Fable 5.1 selections migrate to `fable`, switch back with `/model claude-fable-5-1`. Re-check cost assumptions in agent pipelines pinned to older Fable IDs.
+  - Link: https://www.anthropic.com/claude-fable-and-mythos-5-2
+
+- **Claude Code Code Mode (v2.1.323)** (AI/Claude) - Experimental opt-in mode where Claude writes JavaScript that makes many tool calls in one step instead of one call per turn.
+  - Why it matters: Suited to repeated edits across many files, filtering large search output before it enters context, and parallel commands. Enable with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1`. Limits: interactive terminal only (no `-p`/SDK/VS Code), Anthropic API only, 10-minute cap on foreground code; auto-mode classifier reviews the code, not each call.
+  - Link: https://code.claude.com/docs/en/code-mode
+
+- **Claude Code v2.1.323 plugin `engines` field and 1M-context default** (AI/Claude) - `plugin.json` can now declare `engines["claude-code"]` so out-of-range plugins aren't loaded; unrecognized model IDs now assume 1M context (set `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` for 200K).
+  - Why it matters: Plugin authors can pin compatible Claude Code versions; people using custom/gateway model IDs may see changed context and cost behavior.
+  - Link: https://code.claude.com/docs/en/changelog.md
+
+- **Claude Code v2.1.325 permission changes** (AI/Claude) - Sandboxed Bash now follows the normal permission flow (opt back in with `sandbox.autoAllowBashIfSandboxed: true`); scheduled tasks and `/loop` now ask before running skills that declare `allowed-tools` or hooks unless `Skill(name)` is in `permissions.allow`.
+  - Why it matters: Unattended/scheduled agent runs may start prompting or stalling after upgrade; add explicit allow rules. Also includes a zstd decoding security fix.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- Repos: none reported today; I could not vet any candidate repos for safety this run, so none are listed.
+
 ## 2026-11-14 (AKD)
 
 - **[Paper] Read Less, Solve More: Token-Efficient Sparse Reading of External Content for AI Agents** (Top pick; research; reddit) - A research paper proposing a sparse-reading control layer for agents that cuts tokens by up to 92.9% by withholding unneeded content, with a GitHub repo and integrations for three agent frameworks.
@@ -1021,75 +1041,3 @@ No GitHub repos reported today: search results surfaced nothing I could verify a
   - Why it matters: pattern for exposing local semantic search to coding agents without sending data to a cloud index.
   - Link: https://github.com/yjid/kensaku
   - Safety note: MIT, last push 2026-10-30, ~337 stars, 10 open issues, created 2026-10-24 (new); review before granting file access.
-## 2026-11-05
-
-- **Claude Code v2.1.316-v2.1.317** (AI/Claude tooling) - Releases from 31 Oct and 3 Nov: Agent SDK hook callbacks accept `onFailure: "block"`, a prompt before tools send your account email over the network, `CLAUDE_CODE_SUBAGENT_EFFORT`, and a cost report endpoint (`GET /v1/organizations/analytics/cost`) on the Claude apps gateway admin API.
-  - Why it matters: `onFailure: "block"` makes SDK guardrail hooks fail closed instead of letting an action through, which suits policy or safety checks. Subagent effort can now be tuned separately to control cost.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.317
-
-- **Opus 4.8 fast mode deprecation** (AI/Claude tooling) - The v2.1.316 notes say fast mode for Opus 4.8 is deprecated as of 2026-10-30 and will be removed on 2026-11-30. After that, requests return an error instead of falling back to standard Opus 4.8. The notes recommend migrating to Opus 5.5.
-  - Why it matters: Check scripts, configs, and SDK calls that pin Opus 4.8 fast mode before the 30 Nov cutoff.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.316
-
-- **max-sixty/worktrunk** (GitHub repo) - Rust CLI for Git worktree management built for running several AI agents in parallel. It has hooks, LLM-generated commit messages, a merge workflow, and PR checkout.
-  - Why it matters: It gives each agent its own worktree and branch, which avoids agents overwriting each other's files when you run several Claude Code sessions on one repo.
-  - Link: https://github.com/max-sixty/worktrunk
-  - Safety note: MIT OR Apache-2.0, about 11.3k stars, 5,501 commits, on GitHub's weekly trending page. The last-commit date wasn't visible to me, so check activity yourself. I haven't audited the code or hooks.
-
-- **pbakaus/impeccable** (GitHub repo) - A design vocabulary for coding agents: commands like `polish`, `bolder`, `critique`, and `audit`, plus a rule-based detector that flags generic "AI slop" UI patterns. It works with Claude Code, Cursor, and Codex CLI.
-  - Why it matters: It gives agents repeatable commands for reviewing and improving generated frontends, where you would otherwise re-prompt each time.
-  - Link: https://github.com/pbakaus/impeccable
-  - Safety note: Apache-2.0, about 103k stars, 2,635 commits, trending this week. The last-commit date wasn't visible to me, and I haven't audited the code.
-
-- Skipped on safety grounds: thedotmack/claude-mem is trending (Apache-2.0), but its README promotes a third-party token with a contract address, uses a `curl | bash` installer path, and has cloud sync with a paid trial. I can't vouch for it.
-
-## 2026-10-30 (AKD)
-
-- **anthropics/claude-code v2.1.314** (Top pick; dev_tooling; github) - Adds a permission to block Write/Edit outside working directories in every mode, plus fixes for `claude -p` exit codes and Bedrock image-limit failures, relevant to agent sandboxing and CI scripts.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.314
-
-- **Mistral Releases Weights for Its Trillion-Parameter Model** (Top pick; model_release; email) - Open-weight trillion-parameter model with claimed agentic coding strength gives you a self-hostable option to evaluate for your agent and sandboxing stack, though self-hosting at that scale is a heav…
-  - Link: https://mistral.ai/news/mistral-large-4-oss/?utm_source=tldrai
-
-- **Backdoor in Claude Code for VS Code extension on the Cursor Marketplace** (Top pick; agents_mcp_skills; web) - A backdoored build of the Claude Code VS Code extension was found on the Cursor Marketplace, so check which extension build you installed and reinstall from the official source if unsure.
-  - Link: https://phorion.io/blog/offical-claude-code-vsx-compromise/
-  - Also covered by: [Cursor just disclosed a security incident: a fake Claude Code VS Code extension slipped into its ma…](https://x.com/RoundtableSpace/status/2116164468304449590) (x)
-  - Also covered by: [Backdoors in official Claude Code extensions](https://cyberplace.social/@GossiTheDog/117528831681803563) (web)
-
-- **Pika just released the weights for H3 Flex, its video model that generates synced audio in the same…** (Top pick; model_release; x) - Open weights for a video model that generates synced audio in six sampling steps and runs locally at 480p or 768p, a direct fit for the ComfyUI and HyperFrames tooling you already use.
-  - Link: https://x.com/RoundtableSpace/status/2116081420762566757
-  - Also covered by: [Introducing Pika H3 Flex](https://pika.art/blog/pika-h3-flex?utm_source=tldrai) (email)
-
-- **Node.js 26 LTS Is Generally Available on Vercel** (Top pick; dev_tooling; email) - Node.js 26 becomes Vercel's default for new projects and auto-applies to existing ones whose engines.node range allows it, so check that field before your next deploy for compatibility breaks.
-  - Link: https://vercel.com/changelog/node-js-26-lts-is-now-generally-available-on-vercel?utm_source=tldrdev
-
-- **We've raised the max request size for Messages and Token Counting on the Claude API from 32 MB to 1…** (Notable; dev_tooling; x) - The Claude API's Messages and Token Counting endpoints now accept requests up to 128 MB, up from 32 MB, which removes a limit that was hitting image-heavy computer-use sessions and large PDFs.
-  - Link: https://x.com/ClaudeDevs/status/2115923971279614171
-
-- **Anthropic renames Max5 and Max20 and removes 5h limits for Max20** (Notable; model_release; reddit) - Anthropic renamed the Max5 and Max20 plans and dropped the 5-hour usage limit on Max20, which changes budgeting for anyone running heavy Claude Code or Agent SDK workloads.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjlvlc/anthropic_renames_max5_and_max20_and_removes_5h/
-
-- **Ship less JavaScript in Next.js with your AI agent** (Notable; dev_tooling; email) - Next.js 16.4 adds an agent skill that uses Turbopack's module graph to find and cut unneeded client JavaScript, relevant to your React/Vite and Vercel work.
-  - Link: https://nextjs.org/blog/ship-less-javascript-with-ai?utm_source=tldrdev
-
-- **Anthropic gave 50 analysts Claude Code with a hidden coin-flip bias. They followed the agent’s lean 86% of the time** (Notable; research; reddit) - Anthropic's alignment study shows analysts adopting a hidden-bias agent's conclusions 86% of the time, a concrete reason to build in counter-argument or disagreement prompts when using agents for ana…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xj3qdv/anthropic_gave_50_analysts_claude_code_with_a/
-
-- **jmanico/grim-prompter** (Notable; repo_library; github) - Directly relevant to your interest in agent security: it's an MIT-licensed prompt pack that has Claude Code or Codex produce an evidence-traced threat model of your repo, adoptable in an afternoon.
-  - Link: https://github.com/jmanico/grim-prompter
-
-- **Claude Code VS Code extension with backdoor released on Cursor marketplace** (Notable; agents_mcp_skills; web) - A fake Claude Code VS Code extension carrying a backdoor was listed on the Cursor marketplace, so check your installed extensions and only install from official sources.
-  - Link: https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2
-
-- **A backdoored Claude Code extension hit up to 5,000 Cursor users** (Notable; agents_mcp_skills; reddit) - A malicious extension impersonating Claude Code reportedly reached up to 5,000 Cursor users, so verify extension publishers before installing anything in your editor.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjepra/a_backdoored_claude_code_extension_hit_up_to_5000/
-
-- **Catch the Bugs Your Code Review Misses - Killian Carlsen-Phelan & Taylor Luttrell-Williams, Sonar** (Notable; agents_mcp_skills; youtube) - Shows a hands-on setup of Gitar, an agent that verifies agent-written PRs, catching out-of-diff bugs and enforcing project-config business rules, with a free trial and workshop repo.
-  - Link: https://www.youtube.com/watch?v=wP3P89YB9fA
-
-- **The fx adapter now runs the harness on the host** (Notable; agents_mcp_skills; email) - The fx adapter now runs the agent harness on the host with sandboxed operations separated out, which matters if you build agents on Vercel's sandbox and may need to revisit your execution and securit…
-  - Link: https://vercel.com/changelog/fx-harness-adapter-now-separates-host-and-sandbox?utm_source=tldrai
-
-- **Why Agents Love Supabase** (Notable; dev_tooling; web) - Relevant to a Supabase-and-agents builder: it covers Supabase's new Docker-free local runtime and schema-in-Git workflow, which could change how agent-generated backends get set up and versioned.
-  - Link: https://latent.space/p/supabase/
-
