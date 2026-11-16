@@ -2,6 +2,38 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-16
+
+- **Claude Code Code Mode** (AI/Claude tooling) - Experimental opt-in mode (v2.1.323, Nov 12) where Claude writes JavaScript that makes many tool calls in one step instead of one call per round trip.
+  - Why it matters: Fewer round trips for repo-wide edits, filtered searches and parallel commands. Enable with `CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1`. It is interactive-terminal only (no `-p`, SDK or cloud sessions), and auto mode reviews the code, not each call.
+  - Link: https://code.claude.com/docs/en/code-mode
+
+- **Claude Code 2.1.323-2.1.325** (AI/Claude tooling) - Plugin version gating (`engines["claude-code"]` in plugin.json), `claude plugin validate` type-checks TypeScript hook modules, and a 30s heartbeat for long background hooks in `-p`/SDK runs.
+  - Why it matters: Safer plugin distribution and fewer hung-turn false alarms in headless pipelines. Behavior change in 2.1.325: sandboxed Bash now follows the normal permission flow unless `sandbox.autoAllowBashIfSandboxed: true` is set.
+  - Link: https://code.claude.com/docs/en/changelog.md
+
+- **Claude Fable 5.2 and Mythos 5.2** (AI/Claude tooling) - New models launched Nov 9 for long-horizon reasoning and agentic work: 1M context, 128k max output, $8/$40 per MTok.
+  - Why it matters: Candidate default for long-running coding agents. The same release notes list API changes (prefix check, computer-use toolset migration, 30-day data retention requirement), so check them before migrating.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Messages API message threads (beta)** (AI/Claude tooling) - The server keeps conversation state, so later requests send only new messages (header `message-threads-2026-08-12`, Nov 2).
+  - Why it matters: Cuts payload and re-send overhead in long agent loops.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Self-hosted Claude Managed Agents** (AI/Claude tooling) - Nov 12: the whole Managed Agents service can run on your own infrastructure. Access is through your Anthropic account team.
+  - Why it matters: An option for agent workloads with data-residency or compliance constraints.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **agent-browser** (GitHub repo) - Native Rust CLI that lets AI agents drive a browser from the shell. `snapshot` returns the page as an accessibility tree with element refs (@e1) to click and read.
+  - Why it matters: A lightweight way to give a coding agent web testing and scraping without a heavy browser-automation stack.
+  - Link: https://github.com/vercel-labs/agent-browser
+  - Safety note: Apache-2.0, vercel-labs org, ~51.8k stars, 841 commits. On GitHub's weekly trending list. I could not confirm the last-commit date.
+
+- **modern-web-guidance-src** (GitHub repo) - Google Chrome's skills and CLI that steer coding agents toward current web platform practices, covering 250 features. The CLI can scan a codebase for legacy patterns.
+  - Why it matters: Drop-in skills that keep AI-generated frontend code modern.
+  - Link: https://github.com/GoogleChrome/modern-web-guidance-src
+  - Safety note: Apache-2.0, GoogleChrome org, ~7.7k stars, 1,612 commits. I could not confirm the last-commit date.
+
 ## 2026-11-15 (AKD)
 
 - **Gemini Decision 1: You Don’t Need an LLM to Make a Decision** (Top pick; model_release; youtube) - Google's Gemini Decisions API returns yes/no, choice, and score answers with probability and confidence instead of generated text, offering a cheaper, non-LLM option for classification-style calls.
@@ -1009,84 +1041,3 @@ _Quiet feed: no new Claude model or notable new repo could be verified from prim
   - Link: https://www.anthropic.com/news
 
 No GitHub repos reported today: search results surfaced nothing I could verify and vouch for as new and safe.
-
-## 2026-10-31 (AKD)
-
-- **anthropics/claude-code v2.1.316** (Top pick; dev_tooling; github) - Deprecates fast mode on Opus 4.8 (removed November 30, 2026, then errors without fallback), so migrate to Opus 5.5 to keep the speedup; also adds subagent effort and layered policy controls.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.316
-
-- **NVIDIA Nemotron 3.5 Transcribe and Granary v2** (Top pick; model_release; email) - Open-weight multilingual transcription with speaker attribution and audio Q&A, plus a Granary v2 pipeline for fine-tuning, is adoptable this week for voice-based agent or media workflows.
-  - Link: https://huggingface.co/blog/nvidia/nemotron-transcribe-granary?utm_source=tldrai
-
-- **Gemini 4 Carbon: 15 of 17 Wins, and You Can't Use It** (Top pick; model_release; youtube) - Gemini 4 Carbon is access-gated to cyber defenders, and it wins most benchmarks by slim margins while losing FrontierSWE 2 and OSWorld-2.1, so it's unlikely to be a practical option for this stack so…
-  - Link: https://www.youtube.com/watch?v=TIjxokl5Qkk
-  - Also covered by: [Google unveils Gemini 4 Carbon](https://venturebeat.com/technology/google-unveils-gemini-4-carbon-retaking-the-worlds-no-1-spot-on-updated-harder-benchmarks-but-access-is-limited?utm_source=tldrnewsletter) (email)
-
-- **datalab-to/surya-ocr-2.5 · Hugging Face** (Top pick; model_release; reddit) - A 689M-parameter open OCR model that scores 85.9 on OmniParseBench at 4.5 pages/s on one H100, with HTML table output, but its weights are under a restrictive Open Rail-M license and table geometry r…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xjmfxb/datalabtosuryaocr25_hugging_face/
-
-- **Denial of service in body-parser** (Top pick; dev_tooling; email) - A single crafted request can crash servers running affected body-parser versions, a security risk for any Express-based app, including Vercel-hosted React/Vite backends you run, so check and upgrade.
-  - Link: https://expressjs.com/en/blog/2026-10-28-cve-2026-111181/?utm_source=tldrdev
-
-- **AI can turn security fixes into working exploits before users receive an update** (Notable; research; email) - Relevant to agent security work: an open-weight model (GLM 5.3) reportedly turns published Firefox patches into working exploits before users update, so patch-gap risk for open-source projects is now…
-  - Link: https://epoch.ai/publications/open-weight-models-patch-gap?utm_source=tldrai
-
-- **Introducing Pika H3 Flex** (Notable; model_release; email) - A new video model that takes up to 12 references and exports separate audio stems, relevant to the reader's ComfyUI and HyperFrames video tooling work.
-  - Link: https://pika.art/blog/pika-h3-flex?utm_source=tldrai
-
-- **The most annoying thing about AI agents: they forget everything. claude-mem gives them persistent m…** (Notable; repo_library; x) - Adds persistent cross-session memory to Claude Code and other agents, but its default hosted service sends session data off-machine, so check data handling before installing.
-  - Link: https://x.com/RoundtableSpace/status/2116330562415923700
-
-- **When Running Your Own AI Models Beats Paying for APIs - Steven Latré, imec** (Notable; research; youtube) - Benchmarks show self-hosting coding agents on your own GPUs can beat API costs, with break-even utilization ranging from 15% to 89% depending on hardware and harness choice.
-  - Link: https://www.youtube.com/watch?v=9-Y_oS9OBLc
-
-- **Claude now watermarks everything it writes, and you're the one who can't check** (Notable; industry_business; reddit) - Anthropic is extending an invisible text watermark to Opus 4.6, Sonnet 4.6, Opus 4.7 and Mythos 5 from November 3, with no opt-out, so proofreading or translating with Claude can get your text flagge…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xjqyv2/claude_now_watermarks_everything_it_writes_and/
-
-- **How Revolut Cut AI Coding Costs 90% With Self-Hosted Open Models - David Abitbol, Revolut** (Notable; industry_business; youtube) - Concrete data from a bank running self-hosted open GLM models for coding at about a tenth of frontier-lab cost, with tuning details that transfer to your own agent infrastructure.
-  - Link: https://www.youtube.com/watch?v=Ok6QdZHCcI8
-
-- **Backdoors in official Claude Code extensions** (Notable; agents_mcp_skills; web) - This item reports backdoors found in official Claude Code extensions, which matters for anyone installing skills, plugins, or MCP servers and should prompt a review of what those extensions can execu…
-  - Link: https://cyberplace.social/@GossiTheDog/117528831681803563
-
-- **New Anthropic research: Automating subtle emergent misalignment research. Red-teaming is a vital pa…** (Notable; research; x) - Anthropic automated red-teaming for subtle misalignment by having thousands of Claude agents craft training data that evades monitors, a method you could adapt for agent safety testing.
-  - Link: https://x.com/AnthropicAI/status/2116349211549843666
-
-- **Your Agent Just Paid for Nothing: 6 Attacks on x402 Payments - Ishween Kaur, SoFi** (Notable; agents_mcp_skills; youtube) - Relevant to agent security work: a concrete walkthrough of six attacks on x402 agent payments (price tampering, double-paying, prompt injection into payments) and the guards that stopped them.
-  - Link: https://www.youtube.com/watch?v=YU1uD_YkpjU
-
-- **Making it easier for websites to express AI training preferences** (Notable; industry_business; web) - Site owners who publish with the Vercel/Vite stack may need to review robots.txt rules, since OpenAI will now honor a shared signal for AI training opt-outs.
-  - Link: https://openai.com/index/helping-websites-express-ai-training-preferences
-
-## 2026-10-31
-
-- **Claude Code v2.1.316** (AI/Claude tooling) - New `CLAUDE_CODE_SUBAGENT_EFFORT` and `CLAUDE_CODE_DISABLE_ULTRATHINK` settings; gateway adds `managed.policy_mode: layered` and pooled group budgets; v2.1.314 (Oct 30) added `permissions.blockWritesOutsideWorkingDirectories`.
-  - Why it matters: lets you pin cheaper effort for subagents in agent-heavy workflows, and hard-block writes outside the project in every permission mode, useful for unattended/CI runs.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Fast mode for Opus 4.8 deprecated; removal Nov 30, 2026** (AI/Claude tooling) - After that date `claude-opus-4-8` requests with `speed: "fast"` return an error; Anthropic points to Opus 5.5 (which has fast mode, available on the Google Cloud-managed platform since Oct 22).
-  - Why it matters: grep your code and configs for `speed: "fast"` on Opus 4.8 and migrate before the cutoff.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **Anthropic SDK major versions + API version 2026-10-21** (AI/Claude tooling) - Python 2.0.0, TypeScript 1.0.0, Go 2.0.0, Java 3.0.0, C# 13.0.0, PHP 1.0.0, Ruby 2.0.0 and `ant` CLI 2.0.0 ship with breaking changes and move from MIT to Apache 2.0.
-  - Why it matters: pin SDK versions before upgrading generated or agent-written code; check license policy for the Apache 2.0 switch.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **Usage and Cost Analytics API (beta) + 128 MB request limit** (AI/Claude tooling) - New `/v1/organizations/analytics/usage` and `/cost` endpoints (header `analytics-usage-cost-2026-08-24`), grouped by model, workspace, key or user; Messages/Token Counting max request size raised from 32 MB to 128 MB (Oct 28).
-  - Why it matters: per-agent cost tracking without scraping the console; larger limit helps PDF- and screenshot-heavy agent loops.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **whatsmyagentdoing** (GitHub repo) - Live dashboard (three.js "little office") showing what every Claude Code and Codex agent on your machine is doing.
-  - Why it matters: handy for monitoring several parallel agent sessions.
-  - Link: https://github.com/Charonyuu/whatsmyagentdoing
-  - Safety note: MIT, last push 2026-10-31, ~355 stars, created 2026-10-23 (very new, single maintainer); I did not audit the code, so review before running.
-
-- **audio-studio-mcp** (GitHub repo) - Local MCP server generating background music and sound effects with Stable Audio 3 (MLX on Apple Silicon, PyTorch on NVIDIA); no cloud or API key.
-  - Why it matters: a ready example of wrapping a local generative model as an MCP tool for Claude Code, e.g. for game or video projects.
-  - Link: https://github.com/kanaworksai-hue/audio-studio-mcp
-  - Safety note: MIT, last push 2026-10-24, ~548 stars, created 2026-10-18 (new, single maintainer); no code audit done.
-
-- **kensaku** (GitHub repo) - Rust/Tauri local file launcher with OCR, semantic search and MCP access so agents can search your documents and screenshots offline.
-  - Why it matters: pattern for exposing local semantic search to coding agents without sending data to a cloud index.
-  - Link: https://github.com/yjid/kensaku
-  - Safety note: MIT, last push 2026-10-30, ~337 stars, 10 open issues, created 2026-10-24 (new); review before granting file access.
