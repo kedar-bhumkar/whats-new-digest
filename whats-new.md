@@ -2,6 +2,56 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-16 (AKD)
+
+- **Alibaba just released Qwen4-Max, and it does the same work for about 60% less per task. What's new:…** (Top pick; model_release; x) - A new Qwen model claiming ~60% lower per-task cost and a 1M-token context, usable in coding agents via OpenRouter or the QwenCloud API, which matters for model-swap decisions, though the claims come…
+  - Link: https://x.com/RoundtableSpace/status/2122264663547404446
+  - Also covered by: [Qwen4-Max Is Out of Preview: True Frontier-Grade AI](https://www.youtube.com/watch?v=rzsdYlIvqE4) (youtube)
+  - Also covered by: [Qwen4-Max](https://qwen.ai/blog?id=qwen4-max&utm_source=tldrai) (email)
+
+- **If you built an app with Lovable, check it today. Researchers scanned 159,041 Lovable projects. 24,…** (Top pick; other; x) - Researchers found 24,664 of 159,041 scanned Lovable apps exposing database records publicly, so check Supabase Row Level Security on your tables today.
+  - Link: https://x.com/RoundtableSpace/status/2122189166331007336
+
+- **nvidia/Nemotron-Labs-Sigma 8B/3B** (Top pick; model_release; reddit) - An 8B continuous-space diffusion LM that decodes text in parallel blocks with a standard KV cache, offering a non-autoregressive alternative to try for speed, though it's not a drop-in replacement fo…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xxwg6w/nvidianemotronlabssigma_8b3b/
+
+- **anthropics/anthropic-sdk-python v2.9.0** (Top pick; dev_tooling; github) - The Anthropic Python SDK v2.9.0 adds Update Bundle and RBAC endpoint fields, and changes grep to ignore relative-PATH ripgrep binaries, so check any custom rg setup after upgrading.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.9.0
+
+- **anthropics/claude-code v2.1.326** (Top pick; agents_mcp_skills; github) - Claude Code v2.1.326 adds startup warnings for malformed `--allowedTools`/`--tools` rules and fixes Bash permission-rule and transcript bugs, so review tool permission configs after upgrading.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.326
+
+- **Anthropic upgrades Claude Code Projects to run parallel AI workers** (Notable; dev_tooling; web) - Anthropic's redesigned Claude Code Projects now runs parallel AI workers, which could change how you split coding tasks across agents and is worth testing against your current Agent SDK workflows.
+  - Link: https://claude.com/resources/articles/projects-redesigned
+
+- **Tthanh2k6/turbo-browser-mcp** (Notable; agents_mcp_skills; github) - A Playwright MCP server that batches browser actions and returns delta snapshots, so Claude Code or Agent SDK browser automation can use fewer turns and tokens, with a submit guard on by default.
+  - Link: https://github.com/Tthanh2k6/turbo-browser-mcp
+
+- **NVIDIA’s SkillEvaluator is an open-source project focused on evaluating AI agent skills before you …** (Notable; agents_mcp_skills; x) - NVIDIA's open-source SkillEvaluator (pip install skillevaluator) lints and quality-checks agent skill folders before use, directly relevant to vetting skills and plugins in Claude Code workflows.
+  - Link: https://x.com/RoundtableSpace/status/2122370360498905470
+
+- **Anthropic published a guide on building always-on agents (Nov 13). It breaks them into 5 parts: inbox, timers, memory, permissions, outbox** (Notable; agents_mcp_skills; reddit) - Anthropic's design guide splits always-on agents into five parts (inbox, timers, memory, permissions, outbox), directly applicable to the reader's daily scheduled Claude task, especially its memory l…
+  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xxdzcf/anthropic_published_a_guide_on_building_alwayson/
+
+- **Claude Code on desktop now supports iPhone Duo in the iOS simulator (public beta). You can run your…** (Notable; dev_tooling; x) - Claude Code desktop can now drive the iOS simulator's iPhone Duo (foldable) layouts in public beta, useful for testing responsive app UIs with Claude.
+  - Link: https://x.com/ClaudeDevs/status/2122439098740674839
+
+- **[Release] Qwen3.8-27B-Perplexing-Pegasus-Heretic: Unified vision + typed decider + abliterated weights for local agent stacks (GGUF, AutoRound, NVFP4)** (Notable; model_release; reddit) - A single 27B checkpoint bundling vision, chat/tool-calling, a typed-decision head, and abliterated weights, with GGUF builds that fit 16–24GB GPUs, is a possible local alternative to juggling several…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xxg12n/release_qwen3827bperplexingpegasusheretic_unified/
+
+- **Personal Agent Protocol 1.0** (Notable; agents_mcp_skills; email) - A new open protocol (v0 now out) for how personal agents talk to business agents, sites, and APIs, relevant to agent infrastructure and MCP-style integration work.
+  - Link: https://sierra.ai/blog/releasing-poppy?utm_source=tldrai
+
+- **Building Visual Intelligence — Andreas Blattmann & Dustin Podell, Black Forest Labs** (Notable; model_release; web) - Black Forest Labs (Stable Diffusion alumni) are moving from image generation into video and world models, training FLUX 3 on image, video, and audio jointly; no API or adoption details yet.
+  - Link: https://latent.space/p/bfl/
+  - Also covered by: [Building Visual Intelligence — Andreas Blattmann & Dustin Podell, Black Forest Labs](https://latent.space/p/building-visual-intelligence-andreas-blattmann-dustin-podell-black-forest-labs/) (web)
+
+- **[NEW RELEASE] - Supra2.5-65M Base and Instruct - our next generation state-of-the art small model family - first model!** (Notable; model_release; reddit) - A 65M-parameter base and instruct model released with GGUF quants (F16, Q8_0, Q4_K_M) for llama.cpp and Ollama, but it's a toy-scale model with self-reported benchmarks, so it's low adoption value fo…
+  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xxw9ik/new_release_supra2565m_base_and_instruct_our_next/
+
+- **Claude Code, Cursor and Codex can now edit your videos locally with ffmpeg-skill, a free, MIT-licen…** (Notable; agents_mcp_skills; x) - A local, MIT-licensed skill and MCP server giving Claude Code, Cursor and Codex 42 FFmpeg tools for video editing, adoptable with no API key.
+  - Link: https://x.com/RoundtableSpace/status/2122460957213663698
+
 ## 2026-11-16
 
 - **Claude Code Code Mode** (AI/Claude tooling) - Experimental opt-in mode (v2.1.323, Nov 12) where Claude writes JavaScript that makes many tool calls in one step instead of one call per round trip.
