@@ -411,7 +411,7 @@ def test_youtube_apify_skips_obvious_shorts():
 
 def test_shipped_config_caps_youtube_picks():
     caps = load_config(ROOT / "config.yaml").per_source_pick_cap
-    assert caps.get("youtube") == 2 and caps.get("reddit") == 2
+    assert caps.get("youtube") == 2 and caps.get("reddit") == 2 and caps.get("email") == 4
 
 FULL_BODY_RSS = b"""<?xml version="1.0"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>t</title>
 <item><title>Newsletter</title><link>https://e.com/n</link><pubDate>Mon, 12 Oct 2026 10:00:00 +0000</pubDate>

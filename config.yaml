@@ -8,6 +8,7 @@ max_picks: 20
 per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
   reddit: 2
   youtube: 2
+  email: 4
 max_notable: 10
 group_shortlist: 40       # top-ranked items compared pairwise by Jev for "same story"; 0 turns grouping off
 group_threshold: 0.5      # P(same story) at or above this folds an item under the higher-ranked one
