@@ -2,6 +2,12 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-17
+
+- **Claude Code 2.1.323-2.1.326: Code Mode and tighter permissions** (AI/Claude tooling) - Experimental opt-in Code Mode (Claude writes JavaScript to call its tools), now usable alongside agent teams; plugins can declare `engines["claude-code"]` and `claude plugin validate` type-checks TypeScript hook modules.
+  - Why it matters: Plugin authors get version gating and validation. Sandboxed Bash now follows the normal permission flow unless `sandbox.autoAllowBashIfSandboxed` is true, and read-only git commands outside trusted repos prompt, so unattended or CI setups may need config changes.
+  - Link: https://code.claude.com/docs/en/changelog.md
+
 ## 2026-11-16 (AKD)
 
 - **Alibaba just released Qwen4-Max, and it does the same work for about 60% less per task. What's new:…** (Top pick; model_release; x) - A new Qwen model claiming ~60% lower per-task cost and a 1M-token context, usable in coding agents via OpenRouter or the QwenCloud API, which matters for model-swap decisions, though the claims come…
