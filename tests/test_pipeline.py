@@ -1,4 +1,5 @@
 import json
+from dataclasses import replace
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from akd.pipeline import format_tune, published_ids_from, rank_all, run
 ROOT = Path(__file__).resolve().parent.parent
 NOW = datetime(2026, 10, 12, 12, tzinfo=timezone.utc)
 DAY = date(2026, 10, 12)
-CFG = load_config(ROOT / "config.yaml")
+CFG = replace(load_config(ROOT / "config.yaml"), max_picks=5)  # the tests assume 5 picks whatever production is tuned to
 
 
 def make_item(n: int) -> Item:

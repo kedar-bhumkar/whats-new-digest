@@ -59,7 +59,7 @@ def test_load_profile_returns_text(tmp_path):
 def test_repo_config_and_profile_load():
     root = Path(__file__).resolve().parent.parent
     cfg = load_config(root / "config.yaml")
-    assert cfg.max_picks == 5
+    assert cfg.max_picks == 20
     assert load_profile(root / "profile.yaml").strip()
 
 

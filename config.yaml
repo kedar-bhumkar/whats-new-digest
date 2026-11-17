@@ -4,7 +4,7 @@ weights:
   relevance: 0.20
   actionability: 0.20
   novelty: 0.05
-max_picks: 5
+max_picks: 20
 per_source_pick_cap:   # at most this many Top picks from one source; the rest fall to "Also notable"
   reddit: 2
   youtube: 2

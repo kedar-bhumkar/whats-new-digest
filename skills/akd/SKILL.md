@@ -16,7 +16,7 @@ A daily pipeline (repo `kedar-bhumkar/whats-new-digest`, package `akd/`) that co
 
 ## Where things live
 
-- `config.yaml`: weights, caps (5 picks, ~10 notable), freshness window (`max_age_days`), subreddits, feeds, GitHub topics and watchlist.
+- `config.yaml`: weights, caps (20 picks, ~10 notable), freshness window (`max_age_days`), subreddits, feeds, GitHub topics and watchlist.
 - `profile.yaml`: the reader's stack and interests, passed to Jev so "relevance" is personal. Edit it when focus changes.
 - `akd/levels.py`: the Jev question wording and level descriptions. Tune these from the sample, not by guesswork.
 

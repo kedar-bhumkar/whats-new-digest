@@ -13,7 +13,7 @@ NOW = datetime(2026, 10, 12, tzinfo=timezone.utc)
 
 def cfg(**overrides) -> Config:
     base = load_config(ROOT / "config.yaml")
-    return Config(**{**base.__dict__, **overrides})
+    return Config(**{**base.__dict__, "max_picks": 5, **overrides})  # these tests assume 5 picks whatever production is tuned to
 
 
 def scored(n: int, sig=0.5, rel=0.5, act=0.5, nov=0.5, hype=0.0) -> Scored:
