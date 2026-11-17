@@ -2,6 +2,102 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-17 (AKD)
+
+- **GPT-6.2 Astra and GPT-6.2 Sol—Models built for the real world** (Top pick; model_release; youtube) - GPT-6.2 Astra and Sol are new OpenAI model releases with API access for developers and fewer output tokens per task, so existing model-pinned code may need evaluation and migration.
+  - Link: https://www.youtube.com/watch?v=C1zYX5jwqq4
+  - Also covered by: [Introducing GPT-6.2 Astra and Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol) (web)
+
+- **Hugging Face and OpenRouter Join Forces** (Top pick; dev_tooling; email) - One Hugging Face token can now route requests to any open-weight model via OpenRouter's provider selection, which may simplify multi-provider setups in your agent and API code.
+  - Link: https://huggingface.co/blog/openrouter?utm_source=tldrai
+
+- **anthropics/anthropic-sdk-python v2.10.0** (Top pick; dev_tooling; github) - Adds a beta `billing_policy` parameter and renames error data models (old names deprecated), so check any code importing those error types before upgrading.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.10.0
+
+- **Check out Code Mode, a new, experimental way for Claude Code to work with tools. Claude writes scri…** (Top pick; dev_tooling; x) - Experimental Claude Code "Code Mode" has Claude write scripts that chain MCP tools together, opt-in via CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1, directly relevant to your MCP and agent workflow.
+  - Link: https://x.com/ClaudeDevs/status/2122801681939234950
+
+- **React Flow 13** (Top pick; dev_tooling; email) - React Flow 13 is a major release with store and rendering changes, so upgrading from v12 may require code changes in node-based UIs.
+  - Link: https://xyflow.com/blog/react-flow-13-major-release?utm_source=tldrdev
+
+- **The Claude Code team shared how it gets Claude to check its own work: tests, benchmarks and end-to-…** (Top pick; agents_mcp_skills; x) - Gives concrete self-verification practices for Claude Code (end-to-end, property, and differential tests, a verify skill in .claude/skills/, and a rule that changes can't edit their own judge), all a…
+  - Link: https://x.com/RoundtableSpace/status/2122551554011979974
+
+- **Qwen4-Max Is Out of Preview: True Frontier-Grade AI** (Top pick; model_release; youtube) - Qwen4-Max leaving preview is a new hosted model option worth evaluating against Claude for agentic coding tasks, though this video is a general capability test with no API or migration details.
+  - Link: https://www.youtube.com/watch?v=rzsdYlIvqE4
+  - Also covered by: [Qwen4-Max](https://qwen.ai/blog?id=qwen4-max&utm_source=tldrai) (email)
+
+- **BenchProofer: Formally Verified Coding Benchmarks** (Top pick; research; email) - BenchProofer adds formal specs and verified reference solutions to all 500 SWE-Bench Verified tasks, showing many test-passing agent patches may still be wrong, relevant to judging coding-agent evals.
+  - Link: https://www.amazon.science/blog/benchproofer-formally-verified-coding-benchmarks-on-demand?utm_source=tldrdev
+
+- **Liquid AI just released d1.2 and d1.2-ultra, a new class of omnimodal decision models. > Takes text…** (Top pick; model_release; x) - Liquid AI's d1.2 models output structured decisions (extraction, detection, ranking) from text, image, and audio inputs, which could replace chat-style calls in agent pipelines if the claimed benchma…
+  - Link: https://x.com/RoundtableSpace/status/2122755397299962055
+  - Also covered by: [d1.2: State-of-the-Art Omnimodal Decision Models](https://www.liquid.ai/blog/d1-2?utm_source=tldrai) (email)
+
+- **Coding Agent, Meet ngrok: The ngrok MCP Server Is Live** (Top pick; agents_mcp_skills; email) - The ngrok MCP server lets coding agents inspect live traffic and validate Traffic Policy rules, useful for testing webhooks and local APIs from an agent workflow.
+  - Link: https://ngrok.com/blog/mcp?utm_source=tldrdev
+
+- **Claude Code, Cursor and Codex can now edit your videos locally with ffmpeg-skill, a free, MIT-licen…** (Top pick; agents_mcp_skills; x) - A free MIT-licensed FFmpeg skill and MCP server with 42 tools lets Claude Code and similar agents edit video locally with no API key, a quick adoption candidate.
+  - Link: https://x.com/RoundtableSpace/status/2122536454538608872
+  - Also covered by: [Give your AI agent a video editor. ffmpeg-skill adds 42 editing tools to Claude Code, Codex or Curs…](https://x.com/RoundtableSpace/status/2122619502462701795) (x)
+
+- **sybil-solutions/inference-optimisation-skill** (Top pick; agents_mcp_skills; github) - It's an installable agent skill that guides hill-climbing local LLM serving speed (decode, speculative decoding, KV cache, TTFT), useful if you run local models alongside your Claude Code and MCP too…
+  - Link: https://github.com/sybil-solutions/inference-optimisation-skill
+
+- **11 open-source repos for a research → write → slides → video → voice workflow you can hand to Claud…** (Top pick; repo_library; x) - A curated list of 11 open-source Claude Code-compatible repos covering research, writing, slides, video, and TTS, with license caveats worth checking before commercial use.
+  - Link: https://x.com/RoundtableSpace/status/2122581753449845217
+
+- **Linked billing is now in beta on the Claude Platform. Now users of tools like Factory, Linear, and …** (Top pick; dev_tooling; x) - Partner tools like Factory, Linear, and Ramp can now bill Claude API usage through a Claude Platform org without sharing API keys, which matters for anyone wiring Claude into team tooling.
+  - Link: https://x.com/ClaudeDevs/status/2122751844455956760
+
+- **jackson-cmd/claude-multi-desktop** (Top pick; repo_library; github) - Lets you run several Claude Desktop accounts side by side on Mac with one shared Claude Code setup, which is useful if you juggle personal and work logins.
+  - Link: https://github.com/jackson-cmd/claude-multi-desktop
+
+- **Someone just open sourced a repo of agent skills for building HTML artifacts. Everything from low-f…** (Top pick; agents_mcp_skills; x) - Open-source agent skills for generating HTML prototypes and wireframes, usable as a reference without installing, relevant to Claude Code skills workflows.
+  - Link: https://x.com/RoundtableSpace/status/2122695000316322230
+
+- **More ways to move care forward with ChatGPT for Healthcare** (Top pick; model_release; web) - Adds computer-use agents and healthcare plugins to ChatGPT for Healthcare, relevant to agent sandboxing and security patterns, though it is a vertical product rather than an adoptable developer tool.
+  - Link: https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare
+
+- **AI4XE/Parallax** (Top pick; agents_mcp_skills; github) - Parallax is a small open-source workflow plugin for running hands-off coding agents across Claude Code, Copilot, and DeepSeek, relevant if you want to test multi-agent coding setups.
+  - Link: https://github.com/AI4XE/Parallax
+
+- **morajabi/poo** (Top pick; repo_library; github) - It's a macOS menu bar app, CLI, and MCP server that finds and safely frees disk space from build artifacts, caches, simulators, and agent worktrees, directly relevant to your agentic coding workflow.
+  - Link: https://github.com/morajabi/poo
+
+- **erkamyaman/rust-anything** (Top pick; repo_library; github) - A GitHub tool that incrementally ports TypeScript, Python, Go and other apps to Rust, verifying each step against recorded behavior, which could suit a migration or agent-assisted rewrite workflow.
+  - Link: https://github.com/erkamyaman/rust-anything
+
+- **The Sentence That Makes Fable 5.2 Clean Up Your Code** (Notable; research; youtube) - A single ownership sentence in the prompt made Fable 5.2 consolidate duplicated code in 10/10 Claude Code runs versus 0/10 without it, at about 54% more output tokens, though three runs also changed…
+  - Link: https://www.youtube.com/watch?v=zspRazxh5_A
+
+- **Teach AI coding assistants your design system with Markdown** (Notable; agents_mcp_skills; email) - Documenting design tokens and component patterns in Markdown referenced from AGENTS.md is a low-effort, adoptable way to make your React/Tailwind assistant respect your design system.
+  - Link: https://blog.logrocket.com/teach-ai-assistants-design-system/?utm_source=tldrdev
+
+- **MiniMax H3 Image in ComfyUI Tested Locally** (Notable; model_release; youtube) - A local ComfyUI walkthrough of MiniMax-H3-Image, useful if you run image models locally and want a tested setup path before adopting it in your ComfyUI pipeline.
+  - Link: https://www.youtube.com/watch?v=8Z3pedHd6Vo
+
+- **Building always-on agents** (Notable; agents_mcp_skills; email) - Describes a reference architecture for always-on agents (event inboxes, timers, memory, permissions, outboxes), directly relevant to building unsupervised Claude Agent SDK workflows and their sandbox…
+  - Link: https://claude.com/resources/articles/building-always-on-agents?utm_source=tldrai
+
+- **The Console Framework** (Notable; dev_tooling; email) - Text.js lets one React app render in the browser DevTools console, a terminal, or an MCP server, which matters for agent-facing UIs and shared components across surfaces.
+  - Link: https://textjs.org/?utm_source=tldrdev
+
+- **Broadening access to AI for scientists** (Notable; industry_business; web) - Offers free frontier-model access to 200,000 academic researchers, a funding and access program with no direct coding, API, or agent-tooling impact for this reader.
+  - Link: https://openai.com/index/expanding-chatgpt-for-academic-researchers
+
+- **ALL THE AI MOVIES ARE BECOMING REALER. CALIFORNIA IS SUING OPENAI OVER ROGUE AI AGENT CYBER INCIDEN…** (Notable; industry_business; x) - This is an unverified social-media claim of a state lawsuit over OpenAI agent containment failures, so it bears on agent sandboxing and security but has no concrete technical detail to act on yet.
+  - Link: https://x.com/RoundtableSpace/status/2122770496777551955
+
+- **Claude Artifacts Can't Do This, Right?** (Notable; repo_library; youtube) - Jelly gives coding agents like Claude Code a local, two-way HTML interface with element-pinned questions, a concrete adoptable workflow tool worth a look this week.
+  - Link: https://www.youtube.com/watch?v=B6xrS8zEzrw
+
+- **Projects in Claude Code** (Notable; agents_mcp_skills; email) - Claude Code's Projects update adds a more proactive coordinator and project-chat Q&A, which may change how you structure multi-thread agent work.
+  - Link: https://threadreaderapp.com/thread/2121375309287301360.html?utm_source=tldrai
+
+- **Would You Let a Decision Model Guard Your Shell?** (Notable; research; youtube) - Jev, a small open decision model, matched Claude Haiku 5.5 on routing and shell-command guarding in this test, but one destructive command slipped past both, so don't rely on it as a safety boundary.
+  - Link: https://www.youtube.com/watch?v=rRxHpI891O0
+
 ## 2026-11-17
 
 - **Claude Code 2.1.323-2.1.326: Code Mode and tighter permissions** (AI/Claude tooling) - Experimental opt-in Code Mode (Claude writes JavaScript to call its tools), now usable alongside agent teams; plugins can declare `engines["claude-code"]` and `claude plugin validate` type-checks TypeScript hook modules.
