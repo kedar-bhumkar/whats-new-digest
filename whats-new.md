@@ -2,6 +2,92 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-18 (AKD)
+
+- **modelcontextprotocol/servers v2.5.0** (Top pick; agents_mcp_skills; github) - This is a security release fixing eight vulnerabilities in MCP git, filesystem, and everything servers, so anyone running them should upgrade to the listed versions now.
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.5.0
+
+- **NVIDIA scanned 31,132 AI agent skills. 1 in 4 had security holes. → 26.1% had vulnerabilities → 5.2…** (Top pick; agents_mcp_skills; x) - NVIDIA's open-sourced scanner found 26.1% of 31,132 agent skills had vulnerabilities and 5.2% looked malicious, so audit skills before installing them in Claude Code.
+  - Link: https://x.com/RoundtableSpace/status/2123034738566824268
+
+- **[AINews] GPT-6.2 Astra, the #2 Frontier Model is better and 20%-600% cheaper, but has mixed reviews; 6.2 Sol likely main workhorse** (Top pick; model_release; web) - OpenAI's GPT-6.2 Astra and Sol are out at roughly 15% of Astra's prior per-task cost, with Astra scoring 62 on the Intelligence Index, a cheaper option worth benchmarking against your Claude API work…
+  - Link: https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/
+  - Also covered by: [Introducing GPT-6.2 Astra and Sol](https://openai.com/index/introducing-gpt-6-2-astra-sol) (web)
+  - Also covered by: [OpenAI launches GPT-6.2 Astra and Sol](https://www.testingcatalog.com/openai-launches-gpt-6-2-astra-and-sol-on-chatgpt-and-apis/?utm_source=tldrnewsletter) (email)
+  - Also covered by: [GPT-6.2 Astra vs Claude Fable: What OpenAI's Own Data Says](https://www.youtube.com/watch?v=1q_ILLaeEB4) (youtube)
+  - Also covered by: [GPT-6.2 is less than a day old and the people who tested it can't agree. → Matt Shumer: "essentiall…](https://x.com/RoundtableSpace/status/2122906392076140676) (x)
+
+- **Vercel's eve 1.0** (Top pick; agents_mcp_skills; email) - Vercel's open-source eve 1.0 framework handles the agent loop, memory, approvals, and monitoring, relevant to your Vercel and agent-infrastructure work.
+  - Link: https://vercel.com/blog/eve-is-now-generally-available?utm_source=tldrai
+
+- **anthropics/claude-code v2.1.327** (Top pick; dev_tooling; github) - Adds `claude mcp add-json` stdin input so MCP tokens stay off the command line, plus fixes for `.mcp.json` key loss and worktree file deletion that matter if you run MCP servers or Remote Control.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.327
+
+- **Alibaba just open-sourced the AI code reviewer 20,000+ of its own developers use. → 5M+ real code r…** (Top pick; agents_mcp_skills; x) - Alibaba's open-source AI code reviewer, used internally by 20,000+ developers, is installable via `npx skills add` and works with any model, so it's a directly adoptable alternative to Claude Code fo…
+  - Link: https://x.com/RoundtableSpace/status/2123042287710265351
+
+- **Tencent just open-sourced a workspace where coding agents ship your code like a real dev team. → Ty…** (Top pick; agents_mcp_skills; x) - Open-source, self-hosted workspace that runs Claude Code, Codex, and Cursor CLI agents in Docker sandboxes with human approval before merge, relevant to agent sandboxing and workflow.
+  - Link: https://x.com/RoundtableSpace/status/2122998732358558090
+  - Also covered by: [Superpowers is a free, open-source toolkit that makes AI coding agents plan, test and debug instead…](https://x.com/RoundtableSpace/status/2123102686241333354) (x)
+  - Also covered by: [Jelly + Claude Code: What It Is, Install, Real-Project Test](https://www.youtube.com/watch?v=lEVDrPBQkUg) (youtube)
+
+- **Microsoft's Seven New Models** (Top pick; model_release; email) - Microsoft's MAI Code 2 is now in GitHub Copilot at roughly 40% of GPT-6.1 Sol's price for about 98% of its coding quality, a cheaper option worth benchmarking against your current model.
+  - Link: https://microsoft.ai/news/microsoft-ignite-2026/?utm_source=tldrai
+
+- **40x More Merged PRs With 2.7x the Engineers — Walden Yan, Cognition** (Top pick; agents_mcp_skills; youtube) - Cognition's Walden Yan describes running a coding-agent workflow at scale: self-driving PRs, Slack-driven work, and locally runnable services so agents can test, which is a concrete pattern you could…
+  - Link: https://www.youtube.com/watch?v=U92J5mCDLMc
+
+- **jQuery 4.1.0 and 3.8.0 Released** (Top pick; dev_tooling; email) - jQuery 3.8.0 is the last planned 3.x feature release and 4.1.0 adds form-associated custom element serialization, so any legacy jQuery code still on 3.x should plan an upgrade path rather than expect…
+  - Link: https://blog.jquery.com/2026/11/17/jquery-4-1-0-and-3-8-0-released-passing-the-torch/?utm_source=tldrdev
+
+- **New Ways of Working with Codex — Dominik Kundel & Charlie Guo, OpenAI** (Top pick; agents_mcp_skills; youtube) - A walkthrough of OpenAI's current Codex workflow (plugins, cloud environments, code review, Agents API, parallel agents) that is useful for comparing agentic coding practices with Claude Code.
+  - Link: https://www.youtube.com/watch?v=IPh9YsWvDQk
+
+- **Introducing Replit Missions** (Top pick; agents_mcp_skills; email) - Replit Missions coordinates agent swarms under budget caps, a multi-agent orchestration pattern relevant to agentic coding workflows, though the item gives no API or adoption details.
+  - Link: https://replit.com/blog/introducing-replit-missions?utm_source=tldrai
+
+- **Inside the Codex sandbox** (Top pick; agents_mcp_skills; web) - Codex's cross-platform sandbox design for filesystem and network limits is directly relevant to the reader's interest in agent sandboxing and security patterns for coding agents.
+  - Link: https://openai.com/index/inside-the-codex-sandbox
+
+- **You can now opt into more frequent builds of Claude Desktop on Windows and Mac. Switch to the Lates…** (Top pick; dev_tooling; x) - Claude Desktop now offers a "Latest" release channel on Windows and Mac via Settings > Desktop app, trading faster fixes for less reliability than the default Stable channel.
+  - Link: https://x.com/ClaudeDevs/status/2122821051910684824
+
+- **Someone combined the free tiers of 87 AI providers into one API: 10 billion free tokens a month. → …** (Top pick; dev_tooling; x) - A single OpenAI-compatible endpoint that routes across 87 providers' free tiers and works with Claude Code, useful for cheap experimentation, but treat the "10B tokens" claim and the routing reliabil…
+  - Link: https://x.com/RoundtableSpace/status/2123019639135359265
+
+- **You can now copy any animation from any website into your own code. → Point it at a live site, a sc…** (Top pick; repo_library; x) - A free skill (npx skills add NiazMorshed2007/reanimate) that has an agent rebuild a site's animation from a URL, recording, or GIF and iterate until it matches, useful for prototyping motion quickly.…
+  - Link: https://x.com/RoundtableSpace/status/2123012089333658067
+
+- **SecFathy/otpkit** (Top pick; agents_mcp_skills; github) - An MCP server that lets agents receive OTPs and verification links without API keys, relevant to agent-driven signup and testing workflows, though it raises account-security and misuse considerations…
+  - Link: https://github.com/SecFathy/otpkit
+
+- **Managing frontier AI risk: From training to deployment** (Top pick; agents_mcp_skills; web) - OpenAI outlines its frontier-model safety pipeline (alignment, sandboxing, blocking safeguards, monitoring), relevant to anyone building agents needing sandboxing and guardrail patterns.
+  - Link: https://openai.com/index/managing-frontier-ai-risk
+
+- **boringmarketer/boring-marketing-skills** (Top pick; agents_mcp_skills; github) - A free MIT-licensed bundle of 32 marketing skills for AI agents, which could be a reusable skill set to drop into Claude Code, though it's marketing-focused rather than engineering.
+  - Link: https://github.com/boringmarketer/boring-marketing-skills
+
+- **Building 3D video sets with GPT-6.2 Astra** (Notable; model_release; youtube) - OpenAI's GPT-6.2 Astra is pitched as a flagship upgrade for cleaner code, better 3D and frontend output, and more efficient tool use, demoed building Blender scenes in Codex, which matters if you use…
+  - Link: https://www.youtube.com/watch?v=tKoDPOrLMX0
+
+- **Maxwell V1.0 Flash Tested Locally: 35B MoE, 3B Active, Apache 2.0** (Notable; model_release; youtube) - A 35B MoE with only 3B active under Apache 2.0, runnable locally via vLLM, which is useful if you want a cheap local coding model to test against your Claude Code workflow.
+  - Link: https://www.youtube.com/watch?v=RYbe_zfhoyo
+
+- **How the Claude Code Team Thinks About Verification** (Notable; agents_mcp_skills; email) - It describes how the Claude Code team verifies changes (end-to-end, property, and differential tests, plus failure-derived rules), a practical workflow you could adopt in your own agent-driven coding…
+  - Link: https://x.com/addyosmani/status/2122590683055993308?a=S5WdDueZTW6NMfT57qc&s=46&utm_source=tldrdev
+
+- **FrontierHarness Eval v1.1** (Notable; research; email) - The eval finds the best coding-agent harness varies by model and that harness choice alone can shift cost per task up to 5x, so harness selection deserves benchmarking, not defaults.
+  - Link: https://runta.com/blog/introducing-frontierharness-eval-v1-1/?utm_source=tldrai
+
+- **Apex-35B Locally: A Model Built by AI Research That Improves Itself** (Notable; model_release; youtube) - A local 35B model claimed to self-improve, with setup via llama.cpp and Hermes Agent and coding tests, which is worth a look only if you can run it locally and verify the self-improvement claims your…
+  - Link: https://www.youtube.com/watch?v=tYIvQRlFM6s
+
+- **Writable Derived State: Stop Synchronizing State** (Notable; other; email) - Copying fetched data into React state via effects can clobber unsaved edits on refetch; the nullable-override pattern avoids this and works with TanStack Query, relevant to your React/Vite stack.
+  - Link: https://playfulprogramming.com/posts/writable-derived-state/?utm_source=tldrdev
+
+- **Only the Human Merges** (Notable; agents_mcp_skills; email) - Written instructions alone failed to stop agents from merging, so server-enforced permissions are what actually keep final merge authority with a human.
+  - Link: https://itsmeduncan.com/2026/11/17/only-the-human-merges/?utm_source=tldrdev
+
 ## 2026-11-18
 
 - **Claude Fable 5.2 and Mythos 5.2** (AI/Claude) - Fable 5.2 is GA (Mythos 5.2 limited to verified orgs): 1M context, 128k output, always-on adaptive thinking, $8/$40 per MTok.
