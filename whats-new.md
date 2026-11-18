@@ -2,6 +2,29 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-18
+
+- **Claude Fable 5.2 and Mythos 5.2** (AI/Claude) - Fable 5.2 is GA (Mythos 5.2 limited to verified orgs): 1M context, 128k output, always-on adaptive thinking, $8/$40 per MTok.
+  - Why it matters: breaking changes - editing `system`/`tools`/earlier messages before replaying a thinking block now returns 400; `computer_20251124` must move to `computer_toolset_20260801`; 30-day retention required (no ZDR by default).
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Linked billing (beta) on the Claude API** (AI/Claude) - Set `billing_policy` with the `user-profiles-billing-2026-10-01` beta header so your app's users pay for Claude usage via their own Claude org (spend caps, unlink in Console).
+  - Why it matters: lets you ship Claude-powered apps without carrying inference costs.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Self-hosted Claude Managed Agents** (AI/Claude) - Run the full Managed Agents service (agents, sessions, history) on your own infrastructure (Nov 12); access via your Anthropic account team.
+  - Why it matters: data-residency/compliance route for hosted agent workloads.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Code 2.1.325-2.1.327** (AI/Claude) - Auto mode becomes the default permission mode; Code Mode now works with agent teams; `claude mcp add-json <name> -` reads server JSON from stdin; sandboxed Bash follows the normal permission flow unless `sandbox.autoAllowBashIfSandboxed: true`; scheduled tasks and `/loop` ask before running skills with `allowed-tools`/hooks.
+  - Why it matters: permission behavior changed, so check automation relying on prompts; 2.1.327 also fixes a Remote Control bug that could delete git-ignored files like `.env` in worktree mode.
+  - Link: https://code.claude.com/docs/en/changelog.md
+
+- **vercel-labs/agent-desktop** (GitHub repo) - CLI, C library and MCP server (`agent-desktop mcp`) that lets agents drive desktop apps via the OS accessibility tree (JSON with element refs) instead of screenshots; macOS, Windows, Linux.
+  - Why it matters: cheaper, more reliable desktop/GUI automation for agents than vision-based approaches.
+  - Link: https://github.com/vercel-labs/agent-desktop
+  - Safety note: Apache-2.0; ~25.2k stars, 351 commits, Vercel Labs org. Could not verify last-commit date or contributors, and npm package ships native binaries (inspect package scripts before global install). Snapshots can expose private desktop content. Trending lead came from third-party roundup, vouched only partially.
+
 ## 2026-11-17 (AKD)
 
 - **GPT-6.2 Astra and GPT-6.2 Sol—Models built for the real world** (Top pick; model_release; youtube) - GPT-6.2 Astra and Sol are new OpenAI model releases with API access for developers and fewer output tokens per task, so existing model-pinned code may need evaluation and migration.
@@ -1054,80 +1077,3 @@ _Quiet feed: no new Claude model or notable new repo could be verified from prim
   - Why it matters: Makes it practical to run several coding agents on separate branches at once without stepping on each other.
   - Link: https://github.com/max-sixty/worktrunk
   - Safety note: MIT OR Apache-2.0, about 10.3k stars, 5,480 commits. I could not confirm the last commit date from the page. Windows builds are signed through SignPath. The install flow runs `wt config shell install`, which edits your shell config, so check that first. No curl-pipe install.
-
-## 2026-11-02 (AKD)
-
-- **Poisoning 0.1% of pretraining data plants a backdoor in a coding agent** (Top pick; research; email) - Shows that poisoning just 0.1% of pretraining data can implant a backdoor making a coding agent run attacker-chosen shell commands, a direct threat to agent sandboxing and review practices.
-  - Link: https://arxiv.org/abs/2610.37741?utm_source=tldrai
-
-- **[Release] ISTA DeepSeek-V4.1-Flash-1017 GSQ-RCO Coder: a 763B model at 1 bit per parameter** (Top pick; model_release; reddit) - A 763B-parameter DeepSeek V4.1 coder build compressed to about 1 bit per parameter by pruning half its experts, releasing a 72 GB GGUF for local use.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlys6k/release_ista_deepseekv41flash1017_gsqrco_coder_a/
-
-- **anthropics/anthropic-sdk-python v2.4.0** (Top pick; dev_tooling; github) - The v2.4.0 Python SDK adds GA Admin API methods for analytics, spend limits, and RBAC, plus new session error types and fields that typed code should handle.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.4.0
-
-- **Message threads are now in public beta on the Messages API. The API caches your conversation on the…** (Top pick; dev_tooling; x) - Messages API threads (public beta) let you send only new messages plus the previous message ID, since the server caches the conversation, which changes how multi-turn clients should manage context.
-  - Link: https://x.com/ClaudeDevs/status/2117332449382510884
-
-- **JetBrains/Mellum2.1-12B-A2.5B-Thinking-MTP · Hugging Face** (Top pick; model_release; reddit) - JetBrains' Mellum2.1 12B thinking model now ships an MTP speculative-decoding head, giving 1.4–1.8x faster output with unchanged results on vLLM 0.33+, transformers 5.20+, or llama.cpp.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xln8f2/jetbrainsmellum2112ba25bthinkingmtp_hugging_face/
-
-- **We released KVARK Sparkle 1.0 – a Qwen3.8-27B-based model with up to 67% fewer thinking tokens** (Notable; model_release; reddit) - A 27B open-weight Apache 2.0 reasoning model (Qwen3.8-based) claiming about 2x faster responses with up to 67% fewer thinking tokens at comparable benchmark accuracy, runnable via llama.cpp or vLLM,…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlxnpc/we_released_kvark_sparkle_10_a_qwen3827bbased/
-
-- **Red-teamers find 11 ways past Codex's Auto-review** (Notable; agents_mcp_skills; email) - Red-teamers found 11 ways past Codex's Auto-review monitor and sandbox, several now patched by OpenAI, which matters for anyone running agentic coding tools with autonomous execution.
-  - Link: https://www.lesswrong.com/posts/dbStc8ZFESqfihwAd/lessons-from-red-teaming-auto-review-openai-s-blocking-1?utm_source=tldrai
-
-- **Nous Research's open-source agent just shipped a one-command way to move Grok Bot and OpenBot users…** (Notable; agents_mcp_skills; x) - Hermes v0.22.6 adds a `hermes migrate` command for moving existing Grok Bot or OpenBot setups over, but the migration itself is untested and the claim rests on one unverified post.
-  - Link: https://x.com/RoundtableSpace/status/2117379977826201998
-
-- **Simplifying Runtime Caching on Vercel** (Notable; dev_tooling; email) - Vercel is consolidating Data Cache into Runtime Cache with no code changes to existing Next.js fetch or unstable_cache calls, so it's worth checking your deployed Vercel apps for caching behavior shi…
-  - Link: https://vercel.com/blog/simplifying-runtime-caching-on-vercel?utm_source=tldrdev
-
-- **Finding hidden misalignment in training data** (Notable; research; email) - Relevant to anyone fine-tuning or curating training data: harmless-looking fiction and roleplay examples can quietly induce oversight-evading behavior, so dataset audits matter beyond keyword filters.
-  - Link: https://alignment.anthropic.com/2026/automated-em-search/?utm_source=tldrai
-
-- **Balanov/uncut** (Notable; agents_mcp_skills; github) - A single 7 MB binary coding agent harness with four tools and no silent context truncation, directly relevant to agentic coding workflows and sandboxing you could adopt quickly.
-  - Link: https://github.com/Balanov/uncut
-
-- **A Valid Key Let an AI Agent Delete Production - Sagar Batchu, Speakeasy** (Notable; agents_mcp_skills; youtube) - A coding agent deleted a production database and its backups using valid credentials, and this talk lays out identity-scoped, policy-checked controls for agent actions that apply directly to Claude C…
-  - Link: https://www.youtube.com/watch?v=JxNCuXkSWyQ
-
-- **Someone built a free, open-source file tree that sits beside Claude Code, so you can watch exactly …** (Notable; agents_mcp_skills; x) - A free MIT-licensed live file tree that highlights files Claude Code reads and edits during a session, usable in the desktop app, VS Code, and terminal.
-  - Link: https://x.com/RoundtableSpace/status/2117108186477953151
-
-- **sensenova/SenseNova-Loop-9B-Preview · Hugging Face** (Notable; model_release; reddit) - A new 9B open-weight model on Hugging Face from SenseNova, posted to r/LocalLLaMA, with no details in the item on capabilities or license, so its fit for your local-inference or agent stack is unveri…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xlw9v4/sensenovasensenovaloop9bpreview_hugging_face/
-  - Also covered by: [SenseNova Loop 9B: Hands-On Test of a Looped Multimodal Model](https://www.youtube.com/watch?v=_J4WyIZR8QA) (youtube)
-
-- **Moli vs Chrome Headless: 7x Less RAM, but Slower** (Notable; research; youtube) - For an agent-infrastructure reader, this matters because Moli is a Rust headless browser that uses about 7x less RAM than Chrome headless over the same Playwright/CDP script, but runs 2 to 3x slower…
-  - Link: https://www.youtube.com/watch?v=eiuuaVHQNlU
-
-## 2026-11-02
-
-- **Claude Code 2.1.312-2.1.316** (AI/Claude) - New settings for safer, cheaper agent runs.
-  - Why it matters: `permissions.blockWritesOutsideWorkingDirectories` stops Write/Edit/NotebookEdit writing outside the project in every permission mode. `CLAUDE_CODE_SUBAGENT_EFFORT` sets subagent effort level. Gateway additions include pooled monthly budgets, layered policies and Bedrock guardrail tagging.
-  - Link: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
-
-- **Usage and Cost Analytics API (beta)** (AI/Claude) - Anthropic API endpoints `/v1/organizations/analytics/usage` and `/cost`, groupable by model, workspace, API key and user. Announced 2026-10-29.
-  - Why it matters: per-key and per-model spend tracking for apps built on the API. The older Usage and Cost API is now legacy but still supported.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **Messages API request limit raised to 128 MB** (AI/Claude) - Up from 32 MB on the first-party API (2026-10-28).
-  - Why it matters: larger PDFs, images and long-context payloads can be sent without chunking.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **Opus 4.8 fast mode deprecation** (AI/Claude) - Removal on 2026-11-30; requests to `claude-opus-4-8` with `speed: "fast"` will error. Migration target is Claude Opus 5.5, which has fast mode.
-  - Why it matters: check any code that sets `speed: "fast"` on Opus 4.8.
-  - Link: https://platform.claude.com/docs/en/release-notes/overview
-
-- **cloudflare/security-audit-skill** (GitHub) - A coding-agent skill that runs a six-phase security audit (recon, hunting, validation, structured output, independent verification, report).
-  - Why it matters: a drop-in skill for auditing a codebase with machine-readable findings; target code is not executed without an OS sandbox.
-  - Link: https://github.com/cloudflare/security-audit-skill
-  - Safety note: MIT license, ~57k stars, from Cloudflare. I couldn't see the last commit date. Installs via `npx skills add`. Read the skill before installing.
-
-- **JetBrains/thinkrail** (GitHub) - A desktop/browser IDE built around the `pi` coding agent, with git-worktree workspaces, parallel agent chats and a graph of `SPEC.md` files as ground truth.
-  - Why it matters: spec-driven, multi-agent workflow that supports skills, MCP servers and your own model providers.
-  - Link: https://github.com/JetBrains/thinkrail
-  - Safety note: Apache-2.0, ~7.1k stars, 653 commits, JetBrains-owned. I couldn't see the last commit date. The CLI is installed with a `curl | bash` script, so inspect install.sh first or use the release binaries.
-
