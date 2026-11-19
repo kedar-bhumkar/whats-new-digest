@@ -2,6 +2,31 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-19
+
+- **Claude Code v2.1.326–v2.1.328** (AI/Claude tooling) - Three releases in four days: auto mode on Bedrock/Vertex/Foundry for Opus 4.6 and Sonnet 4.6, `mcp_tool` hooks that can fail closed, and safer MCP setup.
+  - Why it matters: `"onFailure": "block"` on `mcp_tool` hooks lets a failed policy check stop an action instead of silently passing; `claude mcp add-json <name> -` reads server JSON from stdin so tokens stay off the command line; `/status` now flags broken skills/hooks/keybindings; Code Mode works with agent teams.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Claude Fable 5.2 and Claude Mythos 5.2** (AI/Claude tooling) - Anthropic's new flagship models (announced Nov 9), aimed at demanding coding, finance and science work.
+  - Why it matters: Worth re-benchmarking agent/coding workloads against the new tiers; I only confirmed the announcement headline, not pricing or API details.
+  - Link: https://www.anthropic.com/news
+
+- **shanselman/sandbox-mcp** (GitHub repo) - MCP server and CLI (`sbx`) that boots a disposable Windows Sandbox, deploys/runs an app, drives its UI, collects screenshots and logs, then destroys the VM.
+  - Why it matters: Lets a coding agent actually test Windows installers and apps in a clean machine rather than guessing; also has a `detonate` mode for untrusted files.
+  - Link: https://github.com/shanselman/sandbox-mcp
+  - Safety note: MIT; ~489 stars, created 2026-11-06, pushed 2026-11-15; well-known maintainer. Setup needs an admin step to enable Windows Sandbox, and the README suggests having an agent fetch a setup guide from raw.githubusercontent.com — read it first. Contributor list not verified.
+
+- **DIYgod/pinky** (GitHub repo) - Lets MCP agents (Claude Code, Cursor, Codex) operate a real iPhone/Android phone with a human approving risky steps and recordings of each run.
+  - Why it matters: Gives agents a way to test mobile apps on real devices with human-in-the-loop control.
+  - Link: https://github.com/DIYgod/pinky
+  - Safety note: Apache-2.0; ~2.5k stars, created 2026-11-06, pushed 2026-11-19; self-described pre-alpha. Android needs USB debugging/accessibility service and may expose adb over the network; iOS may fetch a disk image from a third-party mirror; updates and anonymous telemetry on by default (`DO_NOT_TRACK=1` disables). Use with caution.
+
+- **alexeyw/lot-map** (GitHub repo) - Live map beside the chat showing what Claude Code is doing: tool calls, model steps, hooks, skills and subagents as they happen; local only.
+  - Why it matters: Useful for debugging and understanding agent runs and hook/skill behavior.
+  - Link: https://github.com/alexeyw/lot-map
+  - Safety note: MIT; ~1k stars, created 2026-11-09, pushed 2026-11-19 (from GitHub search metadata only; I did not inspect the code or maintainer history, so skim before installing).
+
 ## 2026-11-18 (AKD)
 
 - **modelcontextprotocol/servers v2.5.0** (Top pick; agents_mcp_skills; github) - This is a security release fixing eight vulnerabilities in MCP git, filesystem, and everything servers, so anyone running them should upgrade to the listed versions now.
@@ -1086,80 +1111,3 @@ _Quiet feed: no new Claude model or notable new repo could be verified from prim
   - Link: https://github.com/obra/superpowers
   - Safety note: MIT; ~312k stars; skills are prompts/markdown plus shell - read before enabling. Last-commit date not visible from the page.
 
-## 2026-11-03 (AKD)
-
-- **Anthropic added “message threads” to the Messages API (public beta): send the conversation once, then only new messages. Already on by default in Claude Code** (Top pick; dev_tooling; reddit) - Anthropic's Messages API now offers message threads (public beta) so you send the full history once and then only new messages, cutting time-to-first-token about 35% on 500k+ token contexts, but thre…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmh012/anthropic_added_message_threads_to_the_messages/
-  - Also covered by: [Claude Introduces Message Threads](https://claude.com/resources/articles/message-threads?utm_source=tldrai) (email)
-  - Also covered by: [Claude Message Threads Tested: 34 of 50 Turns Faster](https://www.youtube.com/watch?v=nawZ1OvhpE0) (youtube)
-
-- **anthropics/claude-code v2.1.317** (Top pick; agents_mcp_skills; github) - Adds a per-call prompt before tools send your account email over the network, plus `onFailure: "block"` for Agent SDK hooks, which changes how failing callbacks behave in agent builds.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.317
-
-- **New Anthropic research: progress on provable inference for large language models. Here, we introduc…** (Top pick; research; x) - Anthropic open-sourced FlashProve, a cryptographic tool that verifies a response came from a specific model, relevant to agent trust and serving-integrity checks.
-  - Link: https://x.com/AnthropicAI/status/2117710942826123294
-  - Also covered by: [Anthropic just open-sourced a way to prove which AI model actually answered you. Ever wonder if an …](https://x.com/RoundtableSpace/status/2117598919886864764) (x)
-
-- **[Paper] RidgeFill: Training-Free Late-Layer Cache Fill for Faster Prefill** (Top pick; research; reddit) - RidgeFill is a training-free prefill speedup (1.25–1.6x TTFT) that skips most upper layers via a closed-form ridge map, with small accuracy losses; worth testing for long-context serving in vLLM or l…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xmarrf/paper_ridgefill_trainingfree_latelayer_cache_fill/
-
-- **Leaflet 2.0 beta** (Top pick; repo_library; email) - Leaflet 2.0 beta brings tree-shaking, bundled TypeScript types, and breaking API changes, so check any existing map code before upgrading.
-  - Link: https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-beta.1?utm_source=tldrdev
-
-- **Hugging Face just released a safety guard for AI coding agents. Your agent can run any command it d…** (Notable; agents_mcp_skills; x) - A local proxy that inspects and blocks risky agent commands before execution, working with Claude Code via ANTHROPIC_BASE_URL; directly relevant to agent sandboxing and security, and adoptable in a f…
-  - Link: https://x.com/RoundtableSpace/status/2117606470229397657
-
-- **Users can now auto-connect plugins when they log in to Claude, with MCP servers that accept Claude …** (Notable; agents_mcp_skills; x) - Claude can now auto-connect MCP plugins at login, so MCP servers that trust Claude as an issuer can skip re-authorization; worth adding if you build plugins.
-  - Link: https://x.com/ClaudeDevs/status/2117680635561312732
-
-- **Maple ports 287,000 lines of React to Foldkit in 3 days** (Notable; agents_mcp_skills; email) - Shows a concrete large-scale agent migration (about 40 Claude agents, 287k lines in 3 days) with a visual-diff harness, but also that screenshot checks missed around 180 defects and the bundle roughl…
-  - Link: https://maple.dev/blog/react-to-foldkit/?utm_source=tldrdev
-
-- **Automating agentic AI Well-Architected reviews with the AWS Agentic AI Lens** (Notable; agents_mcp_skills; email) - Smarsh packaged the AWS Agentic AI Lens as a Claude skill that audits a GitHub repo against 150 best practices, a directly reusable pattern for agent-project reviews.
-  - Link: https://aws.amazon.com/blogs/architecture/automating-agentic-ai-well-architected-reviews-with-the-aws-agentic-ai-lens/?utm_source=tldrdev
-
-- **Your AI Agents Shouldn't Care Where They Run - Nikhil Harithas, Factory** (Notable; agents_mcp_skills; youtube) - Factory's Droid coding agent now runs on any compute inside a customer's own cloud with bring-your-own-key, a design the reader can study for agent sandboxing and VPC deployment, with the compute lay…
-  - Link: https://www.youtube.com/watch?v=XIHZpZtYCzo
-
-- **How Claude Code reacts when a repo has a no-AI contribution policy** (Notable; agents_mcp_skills; reddit) - Claude Code honors repo-level no-AI policy files (AGENTS.md or CLAUDE.md refuse instantly, AI_POLICY.md stops it before committing), so maintainers can enforce the rule as a soft agreement, not a har…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmgzia/how_claude_code_reacts_when_a_repo_has_a_noai/
-
-- **SenseNova Loop 9B: Hands-On Test of a Looped Multimodal Model** (Notable; model_release; youtube) - A hands-on local test of SenseNova-Loop-9B-Preview, an open 9B multimodal model for agentic and long-context work, useful if you want a small local vision-plus-reasoning option.
-  - Link: https://www.youtube.com/watch?v=_J4WyIZR8QA
-
-- **OpenMausBot** (Notable; agents_mcp_skills; email) - Relevant to agent infrastructure and approval-gating: it wraps locally installed Claude Code, Codex, or Grok CLIs in a chat UI, with permission requests surfaced as approval cards.
-  - Link: https://github.com/milind-soni/OpenMausBot?utm_source=tldrdev
-
-- **wendersoon/radar-cnpj-mcp** (Notable; agents_mcp_skills; github) - An MCP server and CLI for querying Brazilian company (CNPJ) data by CNAE code and region, a niche tool that is only relevant if you build agents for Brazilian business data.
-  - Link: https://github.com/wendersoon/radar-cnpj-mcp
-
-- **Official Claude Code Extension Compromise: Security Advisory** (Notable; dev_tooling; reddit) - Security advisory says Claude Code VS Code extension versions 2.1.312 and 2.1.313 were compromised, so check your installed version and update or downgrade if affected.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xmdwop/official_claude_code_extension_compromise/
-
-## 2026-11-03
-
-- **Claude Code v2.1.317 (and v2.1.314/316)** (AI/Claude) - Latest Claude Code releases: `/schedule` warns about unintended connectors, a prompt before tool calls send your account email to the network, Agent SDK hook callbacks accept `onFailure: "block"`, and `claude -p` now exits 1 on lost transcript writes.
-  - Why it matters: v2.1.314 adds `permissions.blockWritesOutsideWorkingDirectories`, and v2.1.316 adds `CLAUDE_CODE_SUBAGENT_EFFORT` to set subagent effort. Both are useful when running agents unattended or in CI.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Opus 4.8 fast mode deprecated (removal 2026-11-30)** (AI/Claude) - Requests to `claude-opus-4-8` with `speed: "fast"` will error after Nov 30; the notes point to Claude Opus 5.5.
-  - Why it matters: Any code or scheduled job that hardcodes Opus 4.8 fast mode needs migrating before the cutoff.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude SDK major versions with API version 2026-10-21** (AI/Claude) - Python 2.0.0, TypeScript 1.0.0, Go 2.0.0, Java 3.0.0 and others shipped on Oct 21 with breaking changes. The SDKs are now Apache 2.0 instead of MIT. The same notes list user profiles (per-end-customer enforcement) and request size raised from 32 MB to 128 MB.
-  - Why it matters: Pinning older SDK versions or upgrading blindly can break builds. Per-customer user profiles matter for multi-tenant apps built on the API.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Usage and Cost Analytics API (beta)** (AI/Claude) - New `/v1/organizations/analytics/usage` and `/cost` endpoints, grouped by model, workspace, API key or user. Needs the `analytics-usage-cost-2026-08-24` beta header. The older Usage and Cost API is now legacy.
-  - Why it matters: Lets you build spend dashboards or budget alerts for agent workloads.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **vercel-labs/agent-desktop** (GitHub repo) - A CLI and C library that lets AI agents read and operate desktop apps through the OS accessibility tree, returning JSON snapshots with refs. Works on macOS, Windows and Linux.
-  - Why it matters: A structured alternative to screenshot-based computer use for automating GUI apps from an agent.
-  - Link: https://github.com/vercel-labs/agent-desktop
-  - Safety note: Apache-2.0, about 11.7k stars, 325 commits on main, from Vercel Labs. I could not confirm the last commit date from the page. The npm package bundles native binaries, so review before installing. It needs Accessibility permission, and snapshots or clipboard reads can contain private data.
-
-- **max-sixty/worktrunk** (GitHub repo) - A CLI for managing git worktrees for parallel AI agent workflows (`wt switch/list/merge/remove`), with hooks and LLM-generated commit messages.
-  - Why it matters: Makes it practical to run several coding agents on separate branches at once without stepping on each other.
-  - Link: https://github.com/max-sixty/worktrunk
-  - Safety note: MIT OR Apache-2.0, about 10.3k stars, 5,480 commits. I could not confirm the last commit date from the page. Windows builds are signed through SignPath. The install flow runs `wt config shell install`, which edits your shell config, so check that first. No curl-pipe install.
