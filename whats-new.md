@@ -2,6 +2,100 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-19 (AKD)
+
+- **[AINews] Gemini 4 Neon: GDM's Opus/Sol Contender** (Top pick; model_release; web) - Gemini 4 Neon is a new mid-tier model at $3/$15 per million tokens with a 1M-token context, available in the paid Gemini API, Antigravity, and Cursor and GitHub Copilot, so it's worth testing as a dr…
+  - Link: https://latent.space/p/ainews-gemini-4-neon-gdm-s-opus-sol-contender/
+  - Also covered by: [Google launches Gemini 4 Neon on Gemini, Antigravity, and APIs](https://www.testingcatalog.com/google-launches-gemini-4-neon-on-gemini-antigravity-and-apis/?utm_source=tldrnewsletter) (email)
+  - Also covered by: [Gemini 4 Neon Is Here, And It’s a Beast!](https://www.youtube.com/watch?v=Q0ShBenKyqo) (youtube)
+  - Also covered by: [Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/?utm_source=tldrai) (email)
+
+- **anthropics/claude-code v2.1.328** (Top pick; dev_tooling; github) - Claude Code v2.1.328 adds auto mode for Opus 4.6 and Sonnet 4.6 on Bedrock, Vertex and Foundry, and new hook failure-blocking (`onFailure: block`) for `mcp_tool` hooks, so check any MCP hook setups t…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.328
+
+- **Apple just released an open video model that makes video almost as fast as you can watch it. → Abou…** (Top pick; model_release; x) - Apple's open real-time video model (1.3B and 14B, weights on Hugging Face, ~28 fps on one GPU) is relevant to the reader's AI image/video tooling, though the post is a secondhand summary and the clai…
+  - Link: https://x.com/RoundtableSpace/status/2123336727846855037
+
+- **anthropics/anthropic-sdk-python v2.11.0** (Top pick; dev_tooling; github) - The Python SDK v2.11.0 adds Claude Code managed settings to the Admin API and fixes space encoding in query strings, which matters for AWS SigV4-signed requests.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.11.0
+
+- **Qwen4-Max vs Opus 5.5: 4x Cheaper Tokens, Same Bill** (Top pick; research; youtube) - Per solved task, Qwen4-Max costs about the same as Opus 5.5 here ($0.25 vs $0.22) despite the 4x lower token price, solving 11/15 vs 15/15 and hitting token-budget dead ends.
+  - Link: https://www.youtube.com/watch?v=lunalDg5928
+
+- **Post-Training Gemini 4 for Real Engineering Work — Melvin Johnson, Google DeepMind** (Top pick; model_release; youtube) - Covers how Gemini 4 is post-trained for real engineering work, including rubric grading and reward-hacking resistance, relevant to judging coding agents beyond passing tests.
+  - Link: https://www.youtube.com/watch?v=fTHByDwTxGM
+
+- **Introducing GPT-6.2 Astra and Sol** (Top pick; model_release; web) - New OpenAI model family (Astra and Sol) with coding and computer-use gains across Codex and the API, so a comparison benchmark for Claude Code and Agent SDK workflows and a possible model-swap candid…
+  - Link: https://openai.com/index/introducing-gpt-6-2-astra-sol
+  - Also covered by: [OpenAI launches GPT-6.2 Astra and Sol](https://www.testingcatalog.com/openai-launches-gpt-6-2-astra-and-sol-on-chatgpt-and-apis/?utm_source=tldrnewsletter) (email)
+
+- **OpenAI's Codex CLI 0.170 adds realtime voice calls in the terminal over WebRTC, plus experimental s…** (Top pick; dev_tooling; x) - Codex CLI 0.170 adds terminal voice calls over WebRTC and same-name MCP server support across environments, relevant if you use Codex alongside your MCP setup.
+  - Link: https://x.com/RoundtableSpace/status/2123268780247900587
+
+- **Unauthenticated Remote Code Execution in NGINX** (Top pick; other; email) - Two critical unauthenticated HTTP/2 memory-safety flaws in NGINX allow remote code execution, so patch any NGINX instance fronting your deployments or side-project hosting now.
+  - Link: https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities?utm_source=tldrdev
+
+- **Cloudflare CLI 1.0 Release Candidate** (Top pick; dev_tooling; email) - A release candidate for Cloudflare's CLI 1.0 stabilizes config and build formats, so it's worth testing now before the final release locks them in for your Vercel and Workers workflows.
+  - Link: https://developers.cloudflare.com/changelog/post/2026-11-17-release-candidate/?utm_source=tldrdev
+
+- **Genie 4** (Top pick; model_release; email) - Genie 4 is a world-generation model, not a coding or agent API, so it has little direct bearing on your Claude, Salesforce, or React work beyond general AI-video context.
+  - Link: https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/?utm_source=tldrai
+  - Also covered by: [Google just launched Genie, its most realistic interactive world model yet. >⁠Edit environments mid…](https://x.com/RoundtableSpace/status/2123465074648166824) (x)
+
+- **CodeAF** (Top pick; repo_library; email) - CodeAF is an open-source coding harness for open models that topped a ten-harness DeepSWE benchmark at lower cost per issue, a possible alternative to Claude Code for your agentic workflow.
+  - Link: https://github.com/Agent-Field/CodeAF
+
+- **yocontra/pulsar** (Top pick; agents_mcp_skills; github) - Relevant to your MCP server and agentic coding workflow: it gives agents in different harnesses a shared list, tags, and multicast messaging, so it's worth checking if you run multiple coding agents…
+  - Link: https://github.com/yocontra/pulsar
+
+- **Someone open-sourced a 3D building editor that runs in your browser. No $5,000/year AutoCAD or Revi…** (Top pick; repo_library; x) - It's an open-source browser-based 3D building editor, runnable via npx, that exposes edits to coding agents like Claude Code, which makes it a concrete example of agent-editable domain tooling.
+  - Link: https://x.com/RoundtableSpace/status/2123329178066096245
+
+- **You can now run Claude Code or Codex on a free local model, on your own Mac. → One command to insta…** (Top pick; dev_tooling; x) - Lets Claude Code or Codex run against a local model on Apple Silicon M3+ with no API bill, though the "3.9x faster" claim is vendor-reported and unverified.
+  - Link: https://x.com/RoundtableSpace/status/2123298979274203354
+
+- **This tool cuts what Claude Code spends on your codebase by 44%. → It maps every function and how th…** (Top pick; dev_tooling; x) - A local codegraph tool that pre-indexes function call relationships so Claude Code can query a map instead of reading files, claiming 44% lower cost; worth testing on a real repo before trusting the…
+  - Link: https://x.com/RoundtableSpace/status/2123359377092706310
+
+- **You can now give your AI agent its own computer. → Full macOS or Linux desktops for your agents, on…** (Top pick; agents_mcp_skills; x) - Relevant to agent sandboxing: it gives agents full macOS or Linux desktops with persistent signed-in sessions and shared control, raising real security and isolation questions for agent workflows.
+  - Link: https://x.com/RoundtableSpace/status/2123389577154994641
+
+- **yibie/claude-best-practices-zh** (Top pick; repo_library; github) - A Chinese translation of 173 official Claude best-practice articles plus a 100-concept knowledge wiki, useful as a reference for Claude Code and API workflows if you read Chinese, though it is a thir…
+  - Link: https://github.com/yibie/claude-best-practices-zh
+
+- **Research acceleration: The jagged frontier** (Top pick; research; web) - It's an OpenAI measurement of where coding agents speed up AI research and where they stay uneven, which bears on how far agentic coding tools can be trusted on open-ended engineering work.
+  - Link: https://openai.com/index/research-acceleration-jagged-frontier
+
+- **bookwjitchieni1986/blender-ai-mcp-addon** (Top pick; agents_mcp_skills; github) - An MCP server add-on that lets Claude or other LLMs drive Blender scene and bpy scripting, relevant if you're building MCP tooling or 3D pipelines; the author is unverified and it has only 351 stars,…
+  - Link: https://github.com/bookwjitchieni1986/blender-ai-mcp-addon
+
+- **What it takes to set intelligence free — Fabian Hedin, CTO, Lovable** (Notable; agents_mcp_skills; youtube) - This talk covers how Lovable moved from a failed multi-agent framework to durable agent runtimes, forkable sandboxes, and a Rust rewrite of Vite, which is relevant to anyone building long-running cod…
+  - Link: https://www.youtube.com/watch?v=pZWPq_ZAmM4
+
+- **Mastra Factory** (Notable; agents_mcp_skills; email) - Mastra Factory is an open-source pipeline that turns repo issues into plans, code, and reviewed PRs, directly relevant to your agentic coding workflow and self-hostable for evaluation.
+  - Link: https://factory.mastra.ai/?utm_source=tldrdev
+
+- **GPT-6.2 Astra vs Claude Fable: What OpenAI's Own Data Says** (Notable; research; youtube) - This video relays OpenAI's own benchmark and system-card numbers comparing GPT-6.2 Astra and Claude Fable, but the reader gets no independent testing, so treat it as secondhand data.
+  - Link: https://www.youtube.com/watch?v=1q_ILLaeEB4
+
+- **Context API extracts full context from any web page** (Notable; dev_tooling; email) - Perplexity's Context API returns clean Markdown, links, passages, and metadata from up to 10 URLs per call, a ready-made extraction layer for agent or MCP web-reading tools.
+  - Link: https://www.perplexity.ai/hub/blog/context-api-extracts-full-context-from-any-web-page?utm_source=tldrai
+
+- **Jelly + Claude Code: What It Is, Install, Real-Project Test** (Notable; agents_mcp_skills; youtube) - Jelly is a free, open-source local tool that lets a coding agent like Claude Code present visual question pages instead of text walls, and the video shows a real-project install and test.
+  - Link: https://www.youtube.com/watch?v=lEVDrPBQkUg
+
+- **Why Antigravity Eats Weekly Quota Fast** (Notable; agents_mcp_skills; email) - Antigravity clears prompt caches after a 5-minute pause and starts every prompt with 13,800+ tokens of overhead, so disabling unused MCP servers and plugins cuts quota burn.
+  - Link: https://asubedi.com.np/blog/why-antigravity-eats-weekly-quota-fast/?utm_source=tldrai
+
+- **Five brand new ways to use Claude at work** (Notable; dev_tooling; youtube) - Anthropic is rolling out Claude Meetings, Whiteboards, Sheets, and Data plus interactive connectors, so workflow-level tooling may shift and Team/Enterprise plan gating matters for adoption.
+  - Link: https://www.youtube.com/watch?v=t2Zo3YAJdj4
+
+- **Sashiko: Agentic Code Review System for Linux** (Notable; agents_mcp_skills; email) - Sashiko separates bug discovery from verification and requires code evidence for both findings and dismissals, a concrete pattern for building trustworthy agentic code review.
+  - Link: https://cloud.google.com/blog/products/application-development/lessons-from-building-sashiko-an-agentic-code-review-system?utm_source=tldrdev
+
+- **How OpenAI’s Performance Factory keeps ChatGPT fast** (Notable; dev_tooling; web) - OpenAI's Codex-driven performance workflows show agentic coding applied to production latency work, a pattern you could borrow for your own codebases, though the details are behind the link.
+  - Link: https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast
+
 ## 2026-11-19
 
 - **Claude Code v2.1.326–v2.1.328** (AI/Claude tooling) - Three releases in four days: auto mode on Bedrock/Vertex/Foundry for Opus 4.6 and Sonnet 4.6, `mcp_tool` hooks that can fail closed, and safer MCP setup.
