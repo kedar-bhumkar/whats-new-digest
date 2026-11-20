@@ -2,6 +2,30 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-20
+
+- **Claude Fable 5.2 and Mythos 5.2** (AI/Claude) - New Claude models launched Nov 9 with 1M context, 128k max output, $8/$40 per MTok, plus a per-request fast mode for Fable 5.2.
+  - Why it matters: new top-tier option for agentic coding; fast mode needs no beta header. Opus 4.8 fast mode is removed Nov 30, so migrate if you rely on it.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Message threads (beta)** (AI/Claude) - Server-side conversation state so later requests send only new messages (Nov 2).
+  - Why it matters: smaller requests and lower time-to-first-token for long chats and agent loops.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Self-hosted Claude Managed Agents** (AI/Claude) - Run the whole Managed Agents service on your own infrastructure (Nov 12, access by request via account team).
+  - Why it matters: lets teams with data-residency needs use hosted-agent workflows.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Linked billing (beta)** (AI/Claude) - Customers can pay for Claude usage in your app through their own Claude organization (Nov 17).
+  - Why it matters: removes the need to proxy and resell inference when building apps on Claude.
+  - Link: https://platform.claude.com/docs/en/release-notes/overview
+
+- **Claude Code v2.1.327-v2.1.329** (AI/Claude) - `claude mcp add-json <name> -` reads server JSON from stdin (keeps tokens off the command line); `/status` flags broken skills/hooks/permissions; `/tasks` now lists scheduled tasks, loops and forks; hook trust dialog shows where hooks are declared; auto mode extended to Bedrock/Vertex/Foundry.
+  - Why it matters: safer MCP setup and easier debugging of agent config.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+No GitHub repos added today: the trending candidates I found (e.g. NousResearch/hermes-agent, MIT, ~265k stars) are not new and I could not verify recent commit activity from the primary page.
+
 ## 2026-11-19 (AKD)
 
 - **[AINews] Gemini 4 Neon: GDM's Opus/Sol Contender** (Top pick; model_release; web) - Gemini 4 Neon is a new mid-tier model at $3/$15 per million tokens with a 1M-token context, available in the paid Gemini API, Antigravity, and Cursor and GitHub Copilot, so it's worth testing as a dr…
@@ -1130,78 +1154,4 @@ _Quiet feed: no new Claude model or notable new repo could be verified from prim
   - Safety note: Apache-2.0, about 103k stars, 2,635 commits, trending this week. The last-commit date wasn't visible to me, and I haven't audited the code.
 
 - Skipped on safety grounds: thedotmack/claude-mem is trending (Apache-2.0), but its README promotes a third-party token with a contract address, uses a `curl | bash` installer path, and has cloud sync with a paid trial. I can't vouch for it.
-
-## 2026-11-04 (AKD)
-
-- **Anthropic shipped message threads (beta): Claude Code now sends only new messages per turn, about 35% lower time to first token on 500k to 1M token requests** (Top pick; dev_tooling; reddit) - Anthropic's new Messages API "thread" beta (on by default in Claude Code) cuts time to first token about 35% on 500k–1M token requests, but threads expire after 5 idle minutes, forcing a full resend.
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xnc4ew/anthropic_shipped_message_threads_beta_claude/
-  - Also covered by: [Claude Introduces Message Threads](https://claude.com/resources/articles/message-threads?utm_source=tldrai) (email)
-  - Also covered by: [Claude Message Threads Tested: 34 of 50 Turns Faster](https://www.youtube.com/watch?v=nawZ1OvhpE0) (youtube)
-
-- **Axion1-0/Axion-1.0-35B · Hugging Face** (Top pick; model_release; reddit) - An open-weight 35B agent model with a fully reproducible training recipe (data, prompts, and code), useful as a local or self-hosted agent backend to evaluate against your current stack.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnjiu4/axion10axion1035b_hugging_face/
-
-- **Vercel Labs open sourced a free tool that lets any AI agent operate desktop apps, so you can add co…** (Top pick; agents_mcp_skills; x) - Vercel Labs' agent-desktop lets coding agents drive desktop apps via the accessibility tree rather than screenshots, installable via npm on macOS, Windows, and Linux.
-  - Link: https://x.com/RoundtableSpace/status/2117825412462240136
-
-- **anthropics/claude-code v2.1.318** (Top pick; dev_tooling; github) - Claude Code v2.1.318 fixes a `--continue` regression from 2.1.314 that could drop earlier conversation, and adds login-expiry warnings for `claude -p` and CI jobs.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.318
-
-- **anthropics/anthropic-sdk-python v2.5.0** (Top pick; dev_tooling; github) - Breaking-risk check: OverloadedError and ServiceUnavailableError now subclass InternalServerError, so any `except InternalServerError` handlers will start catching them, and APIStatusError gains new…
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.5.0
-
-- **Kimi-K3.1-Pro is now open-weights** (Notable; model_release; reddit) - Moonshot's Kimi-K3.1-Pro is now open-weights, so it can be self-hosted or run through providers, which matters if you want a strong alternative model behind your agent stack.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnrhvb/kimik31pro_is_now_openweights/
-
-- **Baseten launches Grid, Sandboxes, and Serverless Loops** (Notable; agents_mcp_skills; email) - Baseten's new VM-isolated, resumable Sandboxes for agent execution are directly relevant to your agent sandboxing and infrastructure interests, and Grid's model routing could matter if you build on m…
-  - Link: https://www.baseten.co/blog/the-building-blocks-of-the-open-frontier?utm_source=tldrai
-
-- **ricursiveAI/Ripple-65B-Preview · Hugging Face** (Notable; model_release; reddit) - A 65B open-weight model preview from ricursiveAI on Hugging Face, relevant if you're evaluating local models for agent or coding workloads on your own hardware.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnx3cs/ricursiveairipple65bpreview_hugging_face/
-
-- **Hackers stole $6.34B from Binance with a fake coding assignment. The same trick hits developers eve…** (Notable; agents_mcp_skills; x) - This is a practical, adoptable security habit: before running an unknown repo, ask Claude Code to audit install hooks, obfuscated code, network calls, and credential access without executing anything…
-  - Link: https://x.com/RoundtableSpace/status/2117953758730588392
-  - Also covered by: [Binance has revealed how the $6.3B theft happened, and it started months earlier than the heist. Bi…](https://x.com/RoundtableSpace/status/2117795213682855971) (x)
-
-- **ComfyUI v0.44.0 released** (Notable; dev_tooling; reddit) - ComfyUI v0.44.0 ships a new release for your AI image and video tooling, so check whether it changes node APIs or workflow compatibility before upgrading your pipelines.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xngb2i/comfyui_v0440_released/
-
-- **TinyWebUI - Lightweight Open WebUI alternative, just npx and go** (Notable; repo_library; reddit) - A lightweight, npx-installable local chat UI with built-in local web search, memory, and MCP support, directly adoptable for local-model workflows this week.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnmre2/tinywebui_lightweight_open_webui_alternative_just/
-
-- **Limit what agents learn about private repos with enclaves** (Notable; agents_mcp_skills; email) - GitHub Next's enclaves limit what agents share across private repos, relevant to agent security and any multi-repo agentic workflow setup.
-  - Link: https://githubnext.com/posts/enclaves/?utm_source=tldrai
-
-- **djs** (Notable; agents_mcp_skills; email) - A Rust-built JS/TS engine that runs agent-generated code in a WebAssembly sandbox and can snapshot and resume mid-execution, relevant to agent security and tool-calling workflows.
-  - Link: https://github.com/earendil-works/djs?utm_source=tldrdev
-
-- **Building the AI Agent Is Easy. Proving It's Safe Isn't - Jonathan Osborne, NatWest** (Notable; agents_mcp_skills; youtube) - A practical look at how a regulated bank evaluates and safely rolls out production AI agents, including why LLM-as-judge scoring and single accuracy numbers can mislead, which is directly useful for…
-  - Link: https://www.youtube.com/watch?v=5UgnatzpZ9E
-
-- **Why Agents Are Soon Only Going to Have 1 Tool** (Notable; agents_mcp_skills; email) - This matters for how you design MCP servers and agent tool catalogs: collapsing many tools into one sandboxed exec tool could reduce tool-call round trips and context overhead.
-  - Link: https://www.philschmid.de/code-mode?utm_source=tldrnewsletter
-
-## 2026-11-04
-
-- **Claude Code v2.1.318** (AI/Claude tooling) - Reliability release: fixes `--continue` losing history after malformed tool-call retries, and `claude mcp remove`/`/logout` falsely reporting success; adds a `claude -p` warning 10 days before sign-in expiry.
-  - Why it matters: Useful for headless/CI use of `claude -p`; also adds an `effort` option for a mod's `$.model.fork`.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Code v2.1.314-2.1.316 (Oct 30-31)** (AI/Claude tooling) - New `permissions.blockWritesOutsideWorkingDirectories` setting, `CLAUDE_CODE_SUBAGENT_EFFORT` env var, idle-conversation compaction in VS Code/Desktop, and `CLAUDE_CODE_DISABLE_ULTRATHINK`.
-  - Why it matters: Lets you sandbox agent writes to the project and tune subagent cost. Note: Opus 4.8 fast mode is deprecated and removed Nov 30, 2026 - migrate to Opus 5.5.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Haiku 5.5** (AI/Claude tooling) - Anthropic's cheapest/fastest small model (`claude-haiku-5-5`, announced Oct 7, so older than the 7-day window but worth knowing); $0.10/$0.50 per M input/output tokens (prompts up to 100k), first Haiku-class model with an effort setting, computer/browser use (beta) in the Python/TS SDKs.
-  - Why it matters: Good fit for subagents, classification, summarization and compaction steps; Sonnet 5.5 cache reads also cut 50%.
-  - Link: https://www.anthropic.com/news/claude-haiku-5-5
-
-- **worktrunk** (GitHub repo) - Rust CLI for Git worktree management aimed at running AI agents in parallel (`wt switch/list/merge/remove`, hooks, LLM commit messages).
-  - Why it matters: Makes it easy to run several coding agents on isolated branches without collisions.
-  - Link: https://github.com/max-sixty/worktrunk
-  - Safety note: MIT OR Apache-2.0; ~10.8k stars; installs via package managers (no curl|sh), but the suggested `wt config shell install` edits shell config - review first. Last-commit date not visible from the page.
-
-- **obra/superpowers** (GitHub repo) - Composable agent-skills framework/methodology (brainstorm, plan, TDD, subagent-driven implementation, review) for Claude Code, Codex, Cursor, Gemini CLI; trending on GitHub this week.
-  - Why it matters: Drop-in workflow skills that structure how agents implement features.
-  - Link: https://github.com/obra/superpowers
-  - Safety note: MIT; ~312k stars; skills are prompts/markdown plus shell - read before enabling. Last-commit date not visible from the page.
 
