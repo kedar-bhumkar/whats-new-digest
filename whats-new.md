@@ -2,6 +2,75 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-20 (AKD)
+
+- **Google launches Gemini 4 Neon** (Top pick; model_release; email) - Gemini 4 Neon is now live via API with a 1M-token context at $3/$15 per million input/output tokens, a direct cost comparison for your Claude API workloads.
+  - Link: https://www.testingcatalog.com/google-launches-gemini-4-neon-on-gemini-antigravity-and-apis/?utm_source=tldrnewsletter
+  - Also covered by: [Gemini 4 Neon Is Here, And It’s a Beast!](https://www.youtube.com/watch?v=Q0ShBenKyqo) (youtube)
+  - Also covered by: [Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/?utm_source=tldrai) (email)
+  - Also covered by: [Google just released Gemini 4 Neon, and on its own benchmarks it beats GPT-6.2 Sol and Claude Opus …](https://x.com/RoundtableSpace/status/2123676466269577239) (x)
+  - Also covered by: [Gemini 4 Neon vs Carbon: Which One Should You Actually Use?](https://www.youtube.com/watch?v=pYAczC5IgCU) (youtube)
+
+- **anthropics/claude-code v2.1.329** (Top pick; dev_tooling; github) - Claude Code v2.1.329 fixes a `~/.claude.json` reset that could lose settings and a macOS Keychain sign-out loop, and adds hook-source trust warnings worth reviewing if you use managed hooks.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.329
+
+- **anthropics/anthropic-sdk-python v2.12.0** (Top pick; dev_tooling; github) - Bedrock users passing a user profile ID will now see it applied, but requests to Bedrock models without profile support will start returning 400 errors, so remove the ID for those.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.12.0
+
+- **FastFrames: Video Generation at Interactive Latency** (Top pick; model_release; email) - Apple's FastFrames reports 480p video generation at 36 ms per frame on one GPU, which matters for interactive video tooling if the weights and license are usable outside research.
+  - Link: https://apple-aiml-research.github.io/ml-fastframes/?utm_source=tldrai
+
+- **Introducing Tool Retrieval in the Gemini API** (Top pick; dev_tooling; email) - Gemini API now auto-selects and runs registered functions from input, relevant as an alternative to manual tool-calling loops in agent builds, though it's Google-specific rather than a Claude-stack c…
+  - Link: https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/?utm_source=tldrai
+
+- **OpenAI just put ChatGPT's new voice model in the API, and idle time now costs less than half. → $0.…** (Top pick; model_release; x) - OpenAI's ChatGPT voice model is now in the API as "gpt-live-1.1" at $0.05/min talking and $0.02/min idle, relevant if you're building voice agents or coding companions.
+  - Link: https://x.com/RoundtableSpace/status/2123684016213684411
+
+- **Let Gemini tackle repetitive chores on your Mac** (Top pick; model_release; email) - Gemini's Mac app now runs multi-step computer-use tasks across local files, apps, and the web, with approval gates, relevant to anyone tracking agent sandboxing and permission design.
+  - Link: https://blog.google/innovation-and-ai/products/gemini-app/computer-use-mac/?utm_source=tldrai
+
+- **Engineer Your Coding Agents Like Any Other System — Zach Lloyd, Warp** (Top pick; agents_mcp_skills; youtube) - Covers treating cloud coding agents as a measured, code-defined system (sandboxing, swappable models, online evals, orchestration), directly relevant to scaling Claude Code and Agent SDK workflows be…
+  - Link: https://www.youtube.com/watch?v=0LeT996Hz3E
+
+- **CLI-Anything is an open-source project that turns software into command-line tools AI agents can op…** (Top pick; agents_mcp_skills; x) - CLI-Anything is a Claude Code plugin that generates agent-operable CLIs from any project, installable in three commands for a quick trial.
+  - Link: https://x.com/RoundtableSpace/status/2123585869433249932
+
+- **Apple just released Depth Pro 2, and the model is free to download. → Turns any single photo or vid…** (Top pick; model_release; x) - A free, open depth-estimation model from Apple that works on single photos and video frame by frame, relevant for AR, 3D effects, and vision pipelines.
+  - Link: https://x.com/RoundtableSpace/status/2123751964529807479
+
+- **Gemini 4 Neon: Google’s Middle Model Tested** (Top pick; model_release; youtube) - The video tests Google's Gemini 4 Neon model against a mega test prompt, but the description actually centers on a Qwen LoRA adapter install, so the Gemini coverage may be thin; check the linked Goog…
+  - Link: https://www.youtube.com/watch?v=sZU2I8_uoeg
+
+- **Make AI videos for free on the computer you already own. → Runs MiniMax H3, one of the top video mo…** (Top pick; repo_library; x) - Runs MiniMax H3 video generation locally on 8GB VRAM with Claude Code or Codex driving it, a possible free alternative to paid video APIs, though the claims are unverified.
+  - Link: https://x.com/RoundtableSpace/status/2123744415164272906
+
+- **INK-Q/agy-fast** (Top pick; agents_mcp_skills; github) - It's an MCP plugin claiming to cut Antigravity LLM turns, tokens, and upload traffic without changing the native UI or diffs, so worth a look if you use Antigravity alongside MCP tooling, though the…
+  - Link: https://github.com/INK-Q/agy-fast
+
+- **zavi2997-droid/claude-code-agent-workspace** (Top pick; agents_mcp_skills; github) - Relevant to your Claude Code and Agent SDK workflows: it offers a pattern for running composable agents across isolated workspaces, though at 96 stars its maturity needs checking before adoption.
+  - Link: https://github.com/zavi2997-droid/claude-code-agent-workspace
+
+- **Deploying Daybreak Red** (Top pick; agents_mcp_skills; web) - It's a reference architecture for running supervised security investigations with OpenAI's Daybreak Red, covering safety controls and monitoring, relevant to agent sandboxing and security patterns.
+  - Link: https://openai.com/business/learn/deploying-daybreak-red
+
+- **Meet the New Docker, Built to Run on Trust** (Notable; agents_mcp_skills; email) - Docker Sandboxes for isolated agent coding environments and AI Governance for agent access control are directly relevant to agent sandboxing and security work you're tracking.
+  - Link: https://www.docker.com/blog/meet-the-new-docker-built-to-run-on-trust/?utm_source=tldrdev
+
+- **Mirror Dimension for Agents: Evaluating Browser-Use Agents Without the Web** (Notable; agents_mcp_skills; email) - Google's "Mirror Dimension" offers a sandboxed replica for evaluating browser-use agents without live-web risk, relevant to agent security and eval workflows.
+  - Link: https://blog.google/security/mirror-dimension-for-agents/?utm_source=tldrai
+
+- **PINE, a Reactive Harness for Agents** (Notable; agents_mcp_skills; email) - PINE is an open-source event-driven agent harness that triggers agents on file changes, webhooks, or Telegram messages, a direct fit for building reactive Claude Agent SDK workflows on macOS or Linux.
+  - Link: https://github.com/pmndre/pine?utm_source=tldrdev
+
+- **Connect Your Team’s Data to ChatGPT** (Notable; agents_mcp_skills; youtube) - OpenAI's ChatGPT now supports admin-installed Data plugins, Snowflake connections, and custom MCP servers, which is directly relevant to MCP-based agent integration work.
+  - Link: https://www.youtube.com/watch?v=oJIuz3AFfEQ
+
+- **Sandboxed Models Can Communicate via Inference Servers** (Notable; agents_mcp_skills; email) - Models sharing one inference server can signal each other through timing and load effects, so sandboxing alone may not isolate multi-agent or multi-tenant deployments.
+  - Link: https://www.lesswrong.com/posts/7wzWuLP3HhyBLmKfo/models-can-communicate-via-inference-servers-despite-being?utm_source=tldrai
+
+- **How to build an agent that builds the culture — Zach Bruggeman, Ramp** (Notable; agents_mcp_skills; youtube) - This talk covers how Ramp's internal agent Inspect writes about 75% of its code, with concrete practices like shared agent tooling and visible verification that a team lead could copy this week.
+  - Link: https://www.youtube.com/watch?v=MDI81OaZAD4
+
 ## 2026-11-20
 
 - **Claude Fable 5.2 and Mythos 5.2** (AI/Claude) - New Claude models launched Nov 9 with 1M context, 128k max output, $8/$40 per MTok, plus a per-request fast mode for Fable 5.2.
