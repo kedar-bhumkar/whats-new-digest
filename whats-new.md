@@ -2,6 +2,26 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-21
+
+- **Claude Code v2.1.328-v2.1.330** (AI/Claude tooling) - Three releases in two days: v2.1.330 adds a built-in "easel" mod that draws charts on request and under MCP metrics results, org-settings/gateway applied after `claude auth login`, and fixes for post-compaction freezes and `ExitWorktree` deleting worktrees used by other sessions.
+  - Why it matters: v2.1.328 extends auto mode to Opus 4.6/Sonnet 4.6 on Bedrock, Google Cloud, Foundry and the Claude apps gateway, and `"onFailure": "block"` now works for `mcp_tool` hooks, so MCP-based guardrails can actually block. v2.1.329 shows where a folder's hooks are declared in the trust dialog and `/tasks` now lists scheduled tasks and `/loop` wakeups.
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **anthropic-sdk-python v2.10.0-v2.12.0** (AI/Claude tooling) - v2.12.0 (Nov 20) fixes Bedrock to send `user_profile_id` in the request body; v2.11.0 adds Claude Code managed settings to the Admin API and caches structured-output schema building; v2.10.0 adds beta `billing_policy` and renames error data models.
+  - Why it matters: Bedrock requests with a profile ID to models that lack profile support now return 400, so remove the ID there. Old error model names are deprecated in v2.10.0, so check any code that references them.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+- **Claude Agent SDK (Python) v0.2.187** (AI/Claude tooling) - New release on Nov 20 (v0.2.186 on Nov 19); the release page lists no changelog text.
+  - Why it matters: Worth pinning or upgrading if you build agents on the SDK. Read the commits before upgrading, since I could not verify what changed.
+  - Link: https://github.com/anthropics/claude-agent-sdk-python/releases
+
+- **MCP spec 2026-07-28 in Claude** (AI/Claude tooling) - Older than the 7-day window, but still being rolled out. The spec makes MCP stateless request/response, ships MCP Apps (interactive UI) and Tasks (long-running work) as versioned extensions, and aligns auth with OAuth 2.0/OIDC. Anthropic says support is "rolling out across Claude products soon" and mentions MCP tunnels (research preview) for private-network servers.
+  - Why it matters: A stateless core means MCP servers can run on serverless and edge platforms, and OIDC auth suits enterprise identity providers (Entra, Okta).
+  - Link: https://claude.com/blog/bringing-mcp-2026-07-28-to-claude
+
+No new GitHub repos made this digest. The ones I found (e.g. NousResearch/hermes-agent, MIT, about 265k stars) are neither new nor newly trending, and its pipe-to-shell installer is not something I could vouch for.
+
 ## 2026-11-20 (AKD)
 
 - **Google launches Gemini 4 Neon** (Top pick; model_release; email) - Gemini 4 Neon is now live via API with a 1M-token context at $3/$15 per million input/output tokens, a direct cost comparison for your Claude API workloads.
@@ -1150,77 +1170,3 @@ _No GitHub repos included today: searches surfaced only older or unverifiable tr
   - Safety note: MIT license; ~113.6k stars, 807 commits, named maintainers. Last commit date not verified. Includes a `hooks/` directory that runs automatically, and its docs suggest a global git `insteadOf` config change; read hooks and scripts before installing.
 
 _Quiet feed: no new Claude model or notable new repo could be verified from primary sources today._
-
-## 2026-11-05 (AKD)
-
-- **AlphaEvolve (GitHub Repo)** (Top pick; repo_library; email) - Open-sourced minimal AlphaEvolve implementation: a Gemini-driven coding agent that evolves algorithms against automated evaluators, useful as a reference pattern for evaluator-driven agent loops.
-  - Link: https://github.com/google-deepmind/alphaevolve?utm_source=tldrai
-
-- **Ripple-65B Preview** (Top pick; model_release; email) - Open-weight Ripple-65B reports state-of-the-art TerminalBench 2.1 results, relevant if you want a self-hostable or cheap coding-agent backend via OpenRouter or Together AI.
-  - Link: https://www.ricursive.com/ripple?utm_source=tldrai
-  - Also covered by: [Ripple-65B: Thin and Deep Dense Model, Tested Locally](https://www.youtube.com/watch?v=Gd5tnklXxLY) (youtube)
-
-- **OpenAI launches Images 2.6 with GIFs and image reference** (Top pick; model_release; email) - Relevant because GPT-Image-2.6 is now available through the API, so it's a possible drop-in for your image tooling, though the piece doesn't mention pricing or breaking changes.
-  - Link: https://www.testingcatalog.com/openai-launches-images-2-6-with-gifs-and-image-reference/?utm_source=tldrai
-  - Also covered by: [Introducing ChatGPT Images 2.6](https://www.youtube.com/watch?v=bJldMYfRvMQ) (youtube)
-  - Also covered by: [GPT-Image-2.6: Faster image generation with Flare and Sunburst](https://www.youtube.com/watch?v=9ZxCOHkfn_8) (youtube)
-  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6) (web)
-
-- **[Paper] FireFlash : An Open Recipe for Long-Horizon Agentic RL Achieving the Performance-Cost Pareto Frontier** (Top pick; research; reddit) - An open 300B agentic coding model claiming Terminal-Bench parity with frontier models at about 30× lower per-task cost, with the full RL recipe released, is relevant for cost-conscious agent builders…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xomst7/paper_fireflash_an_open_recipe_for_longhorizon/
-
-- **Vibe coding has a spec problem, and GitHub's Spec Kit is the most popular answer so far: 100K+ star…** (Top pick; repo_library; x) - GitHub's Spec Kit adds a spec-first workflow (/constitution through /implement) that supports Claude Code, so it's directly testable on a real project this week.
-  - Link: https://x.com/RoundtableSpace/status/2118187800356966553
-
-- **Kimi-K3.1-Pro** (Notable; model_release; email) - A new open-weight Kimi model with a million-token context window and gains in coding and multimodal work, worth testing against your Claude Code and agent workflows.
-  - Link: https://huggingface.co/moonshotai/Kimi-K3.1-Pro?utm_source=tldrai
-
-- **anthropics/anthropic-sdk-python v2.6.0** (Notable; dev_tooling; github) - The Python SDK v2.6.0 changes Bedrock and Vertex error classes to raise error-code and status exceptions, so any `except` blocks on those clients may need updating.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.6.0
-
-- **Make long-running agents faster with message threads** (Notable; dev_tooling; email) - Anthropic's message threads beta cuts time-to-first-token about 35% for long-running agents by sending only new messages each turn, relevant to Claude Agent SDK and API users.
-  - Link: https://claude.com/resources/articles/message-threads?utm_source=tldrdev
-
-- **A thousand fewer paths to root** (Notable; research; web) - An autonomous AI pipeline found and patched 948 Linux kernel privilege-escalation bugs, relevant to agent-driven security tooling and the risks of autonomous code changes.
-  - Link: https://openai.com/index/a-thousand-fewer-paths-to-root
-
-- **modelcontextprotocol/servers v2.3.0** (Notable; agents_mcp_skills; github) - The v2.3.0 release bumps the official MCP reference servers (filesystem, git, fetch, memory, and others) to new major-line versions, so pin-checking or testing these in existing MCP configs is worth…
-  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.3.0
-
-- **Claude Code can now make AI videos with Runway. Runway's plugin lets your coding agent generate vid…** (Notable; agents_mcp_skills; x) - Runway's plugin lets Claude Code generate video, image, and voiceover assets from the terminal, and it installs via /plugin install runway-api, so it's a quick test for the video tooling you already…
-  - Link: https://x.com/RoundtableSpace/status/2118285947003371982
-
-- **Introducing Pangram Image 1.0** (Notable; model_release; email) - Adds a heatmap-based AI image/video detector with an API, useful if you ever need to verify media in a pipeline you're building, though it's peripheral to your agentic coding focus.
-  - Link: https://www.pangram.com/blog/introducing-pangram-image-1-0?utm_source=tldrai
-
-- **AuroraIMG2-100M Releases!** (Notable; model_release; reddit) - A new Apache 2.0 open-weight image model (AuroraIMG2-100M, diffusers-compatible) that could slot into a local ComfyUI or diffusers image pipeline.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xnzynf/auroraimg2100m_releases/
-
-- **GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents** (Notable; model_release; web) - A new OpenAI cybersecurity model aimed at finding exploitable vulnerabilities and drafting fixes, relevant to agent security and sandboxing work.
-  - Link: https://openai.com/index/introducing-gpt-6-cyber
-
-- **An open-source project just ranked #1 on EnterpriseRAG-Bench, ahead of the listed systems from OpenAI, Google, Microsoft and Amazon** (Notable; agents_mcp_skills; reddit) - An open-source, self-hostable agentic RAG system (PipesHub, MCP-connectable) reports #1 on EnterpriseRAG-Bench, but the author is a founder, so treat the claim cautiously.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xoiaye/an_opensource_project_just_ranked_1_on/
-
-## 2026-11-05
-
-- **Claude Code v2.1.316-v2.1.317** (AI/Claude tooling) - Releases from 31 Oct and 3 Nov: Agent SDK hook callbacks accept `onFailure: "block"`, a prompt before tools send your account email over the network, `CLAUDE_CODE_SUBAGENT_EFFORT`, and a cost report endpoint (`GET /v1/organizations/analytics/cost`) on the Claude apps gateway admin API.
-  - Why it matters: `onFailure: "block"` makes SDK guardrail hooks fail closed instead of letting an action through, which suits policy or safety checks. Subagent effort can now be tuned separately to control cost.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.317
-
-- **Opus 4.8 fast mode deprecation** (AI/Claude tooling) - The v2.1.316 notes say fast mode for Opus 4.8 is deprecated as of 2026-10-30 and will be removed on 2026-11-30. After that, requests return an error instead of falling back to standard Opus 4.8. The notes recommend migrating to Opus 5.5.
-  - Why it matters: Check scripts, configs, and SDK calls that pin Opus 4.8 fast mode before the 30 Nov cutoff.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.316
-
-- **max-sixty/worktrunk** (GitHub repo) - Rust CLI for Git worktree management built for running several AI agents in parallel. It has hooks, LLM-generated commit messages, a merge workflow, and PR checkout.
-  - Why it matters: It gives each agent its own worktree and branch, which avoids agents overwriting each other's files when you run several Claude Code sessions on one repo.
-  - Link: https://github.com/max-sixty/worktrunk
-  - Safety note: MIT OR Apache-2.0, about 11.3k stars, 5,501 commits, on GitHub's weekly trending page. The last-commit date wasn't visible to me, so check activity yourself. I haven't audited the code or hooks.
-
-- **pbakaus/impeccable** (GitHub repo) - A design vocabulary for coding agents: commands like `polish`, `bolder`, `critique`, and `audit`, plus a rule-based detector that flags generic "AI slop" UI patterns. It works with Claude Code, Cursor, and Codex CLI.
-  - Why it matters: It gives agents repeatable commands for reviewing and improving generated frontends, where you would otherwise re-prompt each time.
-  - Link: https://github.com/pbakaus/impeccable
-  - Safety note: Apache-2.0, about 103k stars, 2,635 commits, trending this week. The last-commit date wasn't visible to me, and I haven't audited the code.
-
-- Skipped on safety grounds: thedotmack/claude-mem is trending (Apache-2.0), but its README promotes a third-party token with a contract address, uses a `curl | bash` installer path, and has cloud sync with a paid trial. I can't vouch for it.
-
