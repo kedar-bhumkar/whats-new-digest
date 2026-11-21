@@ -2,6 +2,74 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-21 (AKD)
+
+- **Gemini 4 Neon Is Here, And It’s a Beast!** (Top pick; model_release; youtube) - A new Gemini 4 Neon model for coding and knowledge work, with early-access demos and a Google AI Studio entry point, worth a look for model-choice decisions.
+  - Link: https://www.youtube.com/watch?v=Q0ShBenKyqo
+  - Also covered by: [Gemini 4 Neon](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/?utm_source=tldrai) (email)
+  - Also covered by: [Gemini 4 Neon vs Carbon: Which One Should You Actually Use?](https://www.youtube.com/watch?v=pYAczC5IgCU) (youtube)
+
+- **Thinking Machines just released a 26B model that runs on your laptop, and on its own benchmarks it …** (Top pick; model_release; x) - A 26B open-weights model (3.4B active, ~20GB memory) claiming 79.2% on SWE-bench Verified and runnable locally via Ollama, which is worth verifying against the official release before relying on it.
+  - Link: https://x.com/RoundtableSpace/status/2124099253039771892
+  - Also covered by: [Inkling 2 Mini vs Qwen 3.8 27B: Worth It on a PC?](https://www.youtube.com/watch?v=av9e098JVOs) (youtube)
+
+- **anthropics/claude-code v2.1.330** (Top pick; dev_tooling; github) - Claude Code v2.1.330 adds enterprise org sign-in and a `--start-dir` option for the self-hosted runner, plus new plugin-install JSON fields that scripts parsing that output may need to handle.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.330
+
+- **Craft Anything is an open-source Rust engine that studies how a website, app or game works, has a c…** (Top pick; agents_mcp_skills; x) - Open-source Rust engine that has a coding agent reverse-engineer and rebuild a target site or app, with 320 MCP-exposed tools a reader's agent could drive directly.
+  - Link: https://x.com/RoundtableSpace/status/2124001105512464726
+
+- **PostgreSQL 19 Released** (Top pick; dev_tooling; email) - PostgreSQL 19 adds concurrent table repacking and standby write-wait semantics, useful for your Salesforce-adjacent backends but not an immediate change to your stack.
+  - Link: https://www.postgresql.org/about/news/postgresql-19-released-3449/?utm_source=tldrdev
+
+- **When Agent Swarms Outperform Solo Coders** (Top pick; research; email) - Replit's benchmark shows 32 parallel Opus agents hit an 18.9x NumPy speedup versus 3.7x for one, useful for deciding when multi-agent setups pay off despite higher compute cost.
+  - Link: https://frontier.replit.com/throwing-headcount-at-the-problem/?utm_source=tldrai
+
+- **Top 10 Things AI Gets Wrong in Web Development** (Top pick; research; email) - Coding agents passed only 52% of Chrome's web dev checks unaided versus 91% with Modern Web Guidance, a concrete gap to close in your React/Tailwind workflow.
+  - Link: https://developer.chrome.com/blog/top-10-things-ai-gets-wrong-in-web-dev?utm_source=tldrdev
+
+- **Crashlytics for Web Is Now in Public Preview** (Top pick; dev_tooling; email) - Firebase Crashlytics now groups browser JavaScript errors and alerts on new or regressed issues, a low-effort addition for a React/Vite/Vercel app with a clear first step of enabling it.
+  - Link: https://firebase.blog/posts/2026/11/crashlytics-web-public-preview?utm_source=tldrdev
+
+- **One of DeepSeek's earliest researchers just open-sourced a personal AI agent that runs a 125B model…** (Top pick; agents_mcp_skills; x) - Open-source local agent claiming to run a 125B model on a 12GB GPU via GPU/RAM offloading; the claim is unverified, so test before relying on it.
+  - Link: https://x.com/RoundtableSpace/status/2124114352114463212
+
+- **You can train your own LLM from scratch for about 40 cents. MiniMind has 67.9K stars, and it walks …** (Top pick; repo_library; x) - A 64M-parameter open-source repo (MiniMind) that trains an LLM end to end in about 2 hours on one RTX 3090, a concrete hands-on way to learn pretraining, SFT, LoRA, DPO and GRPO.
+  - Link: https://x.com/RoundtableSpace/status/2124106802098995410
+
+- **Google’s Elephant-Goldfish Model: Design First, Code Last** (Top pick; agents_mcp_skills; youtube) - Elephant-Goldfish is an open-source Google plugin for agent-driven design review before coding, relevant to a Claude Code workflow and adoptable with a single install step.
+  - Link: https://www.youtube.com/watch?v=Gl8ecFo9X80
+
+- **SAVE THIS: 14 free repos that let Claude Code make game-ready 3D models for you. → Blender MCP and …** (Top pick; agents_mcp_skills; x) - A curated pipeline of free open-source MCP servers and tools that lets Claude Code drive Blender and clean up, UV-unwrap, texture, and optimize 3D models; the Blender MCP install command is included.
+  - Link: https://x.com/RoundtableSpace/status/2124121902046130364
+
+- **w01fb0ss/PiBot** (Top pick; agents_mcp_skills; github) - Open-source local-first desktop agent team with MCP support, computer use, and approval gates, built on the pi agent framework; relevant to agent infrastructure and MCP tooling, though at 145 stars i…
+  - Link: https://github.com/w01fb0ss/PiBot
+
+- **How to turn a GTA 6 stream into vertical clips for free. a new MIT repo, GTA Auto Clipper, finds th…** (Top pick; repo_library; x) - A free MIT-licensed Python/FFmpeg tool that auto-generates captioned 9:16 clips from live streams, relevant to the reader's AI-tooling interests, though it is a video-content workflow rather than a c…
+  - Link: https://x.com/RoundtableSpace/status/2124038854365868118
+
+- **Stop wasting hours copying information from websites into ChatGPT. Firecrawl is an open-source tool…** (Top pick; repo_library; x) - Firecrawl is an open-source web-to-markdown tool with a free API tier that can feed clean page data straight into Claude or an agent workflow, a quick win to test.
+  - Link: https://x.com/RoundtableSpace/status/2124220048378105984
+
+- **LIUFelix2004/dsh-workbuddy** (Top pick; repo_library; github) - It bundles WorkBuddy accounts into DeepSeek Harness as model providers, including an automatic workaround for a gateway channel check (error 11128), a possible fragility point if that check changes.
+  - Link: https://github.com/LIUFelix2004/dsh-workbuddy
+
+- **Windows 11 Is Collecting Data on Which Coding Agents and Developer Tools You Use** (Notable; industry_business; email) - Windows 11 appears to log which coding agents and developer tools run on the machine, a privacy and telemetry concern for anyone running agentic tools locally.
+  - Link: https://xusheng.dev/posts/windows-coding-agent-telemetry/?utm_source=tldrdev
+
+- **Stripe evals: Measuring real-world coding agent performance** (Notable; research; email) - Stripe's open evals show frontier coding agents can build working Stripe integrations but often skip best practices, a useful yardstick for judging agent output on payment code.
+  - Link: https://stripe.dev/blog/stripe-integration-evals-methodology?utm_source=tldrai
+
+- **Apple Is Working on AI Agent for Device Control, Apps, Browsing and Coding** (Notable; industry_business; email) - Apple's planned agent would control apps, browsers, and APIs on macOS, and its warning prompt for third-party agent control signals new permission gates for agents like Claude Code on Mac.
+  - Link: https://www.bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJTdWJzY3JpYmVyR2lmdGVkQXJ0aWNsZSIsImlhdCI6MTc5NTE1Mjg1OSwiZXhwIjoxNzk1NzU3NjU5LCJhcnRpY2xlSWQiOiJUT1I5MEtLSkg2VjUwMCIsImJjb25uZWN0SWQiOiI2NTc1NjkyN0UwMkM0N0MwQkQ0MDNEQTJGMEUyNzIyMyJ9.DNgJTKuQu7QIBBw3KLL5QMx5EfNQt2XAf4UlPajQr2U&utm_source=tldrnewsletter
+
+- **Vercel Board** (Notable; agents_mcp_skills; email) - Vercel's experimental Board lets AI agents claim tasks and share context, relevant to your agentic workflow and Vercel deployments, though it's early and unproven.
+  - Link: https://vercel.com/blog/introducing-vercel-board?utm_source=tldrai
+
+- **What Runs Where? Local AI in Production — Ahmad Osman, Osmantic** (Notable; research; youtube) - Covers practical choices for running local models in production (quantization, hardware, inference engines, batching, speculative decoding), relevant to an AI builder deciding what to self-host versu…
+  - Link: https://www.youtube.com/watch?v=GKSQYbELDzw
+
 ## 2026-11-21
 
 - **Claude Code v2.1.328-v2.1.330** (AI/Claude tooling) - Three releases in two days: v2.1.330 adds a built-in "easel" mod that draws charts on request and under MCP metrics results, org-settings/gateway applied after `claude auth login`, and fixes for post-compaction freezes and `ExitWorktree` deleting worktrees used by other sessions.
