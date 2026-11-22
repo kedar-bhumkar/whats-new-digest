@@ -2,6 +2,39 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-22
+
+- **Claude Code v2.1.328 / v2.1.329** (AI/Claude) - Auto mode extended to Opus 4.6 and Sonnet 4.6 on Bedrock, Google Cloud, Foundry and the Claude apps gateway; `"onFailure": "block"` now works for `mcp_tool` hooks; `/tasks` lists scheduled tasks, `/loop` wakeups and forks; `/mcp` shows the JSON-RPC error from refusing remote servers.
+  - Why it matters: blocking MCP-tool hooks let you enforce guardrails on MCP calls, and the trust dialog now shows where a folder's hooks are declared (safer when cloning unfamiliar repos).
+  - Link: https://github.com/anthropics/claude-code/releases
+
+- **Linked billing for the Claude API (beta)** (AI/Claude) - Customers can pay for Claude usage in your app through their own Claude organization; set `billing_policy` on `/v1/messages` (Nov 17, beta header `user-profiles-billing-2026-10-01`).
+  - Why it matters: if you ship an app on top of Claude, users can bring their own billing with spend caps, so you stop fronting API cost. Only works for orgs that pay Anthropic directly.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Self-hosted Claude Managed Agents** (AI/Claude) - The full Managed Agents service (agent/session storage and history) can run on your own infrastructure (Nov 12); access via your Anthropic account team.
+  - Why it matters: lets regulated or data-resident projects use hosted-agent infrastructure without sending session data to a third-party service.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **Claude Fable 5.2 / Mythos 5.2 API changes** (AI/Claude) - Released Nov 9 (older than the usual window but with breaking changes): 1M context, 128k output, always-on adaptive thinking, $8/$40 per MTok, fast mode via `speed: "fast"`. Prefix check enforced (editing system/tools/earlier messages then resending a thinking block returns 400), computer use needs `computer_toolset_20260801`.
+  - Why it matters: check existing agent loops that rewrite history or use the old computer-use tool before switching models.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **alibaba/open-code-review** (GitHub) - AI code-review CLI that reads Git diffs, runs an LLM agent, and emits line-level comments; also a `scan` mode and a mode that delegates review to your host coding agent.
+  - Why it matters: drop-in pre-merge/CI review step; mixes deterministic pipelines with an LLM. Benchmark claims (vs Claude Code) are the authors' own.
+  - Link: https://github.com/alibaba/open-code-review
+  - Safety note: Apache-2.0, ~55k stars, 906 commits, backed by Alibaba. Last-commit date not verified. Install uses npm/skills scripts and the repo ships agent config files (CLAUDE.md, plugin dirs), so review before opening in an agent. Code goes to whichever LLM endpoint you configure.
+
+- **backnotprop/plannotator** (GitHub) - Local browser UI to annotate agent plans, markdown and diffs/PRs and send feedback back to Claude Code, Codex, OpenCode, etc.
+  - Why it matters: structured human-in-the-loop review of agent plans before they execute.
+  - Link: https://github.com/backnotprop/plannotator
+  - Safety note: Apache-2.0 or MIT, ~14k stars, ~12k commits, provenance/SHA256 provided for binaries. Last-commit date not verified. Installer is curl-pipe-to-shell (verify first); remote mode binds 0.0.0.0 with no login; optional Jina Reader and share links are third-party.
+
+- **GoogleChrome/modern-web-guidance-src** (GitHub) - Skills and CLI (`search`, `retrieve`, `legacy-scan`) that keep coding agents on current web-platform best practices (262 features, 204 use cases), stewarded with Chrome, Edge, Firefox and MDN teams.
+  - Why it matters: stops agents generating legacy CSS/JS patterns when you ask for frontend work.
+  - Link: https://github.com/GoogleChrome/modern-web-guidance-src
+  - Safety note: Apache-2.0, ~10k stars, 1.6k commits, major-vendor backing. Last-commit date not verified. Quickstart runs `npx ...@latest`; pin a version.
+
 ## 2026-11-21 (AKD)
 
 - **Gemini 4 Neon Is Here, And It’s a Beast!** (Top pick; model_release; youtube) - A new Gemini 4 Neon model for coding and knowledge work, with early-access demos and a Google AI Studio entry point, worth a look for model-choice decisions.
@@ -1163,78 +1196,3 @@ _No GitHub repos included today: searches surfaced only older or unverifiable tr
   - Why it matters: Giving each agent its own worktree avoids branch collisions when you run multiple Claude Code sessions on one repo. It was in this week's GitHub Trending list.
   - Link: https://github.com/max-sixty/worktrunk
   - Safety note: MIT OR Apache-2.0, about 11.9k stars, 5,511 commits. The README says the project was released at the start of this year, so it isn't brand new. I couldn't see the last commit date or the contributor count on the page, so skim the code before adding it to your workflow.
-
-## 2026-11-06 (AKD)
-
-- **Thinking Machines, Mira Murati's lab, just released Inkling 2 Small, and the full weights go open n…** (Top pick; model_release; x) - Open-weight 594B MoE coding model (17B active) from Thinking Machines, with Apache 2.0 weights promised next week and a free Tinker Playground to try now.
-  - Link: https://x.com/RoundtableSpace/status/2118670985335578977
-  - Also covered by: [Introducing Inkling 2 Small](https://www.reddit.com/r/LocalLLaMA/comments/1xp32od/introducing_inkling_2_small/) (reddit)
-  - Also covered by: [Introducing Inkling 2 Small](https://thinkingmachines.ai/news/inkling-2-small/?utm_source=tldrai) (email)
-  - Also covered by: [[AINews] Inkling 2 Small: 17A-594B trained in 68 hours on 12T tokens, beating Muse Spark](https://latent.space/p/ainews-inkling-2-small-17a-594b-trained-in-68-hours-on-12t-tokens-beating-muse-spark/) (web)
-
-- **anthropics/claude-code v2.1.319** (Top pick; dev_tooling; github) - This release changes auto mode to deny or prompt instead of falling back to the built-in classifier when feature flags are off, so gateway setups need `CLAUDE_CODE_AUTO_MODE_SERVER` set to avoid brea…
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.319
-
-- **Claude Code was quietly sending users' email addresses to the websites it visited. When it searched…** (Top pick; agents_mcp_skills; x) - Claude Code was leaking users' email addresses in web requests, so update to 2.1.317 or later and confirm the privacy setting via /plugins.
-  - Link: https://x.com/RoundtableSpace/status/2118664104894144724
-  - Also covered by: [Claude Code sends your email address to websites](https://github.com/anthropics/claude-code/issues/107757) (web)
-
-- **Introducing ChatGPT Images 2.6** (Top pick; model_release; youtube) - Two new image models are coming to the OpenAI API with 50% faster generation, which may be worth benchmarking if you build AI image pipelines.
-  - Link: https://www.youtube.com/watch?v=bJldMYfRvMQ
-  - Also covered by: [GPT-Image-2.6: Faster image generation with Flare and Sunburst](https://www.youtube.com/watch?v=9ZxCOHkfn_8) (youtube)
-  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6) (web)
-
-- **NVIDIA Cosmos 3 Open Models** (Top pick; model_release; email) - Open-weight world-simulation models for robotics and driving data generation; relevant to you only as a peripheral open-model release, with no direct link to your coding or agent stack.
-  - Link: https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation?utm_source=tldrai
-
-- **Your AI coding agent can write an entire website, but can it actually test if it works? Vercel’s Ag…** (Notable; dev_tooling; x) - Vercel's agent-browser gives Claude Code-style agents a real browser to click and test UIs, installable in three commands, directly useful for your Vite/React/Vercel workflow.
-  - Link: https://x.com/RoundtableSpace/status/2118572837774455289
-
-- **Stop Giving Your AI Agents API Keys - Kim Maida, Keycard & Mason Egger, Temporal** (Notable; agents_mcp_skills; youtube) - It shows a concrete pattern for replacing shared agent API keys with per-tool-call OAuth token exchange and durable, resumable agent execution, both adoptable in a week.
-  - Link: https://www.youtube.com/watch?v=YqJ4asgj1R8
-
-- **Personal Finance in Claude (beta, Nov 5): what Claude can actually see, what it can’t do, and who gets it** (Notable; model_release; reddit) - Anthropic's read-only Personal Finance beta (US, Pro/Max/Ultra) links bank accounts through Plaid and gives Claude two years of transaction data, which is mostly off-topic for this developer-focused…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xp28a6/personal_finance_in_claude_beta_nov_5_what_claude/
-  - Also covered by: [Personal Finance in Claude](https://claude.com/resources/articles/introducing-personal-finance-in-claude?utm_source=tldrai) (email)
-
-- **How Salesforce uses Claude Code** (Notable; agents_mcp_skills; youtube) - Salesforce reports scaling Claude Code to thousands of engineers, with concrete ROI measurement, an agent maturity model, and a shared skills marketplace, all directly relevant to agentic coding work…
-  - Link: https://www.youtube.com/watch?v=4ZsVR-6YOzs
-
-- **Linum-AI/pjit-21k · Hugging Face - A Text-to-Image Model Trained for $21K** (Notable; model_release; reddit) - A low-cost, open text-to-image model (P-JiT, trained for about $21K) with public code, relevant to a builder tracking ComfyUI-style image tooling and open model options.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpcpws/linumaipjit21k_hugging_face_a_texttoimage_model/
-
-- **Matt Pocock released a free collection of skills that help Claude Code and Codex plan, debug, test …** (Notable; agents_mcp_skills; x) - A free set of planning, debugging, testing, and review skills for Claude Code and Codex, installable in one command via npx skills, directly applicable to your agent workflow.
-  - Link: https://x.com/RoundtableSpace/status/2118580387052241012
-
-- **Stop Making Your Customers Click Approve - Emil Chetty, Wise** (Notable; agents_mcp_skills; youtube) - Wise's pattern of a locked, once-agreed agreement enforced by existing payment software, rather than per-step approvals, is a concrete design for safely letting agents act, relevant to agent security…
-  - Link: https://www.youtube.com/watch?v=V2UqEUA8NjM
-
-- **HerdBuilderEstimate/roblox-studio-mcp** (Notable; agents_mcp_skills; github) - An open-source MCP server that lets Claude or Cursor read Roblox Studio object trees, edit scripts, and run playtests, adoptable quickly if you want agent access to a game engine.
-  - Link: https://github.com/HerdBuilderEstimate/roblox-studio-mcp
-
-- **[AINews] Behind Latent Space: Kill My SaaS, Jev & AI in 2026 | AIEi Shanghai** (Notable; research; web) - Frontier LLMs can reportedly generate or edit neural network weights directly without gradient training, with multiple replications; relevant to model-internals and tooling, though claims are contest…
-  - Link: https://latent.space/p/ainews-behind-latent-space-kill-my-saas-jev-ai-in-2026-aiei-shanghai/
-
-- **Cognition Introduces SWE-2 Flash** (Notable; model_release; email) - Cognition's SWE-2 Flash is a new coding model with an added mid-training stage before RL, worth evaluating if you use agentic coding tools like Claude Code for development work.
-  - Link: https://cognition.com/blog/swe-2-flash?utm_source=tldrai
-
-## 2026-11-06
-
-- **Claude Code v2.1.316–2.1.318** (AI/Claude tooling) - Three patch releases (latest v2.1.318, published Nov 4).
-  - Why it matters: v2.1.317 adds `onFailure: "block"` for Agent SDK hook callbacks and a check before web/shell tool calls send your account email to the network; v2.1.316 adds `CLAUDE_CODE_SUBAGENT_EFFORT` and deprecates fast mode for Opus 4.8 (removal scheduled Nov 30, 2026); v2.1.317 removes the Read tool's "unchanged since last read" stub.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **anthropic-sdk-python v2.5.0 / v2.6.0** (AI/Claude tooling) - SDK adds typed error classes and error codes (`APIStatusError` gains `error_code`, `details`, `api_message`).
-  - Why it matters: Bedrock/Vertex clients now raise error-code/status exception classes, so review `except` blocks; also path-parameter hardening, a memory-tool fix so `/memories` is no longer renamed/deleted, and sampling params no longer recorded on OpenTelemetry spans.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
-
-- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec revision (released Jul 28; not new this week but the current stable release).
-  - Why it matters: baseline to target when building or updating MCP servers/clients; see the linked changelog for changes.
-  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
-
-- **addyosmani/agent-skills** (GitHub repo) - 25 production-grade engineering workflow skills, 9 slash commands and agent personas for AI coding agents (Claude Code, Cursor, Codex, Gemini CLI, Copilot).
-  - Why it matters: drop-in spec/review/test workflows you can adopt in agent-driven projects.
-  - Link: https://github.com/addyosmani/agent-skills
-  - Safety note: MIT license; ~113.6k stars, 807 commits, named maintainers. Last commit date not verified. Includes a `hooks/` directory that runs automatically, and its docs suggest a global git `insteadOf` config change; read hooks and scripts before installing.
-
-_Quiet feed: no new Claude model or notable new repo could be verified from primary sources today._
