@@ -2,6 +2,32 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-22 (AKD)
+
+- **Looped Transformers: 2x Deeper Without More Weights** (Top pick; research; youtube) - Explains looped transformers (Inkling 2 Mini runs 12 of its 24 layers three times, 48 effective layer steps) and their trade-offs, with an open model you can run via Ollama to test the idea.
+  - Link: https://www.youtube.com/watch?v=TPtfyKEAk6c
+
+- **DataCat** (Top pick; repo_library; email) - Self-hosted, open-source observability for metrics, logs, and traces that accepts OpenTelemetry and Datadog-compatible traffic, a possible drop-in for monitoring agent or Vercel-hosted services witho…
+  - Link: https://github.com/replit/datacat?utm_source=tldrdev
+
+- **Cloudflare's Clairic and Clairic-flash** (Top pick; model_release; email) - Cloudflare released open weights for Clairic and Clairic-flash, field-extraction models for text, images, and PDFs, which you could self-host or test against Claude-based extraction pipelines.
+  - Link: https://blog.cloudflare.com/open-clairic/?utm_source=tldrai
+
+- **Gemini 4 Neon vs Carbon: Which One Should You Actually Use?** (Top pick; model_release; youtube) - Gemini 4 Neon ($3/$15 per million tokens) reportedly beats Gemini 4 Carbon on Google's benchmark, but the "cheaper per task" claim depends on Carbon's promo pricing expiring November 30.
+  - Link: https://www.youtube.com/watch?v=pYAczC5IgCU
+
+- **Models Engineering Index** (Top pick; research; email) - It ranks language models on public engineering benchmarks against cost and token usage, useful for choosing which model to use in coding agents and API builds.
+  - Link: https://git-aarvin.github.io/mei/?utm_source=tldrdev
+
+- **pritamux/gridlines** (Top pick; agents_mcp_skills; github) - An agent skill that overlays alignment guide lines on a rendered UI to catch misaligned elements, useful for a Tailwind/React frontend pass with Claude Code.
+  - Link: https://github.com/pritamux/gridlines
+
+- **Perplexity's Self-Improving Skills** (Top pick; agents_mcp_skills; email) - Perplexity's agent now writes and updates its own reusable skills from past sessions, a self-improving pattern relevant to anyone building skill- or plugin-based agent workflows.
+  - Link: https://www.perplexity.ai/hub/blog/self-improving-skills?utm_source=tldrai
+
+- **DaisyRose 27B Locally: Pushing the Boundaries of Original Qwen** (Notable; model_release; youtube) - A local-runnable 27B multimodal reasoning model from RadixArk, built on Qwen3-series weights with RL-only training, relevant if you want to self-host a coding or reasoning model.
+  - Link: https://www.youtube.com/watch?v=yDQBz77Jzpc
+
 ## 2026-11-22
 
 - **Claude Code v2.1.328 / v2.1.329** (AI/Claude) - Auto mode extended to Opus 4.6 and Sonnet 4.6 on Bedrock, Google Cloud, Foundry and the Claude apps gateway; `"onFailure": "block"` now works for `mcp_tool` hooks; `/tasks` lists scheduled tasks, `/loop` wakeups and forks; `/mcp` shows the JSON-RPC error from refusing remote servers.
