@@ -2,6 +2,17 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-23
+
+- **Claude Code 2.1.328-2.1.330** (AI/Claude tooling) - Latest releases add org sign-in via `claude auth login` for Enterprise Admin Console, `"onFailure": "block"` for `mcp_tool` hooks, auto mode on Bedrock/Vertex/Foundry for Opus 4.6 and Sonnet 4.6, and a built-in `easel` charting mod.
+  - Why it matters: fail-closed MCP hooks let you build guardrails that actually stop an action when the check errors; the `/mcp` "Server message" row speeds up debugging remote MCP servers; `/tasks` now shows scheduled tasks and `/loop` wakeups.
+  - Link: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+
+- **Headroom** (GitHub repo) - Context-compression layer (library, proxy, MCP server, `headroom wrap` for coding agents) that shrinks tool outputs, logs and RAG chunks before they reach the LLM.
+  - Why it matters: could cut token cost in long agent sessions; its self-reported savings are 21-57% on agent scenarios (unverified).
+  - Link: https://github.com/headroomlabs-ai/headroom
+  - Safety note: Apache-2.0, ~80k stars, active (3.8k commits). Anonymous telemetry on by default (disable with `HEADROOM_BEACON=off`/`DO_NOT_TRACK=1`); `wrap` reroutes agent traffic via a local proxy and edits agent config, so review before enabling. Last commit date not verified; not newly created.
+
 ## 2026-11-22 (AKD)
 
 - **Looped Transformers: 2x Deeper Without More Weights** (Top pick; research; youtube) - Explains looped transformers (Inkling 2 Mini runs 12 of its 24 layers three times, 48 effective layer steps) and their trade-offs, with an open model you can run via Ollama to test the idea.
@@ -1141,84 +1152,3 @@ _No GitHub repos included today: searches surfaced only older or unverifiable tr
 
 (Quiet day: no other items could be verified against a primary source; no repos vetted.)
 
-## 2026-11-07 (AKD)
-
-- **Your Claude memory file is probably making it dumber. Anthropic just published how Claude's memory …** (Top pick; research; x) - Claude Code only loads the first 200 lines or 25 KB of MEMORY.md, so a bloated CLAUDE.md or MEMORY.md silently drops instructions and should be trimmed.
-  - Link: https://x.com/RoundtableSpace/status/2118980523880050885
-
-- **GPT-Image-2.6: Faster image generation with Flare and Sunburst** (Top pick; model_release; youtube) - GPT-Image-2.6 (Flare and Sunburst) is now in the API and Codex, with 50% faster generation, a relevant option if you build image features on the OpenAI API.
-  - Link: https://www.youtube.com/watch?v=9ZxCOHkfn_8
-  - Also covered by: [Introducing Images 2.6](https://openai.com/index/introducing-images-2-6/?utm_source=tldrdev) (email)
-
-- **Higgs Realtime Duplex: a 45B MoE full-duplex model that listens, watches and talks at once, and thinks, calls tools and delegates in the background [N]** (Top pick; model_release; reddit) - Higgs Realtime Duplex is a closed-weights, waitlisted voice API where the model listens, speaks, and runs tool calls concurrently, so it's relevant to agent architecture but not adoptable this week.
-  - Link: https://www.reddit.com/r/MachineLearning/comments/1xpn5pv/higgs_realtime_duplex_a_45b_moe_fullduplex_model/
-
-- **Introducing Inkling 2 Small** (Top pick; model_release; email) - Inkling 2 Small is a 594B-parameter MoE (17B active) with image input and variable effort, but weights are closed initially and API access runs only through Tinker.
-  - Link: https://thinkingmachines.ai/news/inkling-2-small/?utm_source=tldrai
-  - Also covered by: [Thinking Machine's Inkling 2 Small is Here](https://www.youtube.com/watch?v=3fmkbkkhxQ8) (youtube)
-
-- **How to Get Frontier Coding Results at 70% Lower Cost - Nouha Dziri, Cohere** (Top pick; research; youtube) - Relevant to agentic coding workflow: it gives measured guidance on when multi-agent teams beat a single agent and how to cut cost by mixing a strong lead with cheaper workers.
-  - Link: https://www.youtube.com/watch?v=maitMe9HCvw
-
-- **Your Old Prompts Are Making Claude Worse - Lance Martin, Anthropic** (Notable; agents_mcp_skills; youtube) - Practical prompt-audit and prompt-caching tactics from Anthropic's Lance Martin, including a claimed 72% cost cut and a 90% cost cut from switching to a stronger model at lower effort, directly appli…
-  - Link: https://www.youtube.com/watch?v=ys6YQ2yfBpM
-
-- **Stanford researchers develop a new AI memory system that recalls information from entire conversation histories using just 16 memory tokens. It reduces document-token usage by up to 4,212×, runs 27× faster in a 512-document test, and outperforms existing approaches on 5 of 8 benchmarks.** (Notable; research; reddit) - Stanford's 16-token memory compression claims 4,212x fewer document tokens and 27x speedups on 512-doc tests, but this is a Reddit post with no paper linked, so verify the source before building on i…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xpvvg3/stanford_researchers_develop_a_new_ai_memory/
-
-- **Tencent Launches Hy4** (Notable; model_release; email) - Tencent's open-weight Hy4 adds vision and CLI/GUI operation, with weights promised soon, so it's worth tracking as a self-hostable agent-capable model option.
-  - Link: https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models/?utm_source=tldrai
-
-- **Your AI Agent Is Hiding Its Mistakes From You - Ben Holmes, Warp** (Notable; agents_mcp_skills; youtube) - Shows how to log Claude Code and Codex sessions and run LLM-as-judge scoring plus a daily agent that opens PRs to fix skills, with Skill Doctor runnable on your own history.
-  - Link: https://www.youtube.com/watch?v=pz74r-4dGfQ
-
-- **faster-chrome-devtools-skill** (Notable; agents_mcp_skills; email) - A dependency-free Node CLI and agent skill driving Chrome over the DevTools Protocol directly, with accessibility snapshots, screenshots, and no separate browser MCP server needed.
-  - Link: https://github.com/zeke/faster-chrome-devtools-skill?utm_source=tldrdev
-
-- **Claude Code cloud sessions now set up your repo for you on Pro, Max, and Ultra. Claude works out th…** (Notable; dev_tooling; x) - Claude Code cloud sessions can now auto-configure repo dependencies, network access, and API keys on Pro, Max, and Ultra, saving the environment for reuse.
-  - Link: https://x.com/RoundtableSpace/status/2118897476749209878
-  - Also covered by: [We've made it easier to get your repo running in Claude Code cloud sessions on Pro, Max, and Ultra.…](https://x.com/ClaudeDevs/status/2118795192090386454) (x)
-
-- **Someone built a VM for every project folder, so your coding agents run in a sandbox instead of on y…** (Notable; agents_mcp_skills; x) - An open-source MIT tool that runs coding agents like Claude Code in per-project Lima VMs with allowlisted networking and secrets kept on the host, directly relevant to agent sandboxing.
-  - Link: https://x.com/RoundtableSpace/status/2118874827683774478
-
-- **Mirage: A 22 MB visual-language model that runs scene descriptions + object detection + OCR + segmentation + spatial relations analysis + extractions + decisions, in a single pass.** (Notable; model_release; reddit) - A 22 MB on-device vision model covering detection, OCR, segmentation and spatial reasoning at 74 ms on a phone NPU, relevant for local agent perception without cloud calls.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpm8mw/mirage_a_22_mb_visuallanguage_model_that_runs/
-
-- **shanselman/sandbox-mcp** (Notable; agents_mcp_skills; github) - An MCP server that drives Windows Sandbox so agents can run and test apps in disposable Windows environments, directly relevant to agent sandboxing and MCP tooling.
-  - Link: https://github.com/shanselman/sandbox-mcp
-
-- **NousResearch/Arete-27B · Hugging Face (Qwen finetune)** (Notable; model_release; reddit) - A 27B open-weight Qwen3.8 SFT finetune from Nous Research that reports fewer propaganda-framed answers, with its own eval numbers and a GGUF build for local use.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xpmj33/nousresearcharete27b_hugging_face_qwen_finetune/
-  - Also covered by: [Most open models were trained to repeat one government's talking points. Nous Research just showed …](https://x.com/RoundtableSpace/status/2118957874487718323) (x)
-
-## 2026-11-07
-
-- **Claude Code v2.1.319** (AI/Claude tooling) - Auto mode now asks or denies instead of silently falling back to the built-in classifier when feature flags or telemetry are off. MCP tool calls that run as tasks now go to the background, and there is a new `permissions.denyInsteadOfPrompting` setting.
-  - Why it matters: Setups behind LLM gateways need `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep the old behavior. `denyInsteadOfPrompting` suits unattended or scheduled agent runs, since a blocked tool call no longer stalls the turn. Background MCP tasks suit long-running tools.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Code v2.1.317-2.1.318** (AI/Claude tooling) - The Nov 3-4 releases ask before a web or shell tool call sends your account email to the network. They also add `onFailure: "block"` for Agent SDK hook callbacks, and background subagents move shell commands to the background after 3 minutes so the prompt cache doesn't expire.
-  - Why it matters: Update to 2.1.317 or later for the email-privacy check. Hook callbacks that fail closed give you safer guardrails when you build agents on the SDK. Non-interactive launches now refuse to overwrite an invalid `~/.claude.json`.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude API: message threads (beta)** (AI/Claude tooling) - With the `message-threads-2026-08-12` beta header, the API keeps the conversation on the server. Later requests send only the new messages.
-  - Why it matters: It cuts request size and time to first token in long chats and agent loops. Threads expire 5 minutes after their last request and are deleted within 1 hour of last use, so keep your own transcript if you need one.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude API: 128 MB requests, new SDK majors, fast-mode deprecation** (AI/Claude tooling) - The Messages and Token Counting request limit rose from 32 MB to 128 MB (Oct 28). API version `2026-10-21` shipped with new SDK majors (Python 2.0.0, TypeScript 1.0.0, Go 2.0.0 and others). The SDKs are now Apache 2.0 licensed.
-  - Why it matters: The bigger limit helps with large PDFs and images, and the SDK majors include breaking changes, so pin versions before upgrading. Fast mode for `claude-opus-4-8` is removed on Nov 30, so migrate to Opus 5.5.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **Claude API: usage/cost analytics and IP allowlist (beta)** (AI/Claude tooling) - New `/v1/organizations/analytics/usage` and `/cost` endpoints (Oct 29) filter by model, workspace, API key and user. An IP allowlist (Nov 5) limits API access to up to 1,000 addresses or CIDR ranges per organization.
-  - Why it matters: Use the analytics endpoints for per-agent cost tracking. The allowlist stops a leaked key from being used from arbitrary locations.
-  - Link: https://platform.claude.com/docs/en/release-notes/api
-
-- **claude-agent-sdk-python v0.2.179** (AI/Claude tooling) - The Nov 6 release follows v0.2.178, which bundled Claude CLI 2.1.318. The release page lists no changelog for 0.2.179.
-  - Why it matters: Upgrade to pick up the CLI fixes if you build agents on the Python SDK.
-  - Link: https://github.com/anthropics/claude-agent-sdk-python/releases
-
-- **worktrunk** (GitHub repo) - A Rust CLI for Git worktree management, built for running several AI agents in parallel.
-  - Why it matters: Giving each agent its own worktree avoids branch collisions when you run multiple Claude Code sessions on one repo. It was in this week's GitHub Trending list.
-  - Link: https://github.com/max-sixty/worktrunk
-  - Safety note: MIT OR Apache-2.0, about 11.9k stars, 5,511 commits. The README says the project was released at the start of this year, so it isn't brand new. I couldn't see the last commit date or the contributor count on the page, so skim the code before adding it to your workflow.
