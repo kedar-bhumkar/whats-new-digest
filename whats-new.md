@@ -2,6 +2,85 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-24 (AKD)
+
+- **Tencent Releases Hy4 With Multimodal Input and Million-Token Context** (Top pick; model_release; email) - Open-weight Hy4 adds text, image, and video input with million-token context, a viable self-hostable option for long-context coding and computer-use agents worth benchmarking against Claude.
+  - Link: https://huggingface.co/tencent/Hy4?utm_source=tldrai
+
+- **anthropics/claude-code v2.1.331** (Top pick; dev_tooling; github) - Claude Code v2.1.331 adds Code Mode on Bedrock, Vertex and Foundry, a `claude doctor` API connectivity check, and trace-span token attributes that change how llm_request usage is counted, so update a…
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.331
+
+- **NVIDIA Releases Nemotron-Labs-Sigma Continuous Diffusion Language Models** (Top pick; model_release; email) - Open diffusion-style language models from NVIDIA (3B and 8B, 14 checkpoints) generate by denoising token embeddings instead of decoding one token at a time, with a reported 3.46x throughput gain over…
+  - Link: https://research.nvidia.com/labs/genair/sigma/?utm_source=tldrai
+
+- **Inkling 2 Mini** (Top pick; model_release; email) - Open-weight 26.4B model with built-in reasoning that tops sub-100B open models on the DeepSWE coding benchmark, so it's a candidate for local or self-hosted coding agents.
+  - Link: https://thinkingmachines.ai/news/inkling-2-mini/?utm_source=tldrai
+
+- **Everything new in Claude this month** (Top pick; model_release; youtube) - Covers Claude Fable 5.2, Claude Code on desktop, and interactive connectors, which may affect your Claude Code and MCP workflow once they reach GA.
+  - Link: https://www.youtube.com/watch?v=EuOg5f_Egns
+
+- **anthropics/anthropic-sdk-python v2.13.0** (Top pick; dev_tooling; github) - The SDK now flags Claude Opus 4.5 as deprecated with end-of-life January 22, 2027, so any pinned Opus 4.5 calls need a migration plan before then.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.13.0
+
+- **Introducing Claude Ship (beta): Claude can review your pull requests, work on fixes, and approve th…** (Top pick; dev_tooling; x) - Claude Ship (beta) can review PRs, draft fixes, and auto-approve under team policy, directly relevant to agentic coding workflows.
+  - Link: https://x.com/ClaudeDevs/status/2124959436640858475
+
+- **Investigating Linux Vulnerabilities with GPT-6 Cyber** (Top pick; research; youtube) - This matters for an agent-security reader because it shows a concrete pipeline for AI-driven vulnerability validation and patch generation, with lessons on working with upstream maintainers; the main…
+  - Link: https://www.youtube.com/watch?v=MpsO8Ds8uyo
+
+- **Replit just open-sourced a self-hosted alternative to Datadog. DataCat puts metrics, logs, traces, …** (Top pick; repo_library; x) - Replit open-sourced DataCat, a self-hosted observability stack that accepts OpenTelemetry and Datadog-compatible traffic, storing everything in your own Postgres or ClickHouse.
+  - Link: https://x.com/RoundtableSpace/status/2124778730211934439
+
+- **safe-anything is a free, MIT-licensed Rust scanner that finds vulnerabilities, leaked secrets and r…** (Top pick; agents_mcp_skills; x) - A free MIT-licensed Rust scanner that audits MCP and Claude Code/Codex/Cursor agent settings for risks, with a CI exit code, directly relevant to agent security.
+  - Link: https://x.com/RoundtableSpace/status/2125012771637248181
+  - Also covered by: [erkamyaman/safe-anything](https://github.com/erkamyaman/safe-anything) (github)
+
+- **Zero data retention with Enterprise Frontier Safeguards is now in public beta for eligible orgs on …** (Top pick; dev_tooling; x) - Zero data retention with Enterprise Frontier Safeguards is in public beta for eligible orgs, so Messages API traffic can be encrypted into your own cloud storage with automated misuse review, a relev…
+  - Link: https://x.com/ClaudeDevs/status/2124930253344948518
+
+- **OpenAI and Cisco introduce Shirudo** (Top pick; repo_library; web) - An open-source Linux runtime from OpenAI and Cisco for protecting running systems during patch rollouts, relevant to agent sandboxing and security of agent infrastructure.
+  - Link: https://openai.com/index/introducing-shirudo
+
+- **Finally, a way to stop AI from making those ugly, generic diagrams. Diagram Design is a free, open-…** (Top pick; agents_mcp_skills; x) - A free open-source skill that installs via npx and generates brand-matched HTML diagrams inside Claude Code, a direct fit for your agentic workflow with a one-command first step.
+  - Link: https://x.com/RoundtableSpace/status/2124922175190651097
+
+- **Don't rewrite your app in Rust. Rewrite the 5% that's slow. The tool, fast-anything, profiles your …** (Top pick; repo_library; x) - Profiles Python, Node, or Ruby apps and has Claude Code or Codex port only the hot functions to Rust, verified by replaying recorded real calls; a concrete, low-risk adoption path.
+  - Link: https://x.com/RoundtableSpace/status/2124763630092824618
+
+- **Researchers plant 2m canaries into the AI supply chain** (Top pick; agents_mcp_skills; email) - Researchers planted canary tokens across AI supply-chain components and found secrets leaking at scale, which matters for anyone wiring agents and MCP servers to real credentials.
+  - Link: https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate/?utm_source=tldrnewsletter
+
+- **We've redesigned the side panel in Claude Code on desktop. Files, Changes, Terminal and your other …** (Top pick; dev_tooling; x) - Claude Code's desktop side panel now holds Files, Changes, and Terminal as tabs beside the session, with Mac rollout first and Windows/Linux to follow.
+  - Link: https://x.com/ClaudeDevs/status/2124978802006851961
+
+- **A free app that makes any video look like a VHS tape, an old CRT TV or a Windows 95 CD-ROM. NTSCRT …** (Top pick; repo_library; x) - A free MIT-licensed app that applies VHS, CRT, and Windows 95 video effects, with a built-in MCP server that lets Claude apply the look directly.
+  - Link: https://x.com/RoundtableSpace/status/2124808928651583503
+
+- **SAVE THIS: 5 GitHub repos worth trying this week. 1. Skill Distill: turns a great Claude Code sessi…** (Top pick; repo_library; x) - A roundup of five GitHub repos, most relevant here: Skill Distill turns Claude Code sessions into skills for cheap open models, and Pi Bot offers a gated local agent team.
+  - Link: https://x.com/RoundtableSpace/status/2124839128491573673
+  - Also covered by: [Pi Bot is an open-source AI agent team for your desktop that plans, runs commands and edits files o…](https://x.com/RoundtableSpace/status/2125020321174745595) (x)
+
+- **Surogate 3.7 35B-A3B Locally: Tailing DeepSeek V4 Flash and GLM 5.2** (Notable; model_release; youtube) - Surogate 3.7 is a 35B-A3B open model aimed at enterprise agentic workloads, with a local vLLM setup and benchmarks against DeepSeek V4 Flash and GLM 5.2 that are worth checking for a self-hosted agen…
+  - Link: https://www.youtube.com/watch?v=4Q2q0TNx2SE
+
+- **Streaming LLM Responses Without Rendering Every Token** (Notable; dev_tooling; email) - Useful for anyone building streaming LLM UIs: explicit completion/error events, upstream abort on disconnect, and per-frame batched rendering are concrete fixes for janky token streams and leaked gen…
+  - Link: https://danholloran.me/posts/streaming-llm-responses-tokens-arrive-faster-than-you-should-render-them?utm_source=tldrdev
+
+- **AI R&D-Relevant Model Capabilities Are Improving Rapidly** (Notable; research; email) - METR reports frontier models now match or beat skilled humans on well-defined coding tasks, with completable task length doubling about every 3.6 months, which bears on how far to trust agentic codin…
+  - Link: https://metr.org/blog/2026-11-20-q4-2026-capability-update/?utm_source=tldrai
+
+- **12 Rules for a Software Factory That Doesn't Ship Slop — Dex Horthy, Factory** (Notable; research; youtube) - This talk matters because its Slop Code Bench result (best model about 16% on code that evolves over time) gives a concrete benchmark for judging agent-maintained codebases, plus 12 practices like li…
+  - Link: https://www.youtube.com/watch?v=-NFMsM2y0Vk
+
+- **It's a Plan** (Notable; repo_library; email) - A self-hosted tracker that treats AI agents as assignable team members with their own roles and permissions, relevant to agent infrastructure and workflow integration.
+  - Link: https://github.com/croffasia/itsaplan?utm_source=tldrdev
+
+- **Say hello to GIFs in Gemini** (Notable; model_release; email) - Gemini can now generate animated GIFs from prompts, a new output format for multimodal generation, though it has limited direct relevance to agentic coding or your stack.
+  - Link: https://x.com/GeminiApp/status/2123813017855103449?utm_source=tldrai
+
+- **Ling 3.2 Air: Not a Frontier Coder, But Strong at Workflow Automation** (Notable; model_release; youtube) - A new open-weight model aimed at enterprise agentic workflow automation, with a hands-on test covering coding, automation, and vision; it's not a frontier coder, so evaluate it for workflow use rathe…
+  - Link: https://www.youtube.com/watch?v=AewmWwkLTvw
+
 ## 2026-11-23
 
 - **Claude Code 2.1.328-2.1.330** (AI/Claude tooling) - Latest releases add org sign-in via `claude auth login` for Enterprise Admin Console, `"onFailure": "block"` for `mcp_tool` hooks, auto mode on Bedrock/Vertex/Foundry for Opus 4.6 and Sonnet 4.6, and a built-in `easel` charting mod.
