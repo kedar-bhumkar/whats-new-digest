@@ -2,6 +2,31 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-24
+
+- **Claude Code v2.1.330 / v2.1.329** (AI tooling) - Scheduled tasks and `/loop` now run up to 30 days (was 7) while the session lives; `/tasks` lists scheduled tasks, wakeups and forks; stricter approval for risky `rm` commands.
+  - Why it matters: long-running unattended agent routines (like this digest) are more practical; Code Mode no longer runs UserPromptSubmit hooks on script output, so use a PostToolUse hook with `updatedToolOutput` to redact.
+  - Link: https://code.claude.com/docs/en/changelog
+
+- **MCP spec 2026-07-28 coming to Claude** (AI tooling) - Stateless request/response core, versioned extensions (MCP Apps, Tasks), OAuth/OIDC auth hardening; SDKs available now, Claude product support still rolling out.
+  - Why it matters: MCP servers you build can run on serverless/edge infrastructure and plug into enterprise identity (Entra, Okta); MCP tunnels (research preview) reach private-network servers.
+  - Link: https://claude.com/blog/bringing-mcp-2026-07-28-to-claude
+
+- **alibaba/open-code-review** (GitHub) - Code review tool combining deterministic pipelines with an LLM agent for line-level comments and multi-language rules; ~3.0k stars this week, ~56k total.
+  - Why it matters: drop-in CI/agent review step that is less prompt-and-hope than pure-LLM review; installs as `npm i -g @alibaba-group/open-code-review` or as an agent skill.
+  - Link: https://github.com/alibaba/open-code-review
+  - Safety note: Apache-2.0, Alibaba-owned, standard npm install. I could not verify last-commit date or contributor count from the page; review the package before installing.
+
+- **GoogleChrome/modern-web-guidance-src** (GitHub) - Skills that steer coding agents toward modern web-platform solutions with browser-compat data instead of legacy patterns; ~2.7k stars this week.
+  - Why it matters: add to Claude Code/other agents when asking them to implement front-end features so generated code uses current APIs.
+  - Link: https://github.com/GoogleChrome/modern-web-guidance-src
+  - Safety note: Apache-2.0, Google Chrome org, ~1.7k commits; install via `npx modern-web-guidance@latest install` (Node 22+). Last-commit date not verified.
+
+- **ag-ui-protocol/ag-ui** (GitHub) - Agent-User Interaction Protocol for connecting agents to frontend apps; ~3.0k stars this week, ~21k total.
+  - Why it matters: standard event protocol for streaming agent state/UI into web apps rather than hand-rolling it.
+  - Link: https://github.com/ag-ui-protocol/ag-ui
+  - Safety note: trending-page data only; license and maintainer activity not independently verified, so vet before adopting.
+
 ## 2026-11-24 (AKD)
 
 - **Tencent Releases Hy4 With Multimodal Input and Million-Token Context** (Top pick; model_release; email) - Open-weight Hy4 adds text, image, and video input with million-token context, a viable self-hostable option for long-context coding and computer-use agents worth benchmarking against Claude.
