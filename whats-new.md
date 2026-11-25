@@ -2,6 +2,82 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-25 (AKD)
+
+- **anthropics/claude-code v2.1.332** (Top pick; dev_tooling; github) - Claude Code 2.1.332 adds beta MCP-sourced skills and a PreSkillShellCommand hook that can block skill shell commands, relevant to agent security and anyone building skills or MCP servers.
+  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.332
+  - Also covered by: [MCP servers can now ship skills, run tasks, and more with Claude](https://claude.com/resources/articles/skills-over-mcp-tasks-and-more?utm_source=tldrdev) (email)
+
+- **Cognition's SWE-2.1** (Top pick; model_release; email) - Cognition's SWE-2.1 is a new RL-tuned coding agent model built on Kimi K3 that reportedly doubles SWE-2 on Terminal-Bench 4.1, relevant if you evaluate agentic coding backends.
+  - Link: https://cognition.com/blog/swe-2-1?utm_source=tldrai
+
+- **How the memory for a million tokens shrank 150,000 times** (Top pick; research; email) - Explains how DeepSeek-V4.1-Flash's KV cache compression cut long-context memory roughly 150,000x, which matters for anyone sizing context windows or self-hosting long-context inference.
+  - Link: https://three.dev/blog/how-the-memory-for-a-million-tokens-shrank?utm_source=tldrdev
+
+- **1,000 Claude Agents Formalized Fermat's Last Theorem — Lance Martin, Anthropic** (Top pick; agents_mcp_skills; youtube) - A 1,000-agent Claude team formalized Fermat's Last Theorem in Lean using only Git and a database, and the talk covers agent memory and "dreaming" over transcripts, both directly relevant to agent arc…
+  - Link: https://www.youtube.com/watch?v=wrfbI5eyLAI
+
+- **Microsoft Aion-1 2.3B: Hands-On Test of Windows' New On-Device AI** (Top pick; model_release; youtube) - Microsoft's open 2.3B on-device instruct model, with a transformers 5.9.0 install fix and document-injection tests, is relevant to local agent and SLM experimentation.
+  - Link: https://www.youtube.com/watch?v=Q9olIRcN-Xg
+
+- **Introducing Claude Ship (beta): Claude can review your pull requests, work on fixes, and approve th…** (Top pick; dev_tooling; x) - Claude Ship (beta) lets Claude review PRs, push fixes, and auto-approve under team policy, so test its approval rules before enabling it on real repos.
+  - Link: https://x.com/ClaudeDevs/status/2124959436640858475
+  - Also covered by: [Claude Ship](https://code.claude.com/docs/en/claude-ship?utm_source=tldrai) (email)
+
+- **Amazon: AI agents found and exploited a 0-day** (Top pick; agents_mcp_skills; email) - Relevant to agent security: AI agents on the open-source Cairn pentest framework autonomously found and exploited a zero-day, so agent sandboxing and permission scoping need treating as a live threat.
+  - Link: https://arstechnica.com/security/2026/11/amazon-says-hackers-ai-agents-found-and-exploited-0-day-with-little-human-input/?utm_source=tldrai
+
+- **Nuxt 4.7** (Top pick; dev_tooling; email) - Nuxt 4.7 previews WebMCP for exposing app actions to browser agents and offers opt-in Nitro v3, a useful early look at what changes before Nuxt 5.
+  - Link: https://nuxt.com/blog/v4-7?utm_source=tldrdev
+
+- **New Anthropic Fellows research: Returning to the neuron basis for interpretability Understanding wh…** (Top pick; research; x) - Anthropic Fellows found individual neurons in open-weight models can detect harmful text, steer behavior, and reveal hidden finetuning behaviors without extra training.
+  - Link: https://x.com/AnthropicAI/status/2125365268381929637
+
+- **Uber went from 1 AI agent skill to 5,000+ in a year, and they're used 1 million times a month. They…** (Top pick; agents_mcp_skills; x) - Uber's internal rollout shows a concrete pattern for agent skills: one-command installs across Claude Code, Codex, and OpenCode, plus with/without testing to cut unhelpful skills.
+  - Link: https://x.com/RoundtableSpace/status/2125450657427829147
+
+- **We recently migrated our Messages API from Python to Rust. On our engineering blog, we share how we…** (Top pick; dev_tooling; x) - Anthropic rewrote its Messages API from Python to Rust, verifying parity with teams of Claude agents; a useful case study for agent-driven migration testing.
+  - Link: https://x.com/AnthropicAI/status/2125627317263466739
+  - Also covered by: [Our new engineering blog shares how we migrated the Claude Messages API from Python to Rust. We sha…](https://x.com/ClaudeDevs/status/2125628717263372512) (x)
+
+- **EL4CTEO/shrink-anything** (Top pick; repo_library; github) - A tool that deletes dead code, files, and dependencies while keeping only cuts that pass your tests, directly useful for trimming Claude Code-generated or Vite/React projects.
+  - Link: https://github.com/EL4CTEO/shrink-anything
+
+- **uxpilot-ai/frontend-design-skill** (Top pick; agents_mcp_skills; github) - A free Claude Code skill that designs UI on a UX Pilot canvas and then builds it in your codebase, directly relevant to your React/Tailwind frontend workflow and skills setup.
+  - Link: https://github.com/uxpilot-ai/frontend-design-skill
+
+- **Karimk899/free-llm-router** (Top pick; repo_library; github) - A free, OpenAI-compatible proxy that routes one API key across 15+ free LLM providers with automatic fallback, useful for cheap experimentation with agent and SDK code.
+  - Link: https://github.com/Karimk899/free-llm-router
+  - Also covered by: [ThaoYou30020/llm-router-free](https://github.com/ThaoYou30020/llm-router-free) (github)
+
+- **MCP turns two! What started as a protocol for connecting AI apps to tools and data is evolving to s…** (Top pick; agents_mcp_skills; x) - MCP is evolving from a tool-connection protocol into agent-to-agent communication and orchestration, with Skills over MCP and Tasks coming to Claude, so existing MCP servers may need updating.
+  - Link: https://x.com/ClaudeDevs/status/2125289794871963935
+
+- **Surogate 3.7 35B-A3B Locally: Tailing DeepSeek V4 Flash and GLM 5.2** (Notable; model_release; youtube) - Surogate 3.7 is a 35B-A3B open model aimed at enterprise agentic work, with a local vLLM setup and benchmarks against DeepSeek V4 Flash and GLM 5.2 that are relevant for local agent testing.
+  - Link: https://www.youtube.com/watch?v=4Q2q0TNx2SE
+
+- **Claude Artifacts become Mac and Windows apps** (Notable; dev_tooling; email) - Claude artifacts can now be installed as standalone Mac and Windows apps (beta, all plans), which is a quick way to ship and share small tools you build in Claude.
+  - Link: https://claude.com/resources/articles/install-as-app?utm_source=tldrai
+
+- **ERNIE 5.5 Flash: Driven by Baidu Dream** (Notable; model_release; youtube) - A Baidu ERNIE 5.5 Flash Preview model is tested via open weights on Hugging Face, with a coding-app bug and benchmark results, which matters if you're evaluating alternative models for agent or codin…
+  - Link: https://www.youtube.com/watch?v=n_8q9p4dF2g
+
+- **Ternary Bonsai 2.5 27B: 6GB Ternary Model with Power Punch Locally** (Notable; model_release; youtube) - A 27B ternary (quantized-weight) GGUF model that runs in about 6GB locally, relevant if you want to test agent workloads on local hardware.
+  - Link: https://www.youtube.com/watch?v=0ILhA3ylXxs
+  - Also covered by: [Ternary Bonsai 2.5 27B](https://prismml.com/news/bonsai-2-5-27b?utm_source=tldrai) (email)
+
+- **GLM-5.4: Specs, Architecture and Wild Demos** (Notable; model_release; youtube) - Zhipu's GLM-5.4 is a new open-weight coding-focused model worth evaluating as an alternative to Claude for agentic coding tasks, though this video is mostly demos rather than detailed specs.
+  - Link: https://www.youtube.com/watch?v=ONhcW73MjGU
+
+- **React Testing Library is faster when it's part of the DOM** (Notable; dev_tooling; email) - A DOM implementation with Testing Library queries reportedly cuts React test runtime 32–54% without test changes, but it requires Node 26+ and React 19.
+  - Link: https://sigh.dev/posts/vibecoding-faster-react-tests/?utm_source=tldrdev
+
+- **Getting started with WebMCP** (Notable; agents_mcp_skills; email) - WebMCP is a draft browser API for exposing site actions as agent-callable tools, directly relevant to MCP work and adoptable with a small demo.
+  - Link: https://polypane.app/blog/getting-started-with-webmcp-building-and-testing-tools/
+
+- **Agentic coding on an open-source project** (Notable; agents_mcp_skills; email) - Practical guide to running agentic coding on a real open-source project, covering skills, context management, and review workflows relevant to Claude Code users.
+  - Link: https://blog.frankrousseau.fr/agentic-coding-on-an-open-source-project/?utm_source=tldrnewsletter
+
 ## 2026-11-25
 
 - **Claude Code v2.1.332 / v2.1.331** (AI tooling) - Skills from MCP servers (beta) appear in the `/` menu as `server:skill`; new `PreSkillShellCommand` hook can refuse a skill's inline shell commands; Code Mode now works in terminal sessions on Bedrock, Google Cloud Agent Platform, Foundry and Claude Platform on AWS; plugin manifests support `optionalDependencies`.
