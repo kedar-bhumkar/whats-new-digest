@@ -2,6 +2,21 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-25
+
+- **Claude Code v2.1.332 / v2.1.331** (AI tooling) - Skills from MCP servers (beta) appear in the `/` menu as `server:skill`; new `PreSkillShellCommand` hook can refuse a skill's inline shell commands; Code Mode now works in terminal sessions on Bedrock, Google Cloud Agent Platform, Foundry and Claude Platform on AWS; plugin manifests support `optionalDependencies`.
+  - Why it matters: MCP servers can now ship reusable skills, and the new hook lets you gate skill-embedded shell commands. Heads-up: from Nov 30, managed `extraKnownMarketplaces` auto-update by default (set `"autoUpdate": false` to opt out). On Foundry/Agent Platform, `sonnet` now maps to Sonnet 5.5.
+  - Link: https://code.claude.com/docs/en/changelog
+
+- **Claude Fable 5.2 and Claude Mythos 5.2** (AI tooling) - Anthropic's newest models, announced Nov 9, aimed at demanding technical work.
+  - Why it matters: candidates for the hardest agentic coding tasks; check the announcement for capabilities and pricing before switching defaults. I only confirmed the headline from the news index, not model details.
+  - Link: https://www.anthropic.com/news
+
+- **vercel-labs/agent-desktop** (GitHub) - Computer-use CLI and C library that reads a desktop app's accessibility tree and returns JSON with refs for each actionable element, so agents act without screenshots; macOS, Windows, Linux.
+  - Why it matters: a cheaper, more deterministic alternative to screenshot-based computer use when you build desktop-automation agents; it has no model inside, so it plugs into any agent loop.
+  - Link: https://github.com/vercel-labs/agent-desktop
+  - Safety note: Apache-2.0, ~26.6k stars, 355 commits on main; I could not verify last-commit date or contributors. Snapshots/clipboard/screenshots can contain private desktop content, so keep them out of logs; pass secrets via `--stdin`, not args.
+
 ## 2026-11-24
 
 - **Claude Code v2.1.330 / v2.1.329** (AI tooling) - Scheduled tasks and `/loop` now run up to 30 days (was 7) while the session lives; `/tasks` lists scheduled tasks, wakeups and forks; stricter approval for risky `rm` commands.
@@ -1208,10 +1223,4 @@ _No GitHub repos included today: searches surfaced only older or unverifiable tr
 
 - **How One Founder Manages 20 AI Coding Agents at Once - Ryan Carson, Untangle** (Notable; agents_mcp_skills; youtube) - One founder's workflow of a manager agent supervising up to 20 cloud builder agents, with automated review, QA, and a merge queue, is a concrete pattern to borrow for Claude Code and Agent SDK setups.
   - Link: https://www.youtube.com/watch?v=BTtyguoPvBU
-
-## 2026-11-09
-
-- **Claude Code v2.1.317-2.1.319** (AI/Claude tooling) - Three releases in Nov 3-6 adding safer unattended runs and background MCP handling.
-  - Why it matters: `permissions.denyInsteadOfPrompting` lets headless/scheduled runs deny a blocked tool call and continue instead of stalling; long-running MCP tool calls now go to the background with the result reported on completion; `claude -p` exits 1 when auto mode refuses actions or a full disk loses transcript writes (easier CI/automation checks); a new check asks before a tool call sends your account email to the network; `/claude-api latency-optimize` reviews Claude API code for slow spots; Agent SDK hook callbacks support `onFailure: "block"`.
-  - Link: https://github.com/anthropics/claude-code/releases
 
