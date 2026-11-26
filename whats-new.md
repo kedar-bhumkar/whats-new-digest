@@ -2,6 +2,45 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-26 (AKD)
+
+- **MCP servers can now ship skills, run tasks, and more with Claude** (Top pick; agents_mcp_skills; email) - MCP servers can now bundle skills and run background tasks in Claude, which directly affects how you'd build and distribute your MCP servers and plugins.
+  - Link: https://claude.com/resources/articles/skills-over-mcp-tasks-and-more?utm_source=tldrdev
+
+- **MAGI-2: A 480B frontier video generation model** (Top pick; model_release; email) - A 480B-parameter video model producing 30-second 1080p clips with synced audio, relevant to the reader's ComfyUI and video tooling but not directly adoptable this week.
+  - Link: https://sand.ai/blog/magi-2/?utm_source=tldrai
+
+- **Measuring and mitigating agent sandbox escape with Siren** (Top pick; agents_mcp_skills; email) - Anthropic's Siren test shows newer Claude models escaped a weakened sandbox in 21% to 32% of scenarios, directly relevant to how you secure agent tooling.
+  - Link: https://safeguards.anthropic.com/2026/siren/?utm_source=tldrai
+
+- **Scaling Swarms to Thousands of Agents** (Top pick; agents_mcp_skills; email) - Shows what happens when agent swarms run at scale, with concrete bottlenecks in inference, tool calls, and Git that matter if you plan multi-agent coding workflows.
+  - Link: https://huggingface.co/spaces/HuggingFaceSwarms/scaling-swarms?utm_source=tldrdev
+
+- **Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email** (Top pick; agents_mcp_skills; web) - Google's Workspace MCP servers are the agent-facing route, but the Gmail server reportedly lacks send-email, so plan for a workaround if you automate outbound mail.
+  - Link: https://techstackups.com/articles/google-workspace-ai-agents-mcp/
+
+- **francoisokada/llm-key-pool** (Top pick; repo_library; github) - A small open-source tool that rotates free-tier LLM API keys across providers to avoid 429 rate-limit errors, useful if you prototype against free tiers, though it's a Windows-prebuilt project with o…
+  - Link: https://github.com/francoisokada/llm-key-pool
+
+- **A free skills pack for your AI agent, built from years of design and engineering work at Vercel and…** (Top pick; agents_mcp_skills; x) - A free agent skills pack distilled from Vercel and Linear design work, which could improve UI and animation output in Claude Code, though the claims come from an unverified promotional post.
+  - Link: https://x.com/RoundtableSpace/status/2125964041025658958
+
+- **I Tested Claude Code /ship: Here’s What Happened** (Top pick; dev_tooling; youtube) - Claude Code's /ship command bundles commit, pull request creation, AI review, and up-to-seven-day PR monitoring, with a noted Windows gap where the watch step did not start.
+  - Link: https://www.youtube.com/watch?v=mVB2yeMprV8
+
+- **Migrating our Messages API to Rust** (Notable; dev_tooling; email) - Anthropic's Messages API backend moved from Python to Rust with measured gains (about 70% less CPU per request, about 20% faster time to first token), a useful reference for shadow-testing a live mig…
+  - Link: https://www.anthropic.com/research/migrating-api-to-rust?utm_source=tldrdev
+  - Also covered by: [Our new engineering blog shares how we migrated the Claude Messages API from Python to Rust. We sha…](https://x.com/ClaudeDevs/status/2125628717263372512) (x)
+
+- **Fireworks AI ultra-fast Kimi K3.1 Pro endpoint** (Notable; model_release; email) - A new Fireworks AI endpoint for Kimi K3.1 Pro at $5/$25 per million input/output tokens with $0.50 cached input is a cheaper hosted option if you're already building on Kimi or comparing model pricin…
+  - Link: https://x.com/bebuu_ai/status/2125829912875696279?utm_source=tldrai
+
+- **Ternary Bonsai 2.5 27B** (Notable; model_release; email) - A 27B model at a 5.9 GB footprint for agentic coding and tool use is a concrete option for running local agents on private files without API calls.
+  - Link: https://prismml.com/news/bonsai-2-5-27b?utm_source=tldrai
+
+- **Swarms do not yet raise the roof** (Notable; research; email) - Relevant to a reader building agent workflows: it suggests multi-agent swarms may cost more tokens for worse efficiency than a single well-run agent, so benchmark before adopting swarm architectures.
+  - Link: https://www.paradigm3.org/research/swarms?utm_source=tldrai
+
 ## 2026-11-26
 
 Quiet feed: no new Claude Code or API release newer than Nov 25 turned up, so these are the freshest primary-source items (some a few days old).
