@@ -2,6 +2,29 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-26
+
+Quiet feed: no new Claude Code or API release newer than Nov 25 turned up, so these are the freshest primary-source items (some a few days old).
+
+- **Claude Code v2.1.332** (AI tooling) - Beta skills from MCP servers (shown as `server:skill`), a `PreSkillShellCommand` hook that can refuse a skill's inline shell commands, and Sonnet 5.5 as the default on Microsoft Foundry.
+  - Why it matters: beyond the headline features, macOS computer use now follows newer safety rules (some actions are refused), and Desktop Code-tab sessions default to OTel `service.name` `claude-code-desktop`, so update telemetry filters keyed on `claude-code` or set `OTEL_SERVICE_NAME`.
+  - Link: https://code.claude.com/docs/en/changelog
+
+- **Claude Opus 4.5 retirement on the API** (AI tooling) - `claude-opus-4-5` and `claude-opus-4-5-20251101` retire on the Claude API on January 22, 2027 (API release notes, Nov 23); Anthropic recommends Opus 5.5.
+  - Why it matters: grep your code and agent configs for pinned Opus 4.5 IDs and migrate before the date.
+  - Link: https://platform.claude.com/docs/en/release-notes/api
+
+- **anthropic-sdk-python v2.14.0** (AI tooling) - `DefaultHttpxClient` now honors `proxy=` and `trust_env=False` over `HTTP(S)_PROXY`/`NO_PROXY` env vars; adds Google-managed data controls and compliance review cases.
+  - Why it matters: behavior change; with `proxy=` set, hosts in `NO_PROXY` now go through your proxy. Use `mounts={"all://host": None}` to keep a host direct.
+  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
+
+- **cursor/plugins** (GitHub) - Cursor's plugin marketplace repo; defines a plugin layout of `.cursor-plugin/plugin.json` plus `skills/` (SKILL.md), `rules/`, and `mcp.json` per plugin; ~19.7k stars, ~268 today on GitHub Trending.
+  - Why it matters: a concrete reference for packaging skills plus MCP servers as one installable plugin, similar in shape to Claude Code plugins, if you ship tooling for several agents.
+  - Link: https://github.com/cursor/plugins
+  - Safety note: MIT, run by Cursor, 854 commits on main. Last-commit date and contributor count not shown on the page. Treat third-party plugins inside it as unvetted; read a plugin's `mcp.json` before installing.
+
+Skipped: Claude-BugHunter (trending; dual-use offensive-security skills, installer optionally asks for a HackerOne token) and Tracer-Cloud/opensre (public alpha, unpinned curl-to-bash installer, opt-out telemetry); could not vouch for either.
+
 ## 2026-11-25 (AKD)
 
 - **anthropics/claude-code v2.1.332** (Top pick; dev_tooling; github) - Claude Code 2.1.332 adds beta MCP-sourced skills and a PreSkillShellCommand hook that can block skill shell commands, relevant to agent security and anyone building skills or MCP servers.
@@ -1231,72 +1254,4 @@ No GitHub repos added today: the trending candidates I found (e.g. NousResearch/
 
 - **How Anthropic Builds Agent Memory** (Notable; research; email) - Anthropic's research on agent memory, including a "dreaming" consolidation step during idle time, bears directly on how you'd design persistent memory for Claude Agent SDK agents and MCP-based workfl…
   - Link: https://www.anthropic.com/research/components-of-agent-memory?utm_source=tldrai
-
-## 2026-11-10
-
-- **Claude Code v2.1.322 / v2.1.321 / v2.1.319** (AI/Claude tooling) - Fast mode on Vertex (global/US/EU) in v2.1.322; Fable 5.2 (`claude-fable-5-2`, 1M context, $8/$40 per Mtok) becomes the default Fable model in v2.1.321.
-  - Why it matters: v2.1.321 fixes security issues (MCP OAuth no longer leaks refresh tokens on cross-host redirects; read-only Bash no longer escapes the sandbox; deny rules now cover `cp`/`mv` into directories). v2.1.319 adds MCP tasks in the terminal (background long-running MCP calls) and `permissions.denyInsteadOfPrompting` for unattended/headless agent runs.
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **anthropic-sdk-python v2.7.0** (AI/Claude tooling) - Adds `claude-fable-5-2` and `claude-mythos-5-2` model IDs; structured-output schemas now keep `const`; Bedrock/Vertex clients honor `ANTHROPIC_CUSTOM_HEADERS`.
-  - Why it matters: v2.5.0 made `OverloadedError`/`ServiceUnavailableError` subclasses of `InternalServerError`, so existing `except InternalServerError` blocks now catch them. Review retry logic when upgrading.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases
-
-- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol revision, following the 2025-11-25 one.
-  - Why it matters: check that MCP servers/clients you build or depend on target the current revision. Details are in the linked changelog on the release page.
-  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
-
-_No GitHub repos included today: searches surfaced only older or unverifiable trending lists, and nothing could be vouched for._
-
-## 2026-11-09 (AKD)
-
-- **Fable 5.2 REVIEW Here is what's actually different and what to try first (cheaper, faster, way fewer blocks)** (Top pick; model_release; reddit) - A Reddit early-access review of a new model "Fable 5.2" (claude-fable-5-2) reporting lower API prices ($8/$40 per million tokens), faster output, and a changed model string relevant to an agent/API b…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xs2wdl/fable_52_review_here_is_whats_actually_different/
-  - Also covered by: [anthropics/claude-code v2.1.321](https://github.com/anthropics/claude-code/releases/tag/v2.1.321) (github)
-  - Also covered by: [Fable 5.2 is now available in the Claude Platform and Claude Code. It’s up to 30% faster than Fable…](https://x.com/ClaudeDevs/status/2119868698613956992) (x)
-  - Also covered by: [Introducing Claude Fable 5.2](https://www.youtube.com/watch?v=6a1QSJlsYpU) (youtube)
-  - Also covered by: [Claude Fable 5.2 vs Opus 5.5: Don't Pay for Max Effort](https://www.youtube.com/watch?v=7cx2unMXBYY) (youtube)
-  - Also covered by: [Fable 5.2 just landed.](https://www.reddit.com/r/ClaudeAI/comments/1xs0dct/fable_52_just_landed/) (reddit)
-
-- **Hackers now have AI agents searching GitHub for your API keys, 24/7. Microsoft just warned that att…** (Top pick; industry_business; x) - Attackers are using AI agents to scan public GitHub repos for leaked cloud and AI API keys, so any key that ever touched a public repo should be rotated and treated as compromised.
-  - Link: https://x.com/RoundtableSpace/status/2119675100911804878
-
-- **anthropics/anthropic-sdk-python v2.7.0** (Top pick; dev_tooling; github) - Adds claude-fable-5-2 and claude-mythos-5-2 model IDs plus Bedrock/Vertex and structured-output fixes, so check any pinned model names and schema handling after upgrading.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.7.0
-
-- **Anthropic open-sourced a way to prove which model actually answered your request (and it targets exactly the "is my provider serving a quantized model?" problem)** (Top pick; repo_library; reddit) - Anthropic's FlashProve (Apache 2.0, unmaintained research prototype) lets you verify which model served a reply, but current limits (1,024-token context, one-token checks, ~19 MB proofs) make it a wa…
-  - Link: https://www.reddit.com/r/ClaudeAI/comments/1xrydq5/anthropic_opensourced_a_way_to_prove_which_model/
-
-- **The One Thing Every AI Agent Framework Agrees On - Mislav Ivanda, Daytona** (Top pick; agents_mcp_skills; youtube) - Argues that where agent-generated code runs (a separate sandboxed computer versus allow lists or embedded runtimes) is the hard-to-swap decision, and that CrewAI, AG2 and the OpenAI Agents SDK are al…
-  - Link: https://www.youtube.com/watch?v=WWIFiQi9U4w
-
-- **Claude Code can now use your phone. And it has to ask you before anything risky. Pinky lets any AI …** (Notable; agents_mcp_skills; x) - Pinky is an open-source MCP server that lets Claude Code or Codex drive a real iPhone or Android, with confirmation gates on payments and sends, a sandboxed setup for banking and password apps, and s…
-  - Link: https://x.com/RoundtableSpace/status/2119750598480343348
-
-- **Spec Kit** (Notable; agents_mcp_skills; email) - Spec Kit gives agentic coding tools reusable spec-driven workflows and templates, a concrete process you could adopt in Claude Code within a week.
-  - Link: https://github.com/github/spec-kit?utm_source=tldrdev
-
-- **meituan-longcat/LongCat-2.5 · Hugging Face** (Notable; model_release; reddit) - A 1.6T-parameter open-weights multimodal model from Meituan, relevant to local-inference users only if it's runnable at quantized sizes; the Reddit post itself gives no benchmarks, license, or hardwa…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xrsptp/meituanlongcatlongcat25_hugging_face/
-
-- **Anthropic just made the skills behind Claude's Word, Excel, PowerPoint and PDF files fully open sou…** (Notable; agents_mcp_skills; x) - Anthropic's document skills for Word, Excel, PowerPoint, and PDF are now open source, so they can be reused in your own agents, subject to the license terms.
-  - Link: https://x.com/RoundtableSpace/status/2119780797674832359
-
-- **Which Claude model should you build with? Our new guide breaks down when to use Fable 5.2, Opus 5.5…** (Notable; model_release; x) - It's an official Claude model-selection guide covering Fable 5.2, Opus 5.5, Sonnet, and Haiku, including effort tuning and routing subagents to cheaper models, directly relevant to Claude API and Age…
-  - Link: https://x.com/ClaudeDevs/status/2119898687803621427
-
-- **Nanoutrolley/roblox-studio-mcp** (Notable; agents_mcp_skills; github) - An MCP server that lets Claude or Cursor read Roblox Studio object trees and run Lua scripts and playtests, a concrete adoptable pattern for agent-driven game dev tooling.
-  - Link: https://github.com/Nanoutrolley/roblox-studio-mcp
-
-- **Securing AI Agents: Lessons From Real-World Deployment** (Notable; agents_mcp_skills; email) - Uber's production approach to agent security (scoped intents, runtime behavioral checks, prompt provenance) gives a concrete pattern for adding guardrails to your own agent tooling, beyond traditiona…
-  - Link: https://x.com/UberEng/status/2118769501332463762?utm_source=tldrdev
-
-- **PI-Desktop** (Notable; agents_mcp_skills; email) - PI-Desktop is an Electron and Rust workspace that unifies coding agents, models, and MCP-based plugins, which overlaps directly with your Claude Code and MCP setup and is worth testing for local-mode…
-  - Link: https://github.com/vastsa/PI-Desktop?utm_source=tldrdev
-
-- **M4 Pro vs M5 Pro (24GB): Qwen 3.8 Flash Next IQ3 with MoEShift at 374 tok/s prefill, 14.7 tok/s decode, 8.5GB peak memory** (Notable; research; reddit) - Shows a 125B MoE model running on a 24GB Apple Silicon Mac via SSD offloading (MoEShift) at 14.7 tok/s decode and 374 tok/s prefill, an adoptable local-inference option for an agent setup, though bas…
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xrq2fv/m4_pro_vs_m5_pro_24gb_qwen_38_flash_next_iq3_with/
-
-- **How One Founder Manages 20 AI Coding Agents at Once - Ryan Carson, Untangle** (Notable; agents_mcp_skills; youtube) - One founder's workflow of a manager agent supervising up to 20 cloud builder agents, with automated review, QA, and a merge queue, is a concrete pattern to borrow for Claude Code and Agent SDK setups.
-  - Link: https://www.youtube.com/watch?v=BTtyguoPvBU
 
