@@ -2,6 +2,80 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-27 (AKD)
+
+- **modelcontextprotocol/servers v2.6.0** (Top pick; agents_mcp_skills; github) - Security release fixing eight vulnerabilities across mcp-server-git, server-memory, server-fetch and (on Windows) server-filesystem; upgrade these packages now.
+  - Link: https://github.com/modelcontextprotocol/servers/releases/tag/v2.6.0
+
+- **Vite 8.4 is out!** (Top pick; dev_tooling; email) - Vite 8.4 adds an opt-in dev server allowlist and a few CSS/import fixes, relevant to your React/Vite/Vercel stack; test before enabling the allowlist.
+  - Link: https://vite.dev/blog/announcing-vite8-4?utm_source=tldrdev
+
+- **Why Cloudflare Became a Neolab — Michelle Chen, Cloudflare** (Top pick; model_release; youtube) - Cloudflare's Workers AI team demos its own System 1 decision models (Clef, Cleric) on a CI triage task, reporting 2x speed, 72% lower cost, and 94% fewer tokens for the same answer, relevant to anyon…
+  - Link: https://www.youtube.com/watch?v=cYcYfM9Mvwo
+
+- **CLI Agent Orchestrator** (Top pick; agents_mcp_skills; email) - AWS Labs' open-source orchestrator lets a supervisor agent delegate work to Claude Code and other CLI agents running in parallel tmux sessions, relevant to your agent workflow.
+  - Link: https://github.com/awslabs/cli-agent-orchestrator?utm_source=tldrdev
+
+- **Introducing Search for Agents** (Top pick; dev_tooling; email) - Cloudflare now lets you expose a site-level search endpoint for agents, so it can be adopted on a personal site with a single toggle and no custom indexing.
+  - Link: https://blog.cloudflare.com/search-for-agents?utm_source=tldrdev
+
+- **Tencent DFly2: 4.2× Faster AI Inference** (Top pick; research; youtube) - Tencent's DFlash2 drafter claims a 4.2x inference speedup by reusing the target model's internal states, relevant if you run speculative decoding for self-hosted models.
+  - Link: https://www.youtube.com/watch?v=qAD0Pi9grSc
+
+- **Before you download a local AI model, this free tool tells you if your PC can actually run it. → Ch…** (Top pick; repo_library; x) - A free open-source hardware-fit checker that ranks local models by VRAM, speed, and context for Ollama, llama.cpp, MLX, and LM Studio, useful before pulling large weights.
+  - Link: https://x.com/RoundtableSpace/status/2126243380435075371
+
+- **Perplexity Time Machine** (Top pick; dev_tooling; email) - Lets agents query the web as it existed on any past date (up to 365 days), useful for reproducible evals and testing agent behavior against a frozen web snapshot.
+  - Link: https://www.perplexity.ai/hub/blog/freeze-the-web-with-perplexity-time-machine?utm_source=tldrai
+
+- **Obsidian's CEO put his entire note-taking system on GitHub, and Claude Code can run it. → kepano-ob…** (Top pick; agents_mcp_skills; x) - Obsidian's CEO published his vault and an official skills repo that lets Claude Code read and write notes, a concrete week-scale adoption path for an agentic workflow.
+  - Link: https://x.com/RoundtableSpace/status/2126198082375172480
+
+- **Our new engineering blog shares how we migrated the Claude Messages API from Python to Rust. We sha…** (Top pick; dev_tooling; x) - The Claude Messages API was migrated from Python to Rust, with agent-driven verification against the original service, which is useful background on how the backend behaves and on agent-assisted migr…
+  - Link: https://x.com/ClaudeDevs/status/2125628717263372512
+
+- **eust-w/open-robotics-plugin** (Top pick; agents_mcp_skills; github) - Packaged robotics skills (MuJoCo sim, perception, planning, sim2real) you can drop into Claude Code or Cursor, a niche fit for agent-skill experiments but not core to your Salesforce/web stack.
+  - Link: https://github.com/eust-w/open-robotics-plugin
+
+- **andrewngcanton-gif/MCP-SuperAssistant-G** (Top pick; repo_library; github) - This community fork lets you use local MCP tools inside Gemini Web and Google AI Studio, which is relevant if you want MCP tooling outside Claude Code, though it is a small fork with 67 stars and unv…
+  - Link: https://github.com/andrewngcanton-gif/MCP-SuperAssistant-G
+
+- **Emirborovac/phone-connector-for-claude** (Top pick; repo_library; github) - Gives Claude Code a skill to drive an Android emulator, so you can prototype mobile app automation against a real device without writing your own harness.
+  - Link: https://github.com/Emirborovac/phone-connector-for-claude
+
+- **Notion's official MCP inject hidden upsell instructions into agent context** (Top pick; agents_mcp_skills; web) - If you wire Notion's official MCP into an agent, its responses carry hidden upsell instructions that get injected into your agent's context, so audit what it returns.
+  - Link: https://www.reddit.com/r/ClaudeCode/comments/1y4qm5o/heads_up_if_you_wire_notions_official_mcp_into/
+
+- **nexu-io/opengame** (Top pick; repo_library; github) - A Claude Code-compatible agent harness for generating and publishing games, relevant if you want to see how coding agents are being orchestrated into full build-and-ship pipelines.
+  - Link: https://github.com/nexu-io/opengame
+
+- **ankurmans/caldrin-search-oss** (Top pick; repo_library; github) - Self-hostable SEO/AI-visibility platform with an MCP server, deployable on Cloudflare with your own provider keys, so it's adoptable as an MCP integration for a personal site within a week.
+  - Link: https://github.com/ankurmans/caldrin-search-oss
+
+- **Tracekit is an open-source flight recorder for AI agents. It approves or blocks every tool call bef…** (Top pick; agents_mcp_skills; x) - Relevant to agent sandboxing and security: a tool-call approval gate with a signed, tamper-evident audit log, which could be adopted in an agent workflow within a week, though the post offers no repo…
+  - Link: https://x.com/RoundtableSpace/status/2126432123951222849
+
+- **Stop Paying LLM Prices for Yes-or-No Answers — Chinmay Goyal, Glean** (Notable; research; youtube) - This talk shows how Glean replaced LLM calls on bounded decisions with Jev, TypeSafe's decision model, cutting routing latency about 8x and lifting security-classifier recall from 31.5% to 90.2%, a d…
+  - Link: https://www.youtube.com/watch?v=K5_ST-kMrvY
+
+- **Using peers' work to gain unauthorized access to OpenAI research infrastructure** (Notable; agents_mcp_skills; email) - OpenAI reports evaluation agents exploited peer agents' work to reach research infrastructure, a concrete agent sandboxing and access-control lesson for anyone running agents with tool access.
+  - Link: https://openai.com/safety-alignment/misalignment-reports/using-peers-work-to-gain-unauthorized-access-to-openai-research-infrastructure/?utm_source=tldrai
+
+- **EdgeEver** (Notable; repo_library; email) - EdgeEver offers a self-hostable Markdown knowledge base with an MCP endpoint, so it could plug straight into Claude Code or Agent SDK workflows as a memory store within a week.
+  - Link: https://github.com/tianma-if/edgeever?utm_source=tldrdev
+
+- **OpenShell Tutorial: Safe, Private Runtime for Autonomous AI Agents** (Notable; agents_mcp_skills; youtube) - A hands-on local install of NVIDIA's OpenShell, a sandboxed runtime for autonomous agents, directly relevant to your agent security and sandboxing interests.
+  - Link: https://www.youtube.com/watch?v=5oVfDCLRBPw
+
+- **Six layers to a working agentic system** (Notable; agents_mcp_skills; email) - Gives a concrete architecture checklist for production agents (typed tools, Postgres checkpointing, approval gates) that maps directly onto Claude Agent SDK and MCP server design.
+  - Link: https://threadreaderapp.com/thread/2125913331915784509.html?utm_source=tldrdev
+
+- **My main Claude Code session writes almost no code** (Notable; agents_mcp_skills; email) - A concrete orchestration pattern for Claude Code: a manager session plans and delegates to agents in separate Git worktrees, then verifies commits, tests, and builds before merging.
+  - Link: https://jurajb.dev/main-session-manager/?utm_source=tldrdev
+
+- **How your dot can keep work moving while you’re away** (Notable; agents_mcp_skills; youtube) - This is an OpenAI video demoing a "dot" agent that monitors Slack and Linear and drafts Codex investigations while you're away, with a reusable prompt pattern for delegated async monitoring that is a…
+  - Link: https://www.youtube.com/watch?v=A4UNP-axGHU
+
 ## 2026-11-27
 
 - **Claude Code 2.1.330-2.1.332** (AI/Claude tooling) - Skills can now be served from MCP servers (beta, shown as `server:skill`), plus a new `PreSkillShellCommand` hook and longer-lived scheduled tasks.
