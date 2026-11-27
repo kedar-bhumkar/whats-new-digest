@@ -2,6 +2,26 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-27
+
+- **Claude Code 2.1.330-2.1.332** (AI/Claude tooling) - Skills can now be served from MCP servers (beta, shown as `server:skill`), plus a new `PreSkillShellCommand` hook and longer-lived scheduled tasks.
+  - Why it matters: the hook lets you veto a skill's inline shell commands as it loads, which is useful when you install third-party skills. `/loop` and recurring tasks now run up to 30 days instead of 7. Tasks saved by older versions mostly need rescheduling (2.1.329).
+  - Link: https://code.claude.com/docs/en/changelog
+
+- **Claude Ship** (AI/Claude tooling) - Anthropic's post-PR workflow: Code Review (GA), PR Steward (beta, fixes failing CI, merge conflicts and review feedback) and Claude Approvals (beta, applies an approval policy file kept in the repo). `/ship` in Claude Code triggers it.
+  - Why it matters: you can write your merge-approval rules as a policy file in the repo and let an agent handle the routine fix-and-review loop. It is limited to Team/Enterprise plans on GitHub repos and is not available with Zero Data Retention.
+  - Link: https://claude.com/resources/articles/introducing-claude-ship
+
+- **Install artifacts as Mac/Windows apps** (AI/Claude tooling) - A Claude artifact can be installed as a desktop app with its own icon and window. The app can use Claude and your connectors, and updates when the artifact is edited. It is a beta on all plans.
+  - Why it matters: it is a quick way to ship an internal tool built with Claude without a packaging pipeline. You choose between browser-like, app-level or full-computer permissions. Docs, Slides and Sheets artifacts can't be installed.
+  - Link: https://claude.com/resources/articles/install-as-app
+
+- **Zero data retention with Enterprise Frontier Safeguards** (AI/Claude tooling) - A beta that pairs zero data retention with Anthropic's frontier safeguards for enterprise accounts.
+  - Why it matters: it is relevant if compliance has blocked you from using agent features. Note that Claude Ship is not available to ZDR organizations. I read only the headline, not the full post.
+  - Link: https://claude.com/resources/articles/zero-data-retention-with-enterprise-frontier-safeguards
+
+_Repos: none included today. Several new agent repos surfaced in GitHub search, but their maintainer and commit history could not be verified from this session, so they were skipped._
+
 ## 2026-11-26 (AKD)
 
 - **MCP servers can now ship skills, run tasks, and more with Claude** (Top pick; agents_mcp_skills; email) - MCP servers can now bundle skills and run background tasks in Claude, which directly affects how you'd build and distribute your MCP servers and plugins.
@@ -1221,76 +1241,4 @@ No GitHub repos added today: the trending candidates I found (e.g. NousResearch/
   - Why it matters: a cheaper, deterministic alternative to screenshot-based computer use for automating GUI apps from any agent.
   - Link: https://github.com/vercel-labs/agent-desktop
   - Safety note: Apache-2.0, ~22.5k stars, 1.7k forks, 341 commits. I could not confirm last-commit date or contributor list from the page; npm package ships native binaries, so review `package.json` scripts/source before installing, and note snapshots can capture private desktop content.
-
-## 2026-11-11
-
-- **Claude Code v2.1.319 / v2.1.322** (AI/Claude tooling) - Recent releases add MCP task support (background tasks that report back), `permissions.denyInsteadOfPrompting`, `CLAUDE_CODE_DISABLE_FEATURE_FLAGS`, and fast mode on Vertex (v2.1.322, Nov 10).
-  - Why it matters: `denyInsteadOfPrompting` makes unattended/CI agent runs deterministic (denied calls don't stall), and MCP background tasks suit long-running tool servers. Note v2.1.319 changed auto mode behind LLM gateways or with telemetry off (set `CLAUDE_CODE_AUTO_MODE_SERVER=0` to keep the classifier).
-  - Link: https://github.com/anthropics/claude-code/releases
-
-- **Claude Agent SDK (Python) v0.2.177-0.2.180** (AI/Claude tooling) - Nov 3-9 releases; v0.2.177 added an `on_failure` option to `HookMatcher`, v0.2.178 bundles Claude CLI 2.1.318.
-  - Why it matters: hooks that can react to failures help build safer, self-correcting agent pipelines. Release notes for 0.2.179/0.2.180 were not shown, so check before upgrading.
-  - Link: https://github.com/anthropics/claude-agent-sdk-python/releases
-
-- **MCP spec revision 2026-07-28 (stable)** (AI/Claude tooling) - Latest stable Model Context Protocol spec; SDKs adopt it at their own pace.
-  - Why it matters: check that your MCP servers/clients target the current revision. I did not read the changelog itself.
-  - Link: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
-
-- **Prime Agent (PrimeIntellect-ai)** (GitHub repo) - Self-improving RLM coding/long-running agent harness, open-sourced Aug 2026 (older than 7 days, included as the one repo I could verify).
-  - Why it matters: reference design for long-horizon autonomous coding agents.
-  - Link: https://github.com/PrimeIntellect-ai/prime-agent
-  - Safety note: MIT license; ~22.7k stars, 5,269 commits; last commit date not verified. Unix installer is `curl | sh`, so read it first; README warns it is not a sandbox and runs model-generated code with your permissions.
-
-## 2026-11-10 (AKD)
-
-- **anthropics/claude-code v2.1.321** (Top pick; dev_tooling; github) - Claude Code v2.1.321 adds the Fable 5.2 default model and fixes several sandbox, MCP OAuth token-leak, and permission-check bugs, so review the upgrade and update any pinned model IDs.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.321
-  - Also covered by: [[AINews] Fable 5.2 retakes World #1 LLM spot as $ANT IPO roadshow begins](https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins/) (web)
-  - Also covered by: [Claude Fable 5.2 is cheaper than the last Fable: $8 per million input tokens and $40 per million ou…](https://x.com/RoundtableSpace/status/2119999739777491426) (x)
-  - Also covered by: [Fable 5.2 is now available in the Claude Platform and Claude Code. It’s up to 30% faster than Fable…](https://x.com/ClaudeDevs/status/2119868698613956992) (x)
-  - Also covered by: [Introducing Claude Fable 5.2](https://www.youtube.com/watch?v=6a1QSJlsYpU) (youtube)
-
-- **Claude Code's "Don't Ask Again" exposes passwords in 1,122 public GitHub files** (Top pick; agents_mcp_skills; web) - Claude Code's "Don't Ask Again" permission option is linked to credentials committed in 1,122 public GitHub files, so review those approvals and rotate any exposed secrets.
-  - Link: https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again
-
-- **Gemini 4 Carbon: The Most Capable Model from Google** (Top pick; model_release; youtube) - Google's Gemini 4 Carbon is aimed at long unattended engineering tasks, and this video shows real outputs (including a 100+ pass 3D engine build) plus four prompting rules, though the creator has ear…
-  - Link: https://www.youtube.com/watch?v=lQ6wwLHqDAg
-
-- **By default, Claude Code can read files anywhere on your computer. Your SSH keys, your .env files, y…** (Top pick; agents_mcp_skills; x) - Claude Code's new settings block file reads and writes outside the working directory (even in bypass mode) and deny SSH, AWS, and .env access, which matters for agent security; the write block needs…
-  - Link: https://x.com/RoundtableSpace/status/2120045855109509406
-
-- **Amazon just replaced Claude in one of the world's biggest internal ticketing systems. With a 2B mod…** (Top pick; repo_library; x) - A small 2B open model replaced Claude Sonnet for ticket labeling at Amazon, with reported cost and latency drops and a pip-installable CLI to try the same pattern, which is a concrete option for rout…
-  - Link: https://x.com/RoundtableSpace/status/2120112986274881756
-
-- **anthropics/anthropic-sdk-python v2.8.0** (Notable; dev_tooling; github) - Bedrock and Vertex model-ID and path-handling fixes change how `;` and empty IDs are treated, so check any custom Bedrock/Vertex model strings or base URLs before upgrading.
-  - Link: https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0
-
-- **Safely scaling multi-agent teams with Claude Fable 5.2** (Notable; agents_mcp_skills; email) - A 1,000-agent team reproducing a Fermat's Last Theorem formal proof with sandboxed agents, shared Git, and SQL coordination is a concrete multi-agent architecture pattern worth studying.
-  - Link: https://claude.dev/blog/safely-scaling-multi-agent-teams-with-fable-5-2/?utm_source=tldrdev
-  - Also covered by: [Claude Fable 5.2 and Mythos 5.2](https://www.anthropic.com/claude-fable-and-mythos-5-2) (web)
-
-- **MiniMax H3-Image Released, an Open-Weight Image Model built on H3** (Notable; model_release; reddit) - An open-weight image model from MiniMax, relevant as a locally runnable option for the ComfyUI and image tooling workflow you already use.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xso1ie/minimax_h3image_released_an_openweight_image/
-  - Also covered by: [MiniMaxAI/MiniMax-H3-Image · Hugging Face](https://www.reddit.com/r/LocalLLaMA/comments/1xsp3xt/minimaxaiminimaxh3image_hugging_face/) (reddit)
-
-- **NaiveAI Promises 2,100 Tokens per Second. How Well Does It Code?** (Notable; model_release; web) - Naive-N0.5-Flash is an open-weights coding model claiming about 2,100 tokens/sec, built by fine-tuning Xiaomi's MiMo-V2.5 with DeepSeek Sparse Attention and a 1M context, so the throughput and real c…
-  - Link: https://latent.space/p/naiveai/
-
-- **Claude Fable 5.2 Release vs Opus 5.5: Don't Pay for Max Effort** (Notable; model_release; youtube) - It's a model-choice guide for Claude Code users: Fable 5.2 at High effort matches Opus 5.5 on FrontierCode at about half the cost, so it changes which model and effort level to default to.
-  - Link: https://www.youtube.com/watch?v=7cx2unMXBYY
-
-- **anthropics/claude-code v2.1.322** (Notable; dev_tooling; github) - Claude Code v2.1.322 adds fast mode on Vertex (global, US, EU regions) with automatic fallback to standard speed, relevant if you run Claude Code through Vertex.
-  - Link: https://github.com/anthropics/claude-code/releases/tag/v2.1.322
-
-- **Your Agent Hates Your CLI - Ayush Bhardwaj, Allos AI** (Notable; agents_mcp_skills; youtube) - Analysis of about 20,000 agent tool calls shows where CLI output hides failures or forces repeated queries, with concrete fixes and a replay-test method for agent-facing tools.
-  - Link: https://www.youtube.com/watch?v=rS36lYuvXQ8
-
-- **You Can't Tell What an Agent Skill Will Do by Reading It - Roey Ben Chaim, Zenity** (Notable; agents_mcp_skills; youtube) - Reading a skill's SKILL.md can't reveal what it does at runtime, since it can chain-install packages and fetch remote prompts, so treat skills as dependencies and sandbox them.
-  - Link: https://www.youtube.com/watch?v=_7P580m4kPY
-
-- **speakleash/Bielik-11B-v3.1-Instruct · Hugging Face** (Notable; model_release; reddit) - Bielik-11B-v3.1-Instruct is a new open-weight 11B model with GGUF builds, useful if you want a local option for Polish or other European-language work with tool use.
-  - Link: https://www.reddit.com/r/LocalLLaMA/comments/1xsrg0l/speakleashbielik11bv31instruct_hugging_face/
-
-- **How Anthropic Builds Agent Memory** (Notable; research; email) - Anthropic's research on agent memory, including a "dreaming" consolidation step during idle time, bears directly on how you'd design persistent memory for Claude Agent SDK agents and MCP-based workfl…
-  - Link: https://www.anthropic.com/research/components-of-agent-memory?utm_source=tldrai
 
