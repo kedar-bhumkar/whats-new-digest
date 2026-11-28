@@ -2,6 +2,72 @@
 
 Daily digest of AI/Claude tooling advances and vetted GitHub repos. Newest entry first. Maintained by a scheduled routine.
 
+## 2026-11-28 (AKD)
+
+- **Google engineers have open-sourced most of what you need to turn a coding agent into a full enginee…** (Top pick; agents_mcp_skills; x) - Relevant for agent builders: it bundles several open-source Google agent tools (gemini-cli, adk-python, A2A, chrome-devtools-mcp), and the post's suggested starting trio is a concrete first step wort…
+  - Link: https://x.com/RoundtableSpace/status/2126620868013109740
+
+- **NVIDIA just open-sourced a fix for AI agents giving wrong answers about your company's data. Ask an…** (Top pick; agents_mcp_skills; x) - Open-source NVIDIA Auto Ontology exposes database semantics via MCP so agents verify business terms like "revenue" before writing SQL, a concrete fix for wrong-number answers.
+  - Link: https://x.com/RoundtableSpace/status/2126560470027092005
+
+- **GGUF LLM Models with Hidden Malware on Hugging Face Reached 2400 Victims** (Top pick; other; web) - Malicious GGUF models on Hugging Face reached about 2,400 victims, so vet model files before loading them into local inference or agent tooling.
+  - Link: https://malspark.com/blog/malicious-gguf-models-hugging-face/
+
+- **Your LLM Judge Is Hallucinating Too — Brian Kennedy, ZoomInfo** (Top pick; agents_mcp_skills; youtube) - Shows that a single LLM judge can approve failed agent actions, and that splitting evaluation into seven yes-or-no checks caught twice as many failures at 40x lower cost.
+  - Link: https://www.youtube.com/watch?v=DQwcuXgAIA0
+
+- **xAI's own Grok toolkit is free on GitHub. Add these tools and your Grok Bot works like a dev team: …** (Top pick; agents_mcp_skills; x) - Lists xAI's official Grok Build coding agent, SDKs, and a grok-build plugin for Claude Code, so it's adoptable this week, though the post is a curated roundup rather than a primary announcement.
+  - Link: https://x.com/RoundtableSpace/status/2126492522684059739
+
+- **Google released an experimental deep research skill that turns your coding agent into a proper rese…** (Top pick; agents_mcp_skills; x) - A 16-line experimental Google deep-research skill for coding agents, installable via `npx skills add`, that adds parallel subagent research to a Claude-style workflow with minor tweaks.
+  - Link: https://x.com/RoundtableSpace/status/2126673716956553317
+
+- **Samsung's 0.1-Bit LLM: What Did It Lose?** (Top pick; research; youtube) - Samsung's LittleBit-2 compresses Llama 2 13B to about 0.8 GB via sub-1-bit weights, a research result with no mature tooling yet, though a model release is pending.
+  - Link: https://www.youtube.com/watch?v=Sur7FfmvDos
+
+- **Nvidia chip buyers told to rule out Chinese renters** (Top pick; industry_business; email) - A new US rule bars Chinese firms from renting Nvidia GPUs in overseas data centers, which could affect GPU availability and cloud pricing for your builds and deployments.
+  - Link: https://www.cnbc.com/2026/11/26/neoclouds-nvidia-china-ai.html?utm_source=tldrnewsletter
+
+- **lumtekvn/lumreels** (Top pick; repo_library; github) - This is a new open-source MCP/CLI/REST tool that generates 9:16 vertical videos by having AI write HTML/SVG/WebGL per scene, which fits the reader's AI video tooling and MCP interests, with a clear f…
+  - Link: https://github.com/lumtekvn/lumreels
+  - Also covered by: [Someone just open-sourced GitHub for videos edited by AI agents. It's called v2. → Every version of…](https://x.com/RoundtableSpace/status/2126681266955399602) (x)
+
+- **LayerStream: faster MoE fine-tuning on fewer or cheaper GPUs** (Top pick; dev_tooling; email) - LayerStream streams per-layer state through the GPU from host memory, cutting MoE fine-tuning time 3x and GPU cost per token 68%, though the numbers are vendor-reported.
+  - Link: https://nebius.com/blog/posts/layerstream-moe-fine-tuning?utm_source=tldrai
+
+- **sol1560/Captae** (Top pick; repo_library; github) - It exposes an MCP server for AI assistants on top of a local media downloader, which is relevant if you build MCP tooling, though its value depends on how well the server is scoped and secured.
+  - Link: https://github.com/sol1560/Captae
+
+- **CodeGeek04/agent-desktop-fleet** (Top pick; agents_mcp_skills; github) - Runs many sandboxed Linux desktops as microVMs with MCP tools, directly relevant to agent sandboxing and safely giving Claude Code-style agents computer-use access locally.
+  - Link: https://github.com/CodeGeek04/agent-desktop-fleet
+
+- **MathewJames044/ai-api-proxy** (Top pick; repo_library; github) - A unified proxy that routes requests across multiple AI model APIs behind one endpoint, useful if you swap models or need failover without touching client code.
+  - Link: https://github.com/MathewJames044/ai-api-proxy
+
+- **Set up a self-optimizing `slow-turn-retro` Stop hook for my coding agents so that whenever an inter…** (Top pick; agents_mcp_skills; x) - A Stop hook for Claude Code and similar agents that detects turns over 10 minutes and proposes safe speedups, directly relevant to agent workflow tuning.
+  - Link: https://x.com/RoundtableSpace/status/2126484973355987320
+
+- **Your coding agent can make animations and videos now. These are the open-source repos to give it: →…** (Top pick; repo_library; x) - It lists the Remotion skills package for Claude Code, which the reader already uses in their stack, plus other open-source animation tools that could be wired into an agent workflow within a week.
+  - Link: https://x.com/RoundtableSpace/status/2126651067177861454
+
+- **Plato's Key** (Top pick; research; email) - Separately trained models share geometrically similar internal representations that a simple closed-form rotation-and-scale map can translate between, which could enable cheap model interop or swappi…
+  - Link: https://hazyresearch.stanford.edu/blog/2026-11-25-platos-key?utm_source=tldrai
+
+- **Claude Code sabotage: preliminary benchmarking** (Top pick; research; web) - A preliminary benchmark studying whether Claude Code can sabotage tasks it is given, relevant to anyone running it in autonomous or agentic workflows.
+  - Link: https://xinyadu.github.io/blog/claude-code-sabotage.html
+
+- **Looped Transformers: Thinking twice with the same weights** (Top pick; research; email) - Running some transformer layers multiple times per token adds compute without adding weights, which could change how you think about model capacity versus cost.
+  - Link: https://huggingface.co/spaces/dlouapre/looped-transformers?utm_source=tldrdev
+
+- **Context Rot Is Mostly Solved. Except This One** (Notable; research; youtube) - Covers five named context-failure modes (poisoning, distraction, confusion, clash, self-conditioning) for long-running coding agents, with fixes, directly applicable to Claude Code and Agent SDK work…
+  - Link: https://www.youtube.com/watch?v=N3lMEjynpr8
+
+- **Autocomplete for Actions: System One from the UI to the DB — Scott Roberts, Workday** (Notable; model_release; youtube) - Shows a concrete production pattern for using Jev as a fast System One model for UI action autocomplete and in-database SQL filtering, directly relevant to your TypeSafe/Jev work.
+  - Link: https://www.youtube.com/watch?v=5hhlNHRVxB4
+
+- **Hy-MT3: I Tested 102 Languages Locally with llama.cpp** (Notable; model_release; youtube) - A local, open-weight 30B multilingual translation model (GGUF) runnable through llama.cpp, so it's adoptable this week for offline translation or as a self-hosted MT step in pipelines.
+  - Link: https://www.youtube.com/watch?v=wNXzLh6LVDM
+
 ## 2026-11-28
 
 - **Claude Code 2.1.332** (AI/Claude tooling) - Adds beta skills served from MCP servers (shown as `server:skill` in the `/` menu) and a `PreSkillShellCommand` hook that can refuse a skill's inline shell commands.
